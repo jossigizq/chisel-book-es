@@ -1,4 +1,10 @@
-![estado de compilación](https://github.com/schoeberl/chisel-book/actions/workflows/test.yml/badge.svg)
+<!-- ![estado de compilación](https://github.com/schoeberl/chisel-book/actions/workflows/test.yml/badge.svg) -->
+
+# Nota del traductor
+
+Esta traducción al castellano se ha realizado de forma manual, sin recurrir a
+traducción automática. Para la revisión del texto se ha empleado el modelo
+Opus 5 de Anthropic.
 
 # Diseño Digital con Chisel
 
@@ -46,8 +52,3 @@ digital con Chisel. Las diapositivas están [aquí](slides). Puedes consultar el
 en la DTU que incluye los PDF de las diapositivas y el correspondiente
 [material de laboratorio](https://github.com/schoeberl/chisel-lab).
 
-## Nota del traductor
-
-Esta traducción al castellano se ha realizado de forma manual, sin recurrir a
-traducción automática. Para la revisión del texto se ha empleado el modelo
-Opus 5 de Anthropic.
