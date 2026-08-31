@@ -28,11 +28,22 @@
 
 \ifbook
 \else
-\ifoot{\hyperlink{contents}{{\textnormal{Contents}}}}
-\cfoot{\hyperlink{index}{{\textnormal{Index}}}}
+\ifoot{\hyperlink{contents}{{\textnormal{\contentsname}}}}
+\cfoot{\hyperlink{index}{{\textnormal{\indexname}}}}
 \fi
 
 
+
+% Textos automáticos de LaTeX en castellano (Índice general, Capítulo, Figura...)
+% y partición de palabras en castellano.
+% es-noshorthands: evita que " < > pasen a ser caracteres activos, lo que
+%                  rompería el código de los listings y las URL.
+% es-tabla:        «Tabla» en lugar del «Cuadro» que pone babel por omisión.
+% es-nosectiondot / es-noindentfirst: desactivan dos convenciones tipográficas
+%                  castellanas (punto tras el número de apartado y sangrado del
+%                  primer párrafo) para no alterar el aspecto del original.
+%                  Quítalas si prefieres seguir la convención castellana.
+\usepackage[spanish,es-noshorthands,es-tabla,es-nosectiondot,es-noindentfirst]{babel}
 
 \usepackage{pslatex} % -- times instead of computer modern, especially for the plain article class
 \usepackage[pdftex,
@@ -73,6 +84,10 @@
 \makeatother
 
 \usepackage[procnames]{listings}
+
+% listings trae sus propios rótulos y babel no los traduce
+\renewcommand{\lstlistingname}{Listado}
+\renewcommand{\lstlistlistingname}{Índice de listados}
 
 
 \ifbook
