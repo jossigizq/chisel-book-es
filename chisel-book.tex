@@ -165,10 +165,10 @@
 \pagestyle{empty}
 \ \\
 \vspace{1cm}
-{\usekomafont{title}\mdseries\huge Digital Design with Chisel}
+{\usekomafont{title}\mdseries\huge Diseño Digital con Chisel}
 \ \\
 \vspace{1cm}
-{\usekomafont{title}\mdseries\Large Seventh Edition}
+{\usekomafont{title}\mdseries\Large Sexta Edición}
 \cleardoublepage
 \end{flushleft}
 \newpage
@@ -180,7 +180,7 @@
 \vspace{1cm}
 {\usekomafont{title}\Huge Digital Design with Chisel\\
 \bigskip
-{\usekomafont{title}\huge Seventh Edition}\\
+{\usekomafont{title}\huge Sixth Edition}\\
 \bigskip
 \bigskip
 \bigskip
@@ -206,19 +206,18 @@ Copyright \copyright{} 2016--2025 Martin Schoeberl
   \medskip\\
   \begin{tabular}{lp{.8\textwidth}}
     \raisebox{-12pt}{\includegraphics[height=18pt]{figures/cc_by_sa}} &
-     This work is licensed under a Creative Commons Attribution-ShareAlike
-     4.0 International License.
-     \url{http://creativecommons.org/licenses/by-sa/4.0/}\\
+     Esta obra cuenta con una licencia Atribución-CompartirIgual 4.0 Internacional.
+     \url{https://creativecommons.org/licenses/by-sa/4.0/deed.es}\\
   \end{tabular}
 %}
 
 \medskip
 
-Email: \url{martin@jopdesign.com}\\
-Visit the source at \url{https://github.com/schoeberl/chisel-book}
+Correo electrónico: \url{martin@jopdesign.com}\\
+Código fuente original disponible en \url{https://github.com/schoeberl/chisel-book}
 \medskip
 
-The first edition was published in 2019 by Kindle Direct Publishing,\\
+La primera edición se publicó en 2019 en Kindle Direct Publishing,\\
 \url{https://kdp.amazon.com/}
 \medskip
 \medskip
@@ -238,14 +237,16 @@ ISBN 9781689336031
 \bigskip
 
 
-Manufactured in the United States of America.
+Fabricado en los Estados Unidos de América.
 
-Typeset by Martin Schoeberl.}
+Composición tipográfica original de Martin Schoeberl.}
 \end{flushleft}
 
 \frontmatter
 
 \phantomsection
+% Ancla interna del enlace del pie de página: no es texto visible y tiene que
+% coincidir con el \hyperlink{contents} del preámbulo. No se traduce.
 \hypertarget{contents}{}
 \tableofcontents
 
@@ -257,7 +258,7 @@ Typeset by Martin Schoeberl.}
 \lstlistoflistings
 \endgroup
 
-\chapter{Foreword}
+\chapter{Prólogo}
 
 \medskip
 \medskip
@@ -278,7 +279,7 @@ Chisel and FIRRTL Maintainer\\
 Staff Engineer, SiFive
 
 
-\chapter{Preface}
+\chapter{Prefacio}
 
 % This text goes on the backside of the book, and in Amazon description
 This book is an introduction to digital design with a focus on using the hardware construction language Chisel. Chisel brings advances from software engineering, such as object-oriented and functional languages, into digital design.
@@ -417,8 +418,6 @@ in Chisel, VHDL, and Verilog.
 This book was written without any help from artificial intelligence or large language models
 to write or rewrite text. We used Grammarly\footnote{\url{https://app.grammarly.com/}}
 for grammar checking and improvement of the writing style.
-
-\section*{Foreword for the Seventh Edition}
 
 \section*{Translations}
 
