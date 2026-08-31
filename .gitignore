@@ -1,0 +1,74 @@
+# Ficheros auxiliares de LaTeX
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.brf
+*.dvi
+*.fdb_latexmk
+*.fls
+*.glo
+*.gls
+*.idx
+*.ilg
+*.ind
+*.lof
+*.log
+*.lol
+*.lot
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.xdv
+# beamer (diapositivas)
+*.nav
+*.snm
+*.vrb
+
+# Resultado de compilar el libro
+/chisel-book.pdf
+/chisel-book.txt
+/chisel-book.rtf
+
+# Diapositivas generadas (slides/doslides.sh y los Makefile de cada carpeta).
+# Solo el primer nivel: las imagenes de slides-agile/images/ si estan en git.
+slides/*.pdf
+slides-agile/*.pdf
+slides-tutorial/*.pdf
+
+# Figuras generadas por figures/Makefile a partir de los .tex de esa carpeta.
+# El resto de figures/*.pdf son fuentes y si estan en git.
+figures/bus_ack.pdf
+figures/bus_pipe_ack.pdf
+figures/ready_valid1.pdf
+figures/ready_valid2.pdf
+figures/ready_valid3.pdf
+figures/reg_en_wave.pdf
+figures/reg_wave.pdf
+figures/rising.pdf
+figures/tick_count_wave.pdf
+figures/tick_wave.pdf
+figures/uart_wave.pdf
+figures/wishbone.pdf
+figures/wishbone_sync.pdf
+
+# Fragmentos de codigo extraidos de src/ (make gencode)
+/code/
+
+# sbt, Scala y salidas de Chisel
+target/
+project/target/
+project/project/
+/test_run_dir/
+/generated/
+.bloop/
+.bsp/
+.metals/
+.scala-build/
+
+# Entornos de desarrollo y sistema operativo
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
