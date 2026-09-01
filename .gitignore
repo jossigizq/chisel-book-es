@@ -27,7 +27,7 @@
 *.vrb
 
 # Resultado de compilar el libro
-/chisel-book.pdf
+# /chisel-book.pdf
 /chisel-book.txt
 /chisel-book.rtf
 
