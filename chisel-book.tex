@@ -321,13 +321,28 @@ Staff Engineer en SiFive
 \chapter{Prefacio}
 
 % This text goes on the backside of the book, and in Amazon description
-This book is an introduction to digital design with a focus on using the hardware construction language Chisel. Chisel brings advances from software engineering, such as object-oriented and functional languages, into digital design.
+% This book is an introduction to digital design with a focus on using the hardware construction language Chisel. Chisel brings advances from software engineering, such as object-oriented and functional languages, into digital design.
 
-This book addresses hardware designers and software engineers. Hardware designers with knowledge of Verilog or VHDL can upgrade their productivity with a modern language for their next ASIC or FPGA design. Software engineers with knowledge of object-oriented and functional programming can leverage their knowledge to program hardware, for example, FPGA accelerators executing in the cloud.
+Este libro es una introducción al diseño digital centrada en el uso del lenguaje de construcción de hardware Chisel. 
+Chisel incorpora al diseño digital avances de la ingeniería del software, como los lenguajes orientados a objetos y 
+los lenguajes funcionales.
 
-The approach of this book is to present small to medium-sized typical hardware components to explore digital design with Chisel.
+% This book addresses hardware designers and software engineers. Hardware designers with knowledge of Verilog or VHDL can upgrade their productivity with a modern language for their next ASIC or FPGA design. Software engineers with knowledge of object-oriented and functional programming can leverage their knowledge to program hardware, for example, FPGA accelerators executing in the cloud.
 
-I have not used any large language model (LLM) to write even a single sentence. All mistakes are mine, not a halizunisation by an LLM. I use Grammarly for grammar checking and Copilot for writing code.
+Este libro va dirigido a diseñadores de hardware e ingenieros de software. Los diseñadores de hardware con 
+conocimientos de Verilog o VHDL pueden aumentar su productividad con un lenguaje moderno para su próximo diseño ASIC o 
+FPGA. Los ingenieros de software con conocimientos de programación orientada a objetos y funcional pueden aprovechar 
+lo que ya saben para programar hardware, por ejemplo, aceleradores FPGA que se ejecutan en la nube.
+
+% The approach of this book is to present small to medium-sized typical hardware components to explore digital design with Chisel.
+
+El enfoque de este libro consiste en presentar componentes de hardware típicos, de tamaño pequeño a mediano, 
+para explorar el diseño digital con Chisel.
+
+% I have not used any large language model (LLM) to write even a single sentence. All mistakes are mine, not a halizunisation by an LLM. I use Grammarly for grammar checking and Copilot for writing code.
+
+No he utilizado ningún modelo grande de lenguaje (LLM) para escribir ni una sola frase. Todos los errores son míos, 
+no una alucinación de un LLM. Utilizo Grammarly para la revisión gramatical y Copilot para escribir código.
 
 % about me, backside
 % TODO: update the text at Amazon
@@ -336,164 +351,280 @@ I have not used any large language model (LLM) to write even a single sentence. 
 
 %Martin has been several times at UC Berkeley on research stays, where he has picked up Chisel and was in close contact with the developers of Chisel. He lead the research project T-CREST where most of the components have been written in Chisel.
 
-\section*{Foreword for the Second Edition}
+\section*{Prefacio de la Segunda Edición}
 
-As Chisel allows agile hardware design, so does open access and on-demand printing,
-which allows agile textbook publishing. Less than 6 months after the first edition of this book
-I can provide an improved and extended second edition.
+% As Chisel allows agile hardware design, so does open access and on-demand printing,
+% which allows agile textbook publishing. Less than 6 months after the first edition of this book
+% I can provide an improved and extended second edition.
 
-Besides minor fixes, the main changes in the second edition are as follows.
-The testing section has been extended. The sequential building blocks chapter contains
-more example circuits. A new chapter on input processing explains input synchronization,
-shows how to design a debouncing circuit, and how to filter a noisy input signal.
-The example designs chapter has been extended to show different implementations of a FIFO.
-The FIFO variations also show how to use type parameters and inheritance in digital design.
+Igual que Chisel permite un diseño de hardware ágil, también lo permiten el acceso abierto y la impresión bajo demanda, 
+que hacen posible una publicación ágil de libros de texto. Menos de seis meses después de la primera edición de este 
+libro puedo ofrecer una segunda edición mejorada y ampliada.
 
-\section*{Foreword for the Third Edition}
+% Besides minor fixes, the main changes in the second edition are as follows.
+% The testing section has been extended. The sequential building blocks chapter contains
+% more example circuits. A new chapter on input processing explains input synchronization,
+% shows how to design a debouncing circuit, and how to filter a noisy input signal.
+% The example designs chapter has been extended to show different implementations of a FIFO.
+% The FIFO variations also show how to use type parameters and inheritance in digital design.
 
-Chisel has been moving forward in the last year, so it is time for a new edition of the Chisel book.
-We changed all examples to the latest version of Chisel (3.5.3), and the recommended
-Scala version (2.12.13).
+Además de correcciones menores, los cambios principales de la segunda edición son los siguientes. 
+Se ha ampliado la sección dedicada a las pruebas. El capítulo de bloques de construcción secuenciales incluye 
+más circuitos de ejemplo. Un nuevo capítulo sobre procesamiento de entradas explica la sincronización de entradas y 
+muestra cómo diseñar un circuito antirrebotes y cómo filtrar una señal de entrada con ruido. El capítulo de diseños 
+de ejemplo se ha ampliado para mostrar distintas implementaciones de una FIFO. Las variaciones de la FIFO muestran 
+también cómo utilizar los parámetros de tipo y herencia en el diseño digital.
 
-With Chisel 3.5 the testing environment \code{PeekPokeTester} as part of the \code{iotesters}
-package has been deprecated. Therefore, we have changed the testing description to the new
-\myref{https://github.com/ucb-bar/chiseltest}{ChiselTest} framework.
-As there are still many Chisel designs available that use the \code{PeekPokeTester}, we have moved the description for it into the appendix.
+\section*{Prefacio de la Tercera Edición}
 
-One of the fascinating aspects of the Chisel/Scala/Java environment is that we
-can piggyback on the available infrastructure to distribute open-source libraries.
-We can publish hardware components on Maven as simply as any other open-source Java library.
-Publishing on Maven means that a 3rd party component can be integrated into the
-compile flow with a single reference in the \code{build.sbt} configuration.
-This is the same process as how you include the chisel library for your design.
-We have added a section on how to publish a Chisel design on Maven Central.
+% Chisel has been moving forward in the last year, so it is time for a new edition of the Chisel book.
+% We changed all examples to the latest version of Chisel (3.5.3), and the recommended
+% Scala version (2.12.13).
 
-We have improved the explanation of components with a simpler example.
+Chisel ha seguido avanzando durante el último año, así que ha llegado el momento de una nueva edición del libro de 
+Chisel. Hemos actualizado todos los ejemplos a la última versión de Chisel (3.5.3) y a la versión recomendada de 
+Scala (2.12.13).
 
-Hardware \emph{generators} are written in Scala. Therefore, we have added a short
-section on Scala. We have extended the hardware generator chapter with a section
-on using functional programming to write generators.
+% With Chisel 3.5 the testing environment \code{PeekPokeTester} as part of the \code{iotesters}
+% package has been deprecated. Therefore, we have changed the testing description to the new
+% \myref{https://github.com/ucb-bar/chiseltest}{ChiselTest} framework.
+% As there are still many Chisel designs available that use the \code{PeekPokeTester}, we have moved the description for it into the appendix.
 
-The appendix has been extended with a list of reserved keywords and a list
-of acronyms.
+Con Chisel 3.5, el entorno de pruebas \code{PeekPokeTester}, que forma parte del paquete \code{iotesters}, 
+ha quedado obsoleto. Por ello, hemos adaptado la descripción de las pruebas al nuevo marco de trabajo 
+\myref{https://github.com/ucb-bar/chiseltest}{ChiselTest}. Como todavía existen muchos diseños en Chisel que 
+utilizan \code{PeekPokeTester}, hemos trasladado su descripción al apéndice.
 
-Hans Jakob Damsgaard has contributed the description of how to use external components through Chisel's \code{BlackBox} and how to use memories for clock domain crossing (multi-clock memories).
+% One of the fascinating aspects of the Chisel/Scala/Java environment is that we
+% can piggyback on the available infrastructure to distribute open-source libraries.
+% We can publish hardware components on Maven as simply as any other open-source Java library.
+% Publishing on Maven means that a 3rd party component can be integrated into the
+% compile flow with a single reference in the \code{build.sbt} configuration.
+% This is the same process as how you include the chisel library for your design.
+% We have added a section on how to publish a Chisel design on Maven Central.
 
-\section*{Foreword for the Fourth Edition}
+Uno de los aspectos más interesantes del entorno Chisel/Scala/Java es que podemos aprovechar la infraestructura ya 
+existente para distribuir bibliotecas de código abierto. Podemos publicar componentes de hardware en Maven 
+con la misma facilidad que cualquier otra biblioteca Java de código abierto. Publicar en Maven significa que un 
+componente de terceros se puede integrar en el flujo de compilación con una única referencia en la configuración de 
+\code{build.sbt}. Este es el mismo procedimiento con el que incluyes la biblioteca de Chisel en tu diseño. Hemos añadido 
+una sección sobre cómo publicar un diseño de Chisel en Maven Central.
 
-For the fourth edition, we have switched to the actual Chisel version 3.5.4.
-We have added an arbiter, priority encoder, and comparator to the chapter on
-combinational building blocks.
-We have extended the hardware generation chapter with more functional
-examples, including building a fair arbitration tree out of a simple 2-to-1
-arbitration circuits.
-We have added a new chapter on interconnect, bus interfaces,
-and how to connect an IO device as a memory-mapped device.
-We have started a new chapter on debugging, testing, and verification.
-The plan is to extend the chapter on this important topic in the next edition.
-We have extended the processor chapter with a more gentle introduction
-to a microprocessor, including a figure of the datapath.
+% We have improved the explanation of components with a simpler example.
 
-\section*{Foreword for the Fifth Edition}
+Hemos mejorado la explicación de los componentes con un ejemplo más sencillo.
 
-For the fifth edition, we have upgraded to the actual Chisel version 3.5.6 and Scala 2.13.
-To make room for more advanced topics, I have removed the two appendices on
-Chisel 2 and the PeekPokeTester. All projects that are actively maintained have finally
-moved to Chisel 3, at least with the compatibility layer. The PeekPokeTester has been
-deprecated with Chisel 3.5, and it is recommended to switch to ChiselTest.
-If needed, those two chapters are available in the older versions of the Chisel book, available as PDF at the \myref{https://www.imm.dtu.dk/~masca/chisel-book.html}{web page} for this book.
+% Hardware \emph{generators} are written in Scala. Therefore, we have added a short
+% section on Scala. We have extended the hardware generator chapter with a section
+% on using functional programming to write generators.
 
-The fifth edition does not include major changes; it is a consolidation version.
-We did considerable proofreading for more clarity in writing. Chisel has added small convenience
-features (e.g., \code{ChiselEnum}) that we cover in this edition.
-We extended the processor chapter and updated the Leros code snippets
-to the actual version of Leros.
+Los \emph{generadores} de hardware se escriben en Scala. Por ello, hemos añadido una breve sección sobre Scala. 
+Hemos ampliado el capítulo de generadores de hardware con una sección sobre el uso de la programación funcional 
+para escribir generadores.
 
+% The appendix has been extended with a list of reserved keywords and a list
+% of acronyms.
 
-\section*{Foreword for the Sixth Edition}
+El apéndice se ha ampliado con una lista de palabras clave reservadas y una lista de acrónimos.
 
+% Hans Jakob Damsgaard has contributed the description of how to use external components through 
+% Chisel's \code{BlackBox} and how to use memories for clock domain crossing (multi-clock memories).
 
-Chisel has recently gone through some major changes. Up to Chisel 3.x, Chisel is mainly
-based on Scala, which means it runs on the Java virtual machine and is platform independent.
-After 3.x, the architecture of the Chisel compile pipeline has changed. To indicate that change,
-the version numbering system has changed to increment the major version number more often.
-Version 4.0 is skipped, and the next Chisel version is 5.0.
-From version 5.0, the compiler backend is based on \myref{https://circt.llvm.org/}{CIRCT},
-a circuit compiler, which is part of the \myref{https://llvm.org/}{LLVM} project.
-The main difference for the Chisel user is that CIRCT (and LLVM) are written in C++
-and therefore need a different executable for each operating system (processor
-architecture).
+Hans Jakob Damsgaard ha contribuido con la descripción de cómo utilizar componentes externos mediante el 
+\code{BlackBox} de Chisel y de cómo emplear memorias para el cruce de dominios de reloj (memorias multirreloj).
 
+\section*{Prefacio de la Cuarta Edición}
 
-We tested the book with Chisel Versions 3.5.6, 3.6.1, 5.3.0, and 6.5.0.
-Chisel 3.6 is the last version that uses the Scala-based backend to generate Verilog files.
-Chisel 5 is using CIRCT and needs \code{firtool} installed manually.
-The latest version of Chisel 6 includes the \code{firtool} binaries.
-Testing with ChiselTest is still supported until Chisel 6.
-Therefore, we recommend that Chisel 5 be skipped and Chisel 6 be used.
-Chisel 6 might switch to a different simulation and testing library.
-We used Scala 2.13 and tested it with Java 17 and Java 21.
-Chisel 3.5.6 does not support Java 21. Therefore, we recommend using Chisel
-3.6.1, if one wants to work with Chisel 3.
+% For the fourth edition, we have switched to the actual Chisel version 3.5.4.
+% We have added an arbiter, priority encoder, and comparator to the chapter on
+% combinational building blocks.
+% We have extended the hardware generation chapter with more functional
+% examples, including building a fair arbitration tree out of a simple 2-to-1
+% arbitration circuits.
+% We have added a new chapter on interconnect, bus interfaces,
+% and how to connect an IO device as a memory-mapped device.
+% We have started a new chapter on debugging, testing, and verification.
+% The plan is to extend the chapter on this important topic in the next edition.
+% We have extended the processor chapter with a more gentle introduction
+% to a microprocessor, including a figure of the datapath.
 
-\todo{Some of this might go into getting started.}
+Para la cuarta edición hemos pasado a la versión actual de Chisel, la 3.5.4. Hemos añadido un arbitrador (\textit{arbiter}), 
+un codificador de prioridad (\textit{priority encoder}) y un comparador (\textit{comparator}) al capítulo sobre 
+bloques de construcción combinacionales. Hemos ampliado el capítulo de generación de hardware con más ejemplos 
+funcionales, entre ellos la construcción de un árbol de arbitraje equitativo a partir de sencillos circuitos 
+de arbitraje 2 a 1. Hemos añadido un nuevo capítulo sobre interconexión, interfaces de bus y cómo conectar 
+un dispositivo de E/S como dispositivo mapeado en memoria (\textit{memory-mapped device}). Hemos comenzado un nuevo 
+capítulo sobre depuración, pruebas y verificación. Tenemos previsto ampliar en la próxima edición el capítulo dedicado 
+a este tema tan importante. Hemos ampliado el capítulo del procesador con una introducción más asequible a los 
+microprocesadores, que incluye una figura de la ruta de datos (\textit{datapath}).
 
+\section*{Prefacio de la Quinta Edición}
 
-\todo{We should also show more Leros code.}
+% For the fifth edition, we have upgraded to the actual Chisel version 3.5.6 and Scala 2.13.
+% To make room for more advanced topics, I have removed the two appendices on
+% Chisel 2 and the PeekPokeTester. All projects that are actively maintained have finally
+% moved to Chisel 3, at least with the compatibility layer. The PeekPokeTester has been
+% deprecated with Chisel 3.5, and it is recommended to switch to ChiselTest.
+% If needed, those two chapters are available in the older versions of the Chisel book, available as PDF at the \myref{https://www.imm.dtu.dk/~masca/chisel-book.html}{web page} for this book.
 
-We extended the testing chapter with a description of how to access internal signals and
-how to use assertions. Furthermore, we started to explore formal verification in Chisel.
+Para la quinta edición hemos actualizado a la versión actual de Chisel, la 3.5.6, y a Scala 2.13. 
+Para hacer sitio a temas más avanzados, he eliminado los dos apéndices sobre Chisel 2 y sobre PeekPokeTester. 
+Todos los proyectos que se mantienen activamente han migrado por fin a Chisel 3, al menos con la capa de 
+compatibilidad. PeekPokeTester quedó obsoleto con Chisel 3.5 y se recomienda pasar a ChiselTest. Si los necesitas, 
+esos dos capítulos están disponibles en las versiones anteriores del libro de Chisel, accesibles en PDF en la 
+\myref{https://www.imm.dtu.dk/~masca/chisel-book.html}{página web} de este libro.
 
-Organizing digital circuits as pipelines to increase performance is a key aspect of digital design
-and computer architecture.
-We added a chapter on pipelining where we use a 3-stage RISC-V pipeline as a running example.
+% The fifth edition does not include major changes; it is a consolidation version.
+% We did considerable proofreading for more clarity in writing. Chisel has added small convenience
+% features (e.g., \code{ChiselEnum}) that we cover in this edition.
+% We extended the processor chapter and updated the Leros code snippets
+% to the actual version of Leros.
 
-We are aware that Chisel is still a niche language in hardware design, and one needs to
-at least be able to read VHDL and/or Verilog. However, we think that with a good knowledge
-of digital design, switching to a different hardware description language should be a matter of days.
-To simplify this transition, we have added an appendix showing and comparing basic constructs
-in Chisel, VHDL, and Verilog.
+La quinta edición no incluye cambios importantes; se trata de una versión de consolidación. Hemos realizado una revisión 
+considerable del texto para mejorar la claridad de la redacción. Chisel ha incorporado pequeñas mejoras de comodidad 
+(por ejemplo, \code{ChiselEnum}) que cubrimos en esta edición. Hemos ampliado el capítulo del procesador y 
+actualizado los fragmentos de código de Leros a la versión actual de Leros.
 
-This book was written without any help from artificial intelligence or large language models
-to write or rewrite text. We used Grammarly\footnote{\url{https://app.grammarly.com/}}
-for grammar checking and improvement of the writing style.
+\section*{Prefacio de la Sexta Edición}
 
-\section*{Translations}
+% Chisel has recently gone through some major changes. Up to Chisel 3.x, Chisel is mainly
+% based on Scala, which means it runs on the Java virtual machine and is platform independent.
+% After 3.x, the architecture of the Chisel compile pipeline has changed. To indicate that change,
+% the version numbering system has changed to increment the major version number more often.
+% Version 4.0 is skipped, and the next Chisel version is 5.0.
+% From version 5.0, the compiler backend is based on \myref{https://circt.llvm.org/}{CIRCT},
+% a circuit compiler, which is part of the \myref{https://llvm.org/}{LLVM} project.
+% The main difference for the Chisel user is that CIRCT (and LLVM) are written in C++
+% and therefore need a different executable for each operating system (processor
+% architecture).
 
-This book has been translated into Chinese, Japanese, and Vietnamese. All translations are available as free PDF
-from the books \myref{https://www.imm.dtu.dk/~masca/chisel-book.html}{web page}.
-I would like to thank Yuda Wang, Qiwei Sun, and Yun Chen for the Chinese translation;
-Seiji Munetoh, Masatoshi Tanabata, and Takaaki Hagino for the Japanese translation;
-and VieLe Duc Hung for the Vietnamese translation.
-If you are interested in translating this book into another language, feel free to do it and
-publish it under the same license. Please contact me then, so I can point to your translation.
+Chisel ha experimentado recientemente algunos cambios importantes. Hasta Chisel 3.x, Chisel se basaba principalmente 
+en Scala, lo que significa que se ejecuta sobre la máquina virtual de Java y es independiente de la plataforma.
+Después de la versión 3.x, la arquitectura del proceso de compilación de Chisel ha cambiado. Para reflejar ese cambio, 
+el sistema de numeración de versiones se ha modificado para incrementar el número de versión mayor. La versión 4.0 se 
+omite, y la siguiente versión de Chisel es la 5.0.
+A partir de la versión 5.0, el backend del compilador se basa en \myref{https://circt.llvm.org/}{CIRCT}, un compilador 
+de circuitos que forma parte del proyecto \myref{https://llvm.org/}{LLVM}. La principal diferencia para el usuario de 
+Chisel es que CIRCT (y LLVM) están escritos en C++ y, por tanto, necesitan un ejecutable distinto para cada sistema 
+operativo (arquitectura de procesador).
 
+% We tested the book with Chisel Versions 3.5.6, 3.6.1, 5.3.0, and 6.5.0.
+% Chisel 3.6 is the last version that uses the Scala-based backend to generate Verilog files.
+% Chisel 5 is using CIRCT and needs \code{firtool} installed manually.
+% The latest version of Chisel 6 includes the \code{firtool} binaries.
+% Testing with ChiselTest is still supported until Chisel 6.
+% Therefore, we recommend that Chisel 5 be skipped and Chisel 6 be used.
+% Chisel 6 might switch to a different simulation and testing library.
+% We used Scala 2.13 and tested it with Java 17 and Java 21.
+% Chisel 3.5.6 does not support Java 21. Therefore, we recommend using Chisel
+% 3.6.1, if one wants to work with Chisel 3.
 
-\section*{Acknowledgements}
+Hemos probado el libro con las versiones de Chisel 3.5.6, 3.6.1, 5.3.0 y 6.5.0. Chisel 3.6 es la última versión que 
+utiliza el backend basado en Scala para generar los ficheros Verilog. Chisel 5 usa CIRCT y requiere instalar 
+\code{firtool} manualmente. La última versión de Chisel 6 incluye los binarios de \code{firtool}. Las pruebas con 
+ChiselTest siguen estando soportadas hasta Chisel 6. Por ello, recomendamos saltarse Chisel 5 y utilizar Chisel 6. 
+Es posible que Chisel 6 cambie a una biblioteca distinta de simulación y pruebas. Hemos usado Scala 2.13 y lo hemos 
+probado con Java 17 y Java 21. Chisel 3.5.6 no es compatible con Java 21; por eso recomendamos utilizar Chisel 3.6.1 
+si se quiere trabajar con Chisel 3.
 
-I want to thank everyone who has worked on Chisel for creating such
-a cool hardware construction language. Chisel is so joyful to use and
-therefore worth writing a book about.
-I am thankful to the whole Chisel community, which is so welcoming and friendly
-and never tired of answering questions on Chisel.
+% \todo{Some of this might go into getting started.}
 
-I would also like to thank my students in the last years of an advanced computer
-architecture course where most of them picked up Chisel for the final project.
-Thank you for moving out of your comfort zone and taking up the journey of
-learning and using a bleeding-edge hardware description language.
-Many of your questions have helped to shape this book.
+% \todo{We should also show more Leros code.}
 
-It was a pleasure to use Chisel in teaching digital electronics
-at the Technical University of Denmark since 2020.
-I know it is a challenge to pickup Chisel and Java in parallel in the second
-semester. Thank you to all students from this course, who had on open mind to
-pickup a modern programming language for hardware description.
+\todo{Parte de esto podría ir en el capítulo de introducción.}
+\todo{También deberíamos mostrar más código de Leros.}
 
-For the third edition, I would like to acknowledge Hans Jakob Damsgaard
-(\myref{https://github.com/hansemandse}{@hansemandse}) for rewriting
-all test code of this book to ChiselTest, adding ChiselTest to the testing chapter, adding the black
-box description, and an example of a multi-clock memory.
+% We extended the testing chapter with a description of how to access internal signals and
+% how to use assertions. Furthermore, we started to explore formal verification in Chisel.
 
+Hemos ampliado el capítulo de pruebas con una descripción de cómo acceder a las señales internas y cómo utilizar 
+aserciones (\textit{assertions}). Además, hemos empezado a explorar la verificación formal en Chisel.
+
+% Organizing digital circuits as pipelines to increase performance is a key aspect of digital design
+% and computer architecture.
+% We added a chapter on pipelining where we use a 3-stage RISC-V pipeline as a running example.
+
+La segmentación de los circuitos digitales en \emph{pipelines} para aumentar el rendimiento es un aspecto clave 
+del diseño digital y de la arquitectura de computadores. Hemos añadido un capítulo sobre \emph{pipelining} en el 
+que utilizamos como ejemplo práctico un \emph{pipeline} RISC-V de tres etapas.
+
+% We are aware that Chisel is still a niche language in hardware design, and one needs to
+% at least be able to read VHDL and/or Verilog. However, we think that with a good knowledge
+% of digital design, switching to a different hardware description language should be a matter of days.
+% To simplify this transition, we have added an appendix showing and comparing basic constructs
+% in Chisel, VHDL, and Verilog.
+
+Somos conscientes de que Chisel sigue siendo un lenguaje minoritario en el diseño de hardware y de que es necesario 
+ser capaz, al menos, de leer VHDL o Verilog. Sin embargo, creemos que, con un buen conocimiento del diseño digital, 
+cambiar a otro lenguaje de descripción de hardware debería ser cuestión de días. Para facilitar esa transición, 
+hemos añadido un apéndice en el que se muestran y comparan las construcciones básicas en Chisel, VHDL y Verilog.
+
+% This book was written without any help from artificial intelligence or large language models
+% to write or rewrite text. We used Grammarly\footnote{\url{https://app.grammarly.com/}}
+% for grammar checking and improvement of the writing style.
+
+Este libro se ha escrito sin ninguna ayuda de la inteligencia artificial ni de modelos grandes de lenguaje para 
+redactar o reescribir el texto. Hemos utilizado Grammarly\footnote{\url{https://app.grammarly.com/}} para la 
+revisión gramatical y la mejora del estilo de redacción.
+
+\section*{Traducciones}
+
+% This book has been translated into Chinese, Japanese, and Vietnamese. All translations are available as free PDF
+% from the books \myref{https://www.imm.dtu.dk/~masca/chisel-book.html}{web page}.
+% I would like to thank Yuda Wang, Qiwei Sun, and Yun Chen for the Chinese translation;
+% Seiji Munetoh, Masatoshi Tanabata, and Takaaki Hagino for the Japanese translation;
+% and VieLe Duc Hung for the Vietnamese translation.
+% If you are interested in translating this book into another language, feel free to do it and
+% publish it under the same license. Please contact me then, so I can point to your translation.
+
+Este libro se ha traducido al chino, al japonés y al vietnamita. Todas las traducciones están disponibles como PDF 
+gratuito en la \myref{https://www.imm.dtu.dk/~masca/chisel-book.html}{página web} del libro. Quiero dar las gracias 
+a Yuda Wang, Qiwei Sun y Yun Chen por la traducción al chino; a Seiji Munetoh, Masatoshi Tanabata y Takaaki Hagino 
+por la traducción al japonés; y a VieLe Duc Hung por la traducción al vietnamita. Si te interesa traducir este libro 
+a otro idioma, hazlo sin problema y publícalo bajo la misma licencia. Ponte en contacto conmigo, para que 
+pueda incluir un enlace a tu traducción.
+
+\section*{Agradecimientos}
+
+% I want to thank everyone who has worked on Chisel for creating such
+% a cool hardware construction language. Chisel is so joyful to use and
+% therefore worth writing a book about.
+% I am thankful to the whole Chisel community, which is so welcoming and friendly
+% and never tired of answering questions on Chisel.
+
+Quiero dar las gracias a todas las personas que han trabajado en Chisel por crear un lenguaje de construcción de hardware tan 
+estupendo. Es un auténtico placer utilizar Chisel y, por ello, merece que se escriba un libro sobre él. Estoy agradecido a toda la 
+comunidad de Chisel, que es tan acogedora y amable y nunca se cansa de responder preguntas sobre Chisel.
+
+% I would also like to thank my students in the last years of an advanced computer
+% architecture course where most of them picked up Chisel for the final project.
+% Thank you for moving out of your comfort zone and taking up the journey of
+% learning and using a bleeding-edge hardware description language.
+% Many of your questions have helped to shape this book.
+
+También quiero dar las gracias a mis estudiantes de los últimos años en un curso avanzado de arquitectura de computadores, 
+en el que la mayoría se decidió por Chisel para el proyecto final. Gracias por salir de vuestra zona de confort y emprender el 
+viaje de aprender y usar un lenguaje de descripción de hardware puntero. Muchas de vuestras preguntas han ayudado a dar forma a 
+este libro.
+
+% It was a pleasure to use Chisel in teaching digital electronics
+% at the Technical University of Denmark since 2020.
+% I know it is a challenge to pickup Chisel and Java in parallel in the second
+% semester. Thank you to all students from this course, who had on open mind to
+% pickup a modern programming language for hardware description.
+
+Ha sido un placer utilizar Chisel para impartir electrónica digital en la Universidad Técnica de Dinamarca desde 2020. 
+Sé que supone un reto aprender Chisel y Java a la vez en el segundo semestre. Gracias a todos los estudiantes de este curso, 
+que tuvieron la mente abierta para adoptar un lenguaje de programación moderno para la descripción de hardware.
+
+% For the third edition, I would like to acknowledge Hans Jakob Damsgaard
+% (\myref{https://github.com/hansemandse}{@hansemandse}) for rewriting
+% all test code of this book to ChiselTest, adding ChiselTest to the testing chapter, adding the black
+% box description, and an example of a multi-clock memory.
+
+Para la tercera edición, quiero reconocer el trabajo de Hans Jakob Damsgaard (\myref{https://github.com/hansemandse}{@hansemandse}), 
+que reescribió todo el código de pruebas de este libro para ChiselTest, añadió ChiselTest al capítulo de pruebas e incorporó la 
+descripción de las cajas negras (\emph{black boxes}) y un ejemplo de memoria multirreloj (\emph{multi-clock memory}).
 
 \mainmatter
 
