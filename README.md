@@ -1,22 +1,28 @@
-![build status](https://github.com/schoeberl/chisel-book/actions/workflows/test.yml/badge.svg)
+<!-- ![estado de compilación](https://github.com/schoeberl/chisel-book/actions/workflows/test.yml/badge.svg) -->
 
-# Digital Design with Chisel
+# Nota del traductor
 
-[![Book Cover](cover-small.jpg)](http://www.imm.dtu.dk/~masca/chisel-book.html)
+Esta traducción al castellano se ha realizado de forma manual, sin recurrir a
+traducción automática. Para la revisión del texto se ha empleado el modelo
+Opus 5 de Anthropic.
 
-This book is an introduction to digital system design using a modern hardware
-construction language, [Chisel](https://www.chisel-lang.org/).
-In this book we focus on a slightly higher abstraction level to get you up to
-speed to build more complex, interacting digital systems.
+# Diseño Digital con Chisel
 
-A compiled PDF version of the book is available at
+[![Portada del libro](cover-small-es.jpg)](http://www.imm.dtu.dk/~masca/chisel-book.html)
+
+Este libro es una introducción al diseño de sistemas digitales utilizando un
+lenguaje moderno de construcción de hardware, [Chisel](https://www.chisel-lang.org/).
+En este libro nos centramos en un nivel de abstracción ligeramente superior al habitual,
+para que puedas ponerte al día y construir sistemas digitales más complejos que interactúan entre sí.
+
+Hay disponible una versión PDF compilada del libro en inglés en
 [Digital Design with Chisel PDF](http://www.imm.dtu.dk/~masca/chisel-book.pdf).
-Translations in Chinese, Japanese, and Vietnamese are also available
-[here](http://www.imm.dtu.dk/~masca/chisel-book.html).
+También hay traducciones al chino, al japonés, al vietnamita y al castellano disponibles
+[aquí](http://www.imm.dtu.dk/~masca/chisel-book.html).
 
-The book is available [at Amazon](https://www.amazon.com/dp/168933603X/).
+El libro en inglés está disponible [en Amazon](https://www.amazon.com/dp/168933603X/).
 
-In case you want to cite the book:
+Por si quieres citar el libro:
 
 ```
 @book{chisel:book,
@@ -28,20 +34,21 @@ In case you want to cite the book:
 }
 ```
 
-This book project has an accompanying repository containing
-[Chisel examples](https://github.com/schoeberl/chisel-examples).
+Este proyecto de libro cuenta con un repositorio complementario que contiene
+[ejemplos de Chisel](https://github.com/schoeberl/chisel-examples).
 
-To build the Chisel book from the source you need make, latex, sbt, and
-a Java JDK (1.8 or later) installed. For some tests you also need Verilator
-and z3 installed. Then you simply build the book with:
+Para compilar el libro de Chisel a partir del código fuente necesitas tener
+instalados make, latex, sbt y un JDK de Java (1.8 o posterior). Para algunas
+pruebas también necesitas Verilator y z3 instalados. Después, simplemente
+compila el libro con:
 
 ```
 make
 ```
 
-The book also contains slides for a one semester course on digital electronics
-with Chisel. The slides are [here](slides). You can see a
-[lecture plan](http://www2.imm.dtu.dk/courses/02139/) for a course
-given at DTU that includes PDFs of the slides and the corresponding
-[lab material](https://github.com/schoeberl/chisel-lab).
+El libro también incluye diapositivas para un curso semestral de electrónica
+digital con Chisel. Las diapositivas están [aquí](slides). Puedes consultar el
+[plan de la asignatura](http://www2.imm.dtu.dk/courses/02139/) de un curso impartido
+en la DTU que incluye los PDF de las diapositivas y el correspondiente
+[material de laboratorio](https://github.com/schoeberl/chisel-lab).
 
