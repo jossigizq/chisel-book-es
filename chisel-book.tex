@@ -86,8 +86,8 @@
 \usepackage[procnames]{listings}
 
 % listings trae sus propios rótulos y babel no los traduce
-\renewcommand{\lstlistingname}{Listado}
-\renewcommand{\lstlistlistingname}{Índice de listados}
+\renewcommand{\lstlistingname}{Código}
+\renewcommand{\lstlistlistingname}{Índice de código}
 
 
 \ifbook
@@ -628,201 +628,351 @@ descripción de las cajas negras (\emph{black boxes}) y un ejemplo de memoria mu
 
 \mainmatter
 
-\chapter{Introduction}
+\chapter{Introducción}
 \label{sec:intro}
 
-This book is an introduction to digital system design using a modern hardware
-construction language, \myref{https://www.chisel-lang.org/}{Chisel}~\cite{chisel:dac2012}.
-In this book, we focus on a higher abstraction level than usual in digital design books,
-to enable you to build more complex, interacting digital systems in a shorter time.
+% This book is an introduction to digital system design using a modern hardware
+% construction language, \myref{https://www.chisel-lang.org/}{Chisel}~\cite{chisel:dac2012}.
+% In this book, we focus on a higher abstraction level than usual in digital design books,
+% to enable you to build more complex, interacting digital systems in a shorter time.
 
-This book and Chisel are targeting two groups of developers:
-(1) hardware designers and (2) software programmers.
-Hardware designers who are fluent in VHDL or Verilog and use other languages, such as Python,
-Java, or Tcl to generate hardware can move to a single hardware construction language
-where hardware generation is part of the language.
-Software programmers may become interested in hardware design,
-e.g., as future chips from Intel will include programmable hardware to speed up programs.
-It is perfectly fine to use Chisel as your first hardware description language.
+Este libro es una introducción al diseño de sistemas digitales mediante un moderno lenguaje de construcción de hardware 
+(\emph{hardware construction language}), \myref{https://www.chisel-lang.org/}{Chisel}~\cite{chisel:dac2012}.
+En este libro nos centramos en un nivel de abstracción más alto de lo habitual en los libros de diseño digital, para que puedas 
+construir sistemas digitales más complejos e interconectados en menos tiempo.
 
-Chisel brings advances in software engineering, such as object-orientated
-and functional programming in the digital design domain.
-Chisel does not only allow to express hardware at the register-transfer level
-but allows you to write hardware \emph{generators}.
+% This book and Chisel are targeting two groups of developers:
+% (1) hardware designers and (2) software programmers.
+% Hardware designers who are fluent in VHDL or Verilog and use other languages, such as Python,
+% Java, or Tcl to generate hardware can move to a single hardware construction language
+% where hardware generation is part of the language.
+% Software programmers may become interested in hardware design,
+% e.g., as future chips from Intel will include programmable hardware to speed up programs.
+% It is perfectly fine to use Chisel as your first hardware description language.
 
-Hardware is now commonly described with a hardware description language.
-The time of drawing hardware components, even with CAD tools, is
-over. Some high-level schematics can give an overview of the system but are
-not intended to describe the system.
-The two most common hardware description languages are Verilog and VHDL.
-Both languages are old, contain many legacies, and have a moving line of what
-constructs of the language are synthesizable to hardware.
-Do not get me wrong: VHDL and Verilog are perfectly able to describe a hardware
-block that can be synthesized into an
+Este libro y Chisel se dirigen a dos grupos de desarrolladores:
+(1) los diseñadores de hardware y (2) los programadores de software.
+Los diseñadores de hardware que dominan VHDL o Verilog y utilizan otros lenguajes, como Python,
+Java o Tcl, para generar hardware pueden pasarse a un único lenguaje de construcción de hardware
+en el que la generación de hardware forma parte del propio lenguaje.
+Los programadores de software pueden empezar a interesarse por el diseño de hardware,
+por ejemplo, porque los futuros chips de Intel incluirán hardware programable para acelerar los programas.
+Chisel es una opción perfectamente válida como primer lenguaje de descripción de hardware (\emph{hardware description language}).
+
+% Chisel brings advances in software engineering, such as object-orientated
+% and functional programming in the digital design domain.
+% Chisel does not only allow to express hardware at the register-transfer level
+% but allows you to write hardware \emph{generators}.
+
+Chisel traslada al ámbito del diseño digital avances de la ingeniería del software, como la programación orientada a objetos y 
+la programación funcional. Chisel no solo permite describir el hardware en el nivel de transferencia de registros 
+(\emph{register-transfer level}), sino que también permite escribir \emph{generadores} de hardware.
+
+% Hardware is now commonly described with a hardware description language.
+% The time of drawing hardware components, even with CAD tools, is
+% over. Some high-level schematics can give an overview of the system but are
+% not intended to describe the system.
+% The two most common hardware description languages are Verilog and VHDL.
+% Both languages are old, contain many legacies, and have a moving line of what
+% constructs of the language are synthesizable to hardware.
+% Do not get me wrong: VHDL and Verilog are perfectly able to describe a hardware
+% block that can be synthesized into an
+% \myref{https://en.wikipedia.org/wiki/Application-specific_integrated_circuit}{ASIC}.
+% For hardware design in Chisel, Verilog serves as an intermediate language
+% for testing and synthesis.
+
+Hoy en día el hardware se describe habitualmente con un lenguaje de descripción de hardware.
+La época de dibujar los componentes hardware, incluso con herramientas CAD, ya
+pasó. Algunos esquemas de alto nivel pueden ofrecer una visión general del sistema, pero no
+pretenden describirlo.
+Los dos lenguajes de descripción de hardware más extendidos son Verilog y VHDL.
+Ambos son lenguajes antiguos, contienen muchos elementos heredados y tienen una frontera cambiante sobre qué
+construcciones del lenguaje son sintetizables en hardware.
+No me malinterpretes: VHDL y Verilog son perfectamente capaces de describir un bloque de hardware
+que puede sintetizarse en un
 \myref{https://en.wikipedia.org/wiki/Application-specific_integrated_circuit}{ASIC}.
-For hardware design in Chisel, Verilog serves as an intermediate language
-for testing and synthesis.
+En el diseño de hardware con Chisel, Verilog hace de lenguaje intermedio
+para las pruebas y la síntesis.
 
-This book is not a general introduction to digital design and the fundamentals of it.
-For an introduction to the basics of digital design, such as how to build a gate out of
-CMOS transistors refer to other digital design books.
-However, this book intends to teach digital design at an abstraction level that is
-current practice to describe ASICs or designs targeting
-\myref{https://en.wikipedia.org/wiki/Field-programmable_gate_array}{FPGA}s.\footnote{As the author is more familiar with FPGAs
-than ASICs as target technology, some design optimizations shown in this book are
-targeting FPGA technology.}
-As prerequisites for this book, we assume basic knowledge of
-\myref{https://en.wikipedia.org/wiki/Boolean_algebra}{Boolean algebra} and the
-\myref{https://en.wikipedia.org/wiki/Binary_number}{binary number system}.
-Furthermore, some programming experience in any programming language
-is assumed. No knowledge of Verilog or VHDL is needed.
-Chisel can be your first programming language to describe digital hardware.
-As the build process of the examples is based on \code{sbt} and \code{make},
-basic knowledge of the command-line interface (CLI, also called terminal or
-Unix shell) will be helpful.
+% This book is not a general introduction to digital design and the fundamentals of it.
+% For an introduction to the basics of digital design, such as how to build a gate out of
+% CMOS transistors refer to other digital design books.
+% However, this book intends to teach digital design at an abstraction level that is
+% current practice to describe ASICs or designs targeting
+% \myref{https://en.wikipedia.org/wiki/Field-programmable_gate_array}{FPGA}s.\footnote{As the author is more familiar with FPGAs
+% than ASICs as target technology, some design optimizations shown in this book are
+% targeting FPGA technology.}
+% As prerequisites for this book, we assume basic knowledge of
+% \myref{https://en.wikipedia.org/wiki/Boolean_algebra}{Boolean algebra} and the
+% \myref{https://en.wikipedia.org/wiki/Binary_number}{binary number system}.
+% Furthermore, some programming experience in any programming language
+% is assumed. No knowledge of Verilog or VHDL is needed.
+% Chisel can be your first programming language to describe digital hardware.
+% As the build process of the examples is based on \code{sbt} and \code{make},
+% basic knowledge of the command-line interface (CLI, also called terminal or
+% Unix shell) will be helpful.
 
-Chisel itself is not a big language. The basic constructs fit on
-\myref{https://github.com/freechipsproject/chisel-cheatsheet/releases/latest/download/chisel_cheatsheet.pdf}{one page}
-and can be learned within a few days.
-Therefore, this book is not a big book, as well.
-Chisel is for sure smaller than VHDL and Verilog, which carry many legacies.
-The power of Chisel comes from the embedding of Chisel within
-\myref{https://www.scala-lang.org/}{Scala}, which itself is an expressive language.
-Chisel inherits the feature from Scala of being ``a language that grows on you''~\cite{Scala}.
-However, Scala is not the topic of this book.
-We provide a short section on Scala for hardware designers.
-The textbook by Odersky et al.~\cite{Scala} provides a general introduction
-to Scala.
-This book is a tutorial in digital design and the Chisel language; it is not
-a Chisel language reference, nor is it a book on complete chip design.
+Este libro no es una introducción general al diseño digital ni a sus fundamentos.
+Para una introducción a los conceptos básicos del diseño digital, como la construcción de una puerta lógica a partir de
+transistores CMOS, consulta otros libros sobre diseño digital.
+En cambio, este libro pretende enseñar diseño digital en un nivel de abstracción que se corresponde con
+la práctica actual para describir ASIC o diseños destinados a
+\myref{https://en.wikipedia.org/wiki/Field-programmable_gate_array}{FPGA}.\footnote{Como el autor está más familiarizado con las FPGA
+que con los ASIC como tecnología de destino, algunas de las optimizaciones de diseño que se muestran en este libro
+están orientadas a la tecnología FPGA.}
+Como requisitos previos para este libro, se asumen conocimientos básicos del
+\myref{https://en.wikipedia.org/wiki/Boolean_algebra}{álgebra de Boole} y del
+\myref{https://en.wikipedia.org/wiki/Binary_number}{sistema numérico binario}.
+Además, se presupone algo de experiencia de programación en cualquier lenguaje de programación.
+No se necesita conocer Verilog ni VHDL.
+Chisel puede ser tu primer lenguaje de programación para describir hardware digital.
+Como el proceso de compilación de los ejemplos se basa en \code{sbt} y \code{make},
+resultará útil un conocimiento básico de la interfaz de línea de órdenes (CLI, también llamada terminal o
+consola de Unix).
 
+% Chisel itself is not a big language. The basic constructs fit on
+% \myref{https://github.com/freechipsproject/chisel-cheatsheet/releases/latest/download/chisel_cheatsheet.pdf}{one page}
+% and can be learned within a few days.
+% Therefore, this book is not a big book, as well.
+% Chisel is for sure smaller than VHDL and Verilog, which carry many legacies.
+% The power of Chisel comes from the embedding of Chisel within
+% \myref{https://www.scala-lang.org/}{Scala}, which itself is an expressive language.
+% Chisel inherits the feature from Scala of being ``a language that grows on you''~\cite{Scala}.
+% However, Scala is not the topic of this book.
+% We provide a short section on Scala for hardware designers.
+% The textbook by Odersky et al.~\cite{Scala} provides a general introduction
+% to Scala.
+% This book is a tutorial in digital design and the Chisel language; it is not
+% a Chisel language reference, nor is it a book on complete chip design.
 
-All code examples in this book are extracted from complete programs
-compiled and tested in continuous integration at GitHub.
-Therefore, the code shall not contain
-any syntax errors. The code examples are available from the
-\myref{https://github.com/schoeberl/chisel-book}{GitHub repository}
-of this book.
-Besides showing Chisel code, we have also tried to show useful designs and
-principles of good hardware description style.
+Chisel no es en sí un lenguaje grande. Las estructuras básicas caben en
+\myref{https://github.com/freechipsproject/chisel-cheatsheet/releases/latest/download/chisel_cheatsheet.pdf}{una sola página}
+y pueden aprenderse en unos pocos días.
+Por eso, este libro tampoco es muy extenso.
+Chisel es sin duda más pequeño que VHDL y Verilog, que arrastran muchos elementos heredados.
+La potencia de Chisel proviene de su integración en
+\myref{https://www.scala-lang.org/}{Scala}, que de por sí es un lenguaje expresivo.
+Chisel hereda de Scala esa cualidad de ser ``un lenguaje que crece contigo''~\cite{Scala}.
+Sin embargo, Scala no es el tema principal de este libro.
+Incluimos una breve sección sobre Scala dirigida a los diseñadores de hardware.
+El libro de texto de Odersky et al.~\cite{Scala} ofrece una introducción general
+a Scala.
+Este libro es un tutorial de diseño digital y del lenguaje Chisel; no es
+un manual de referencia de Chisel ni un libro sobre diseño completo de chips.
 
-This book is optimized for reading on a tablet (e.g., an iPad) or a laptop.
-We include links to further reading in the running text, primarily to
-\myref{https://en.wikipedia.org/}{Wikipedia} articles.
+% All code examples in this book are extracted from complete programs
+% compiled and tested in continuous integration at GitHub.
+% Therefore, the code shall not contain
+% any syntax errors. The code examples are available from the
+% \myref{https://github.com/schoeberl/chisel-book}{GitHub repository}
+% of this book.
+% Besides showing Chisel code, we have also tried to show useful designs and
+% principles of good hardware description style.
 
-\section{Installing Chisel and FPGA Tools}
+Todos los ejemplos de código de este libro proceden de programas completos
+compilados y probados mediante integración continua en GitHub.
+Por lo tanto, el código no debería contener
+ningún error sintáctico. Los ejemplos de código están disponibles en el
+\myref{https://github.com/schoeberl/chisel-book}{repositorio de GitHub}
+de este libro.
+Además de mostrar código Chisel, hemos procurado mostrar diseños útiles y
+principios de un buen estilo de descripción de hardware.
 
-Chisel is a Scala library, and the easiest way to install Chisel and Scala is
-with \code{sbt}, the Scala build tool. Scala itself depends on the installation
-of \myref{https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html}{Java JDK 8}
-(or a later version up to Java 21).
-As Oracle has changed the license for Java, it may be easier to
-install OpenJDK from \myref{https://adoptopenjdk.net/}{AdoptOpenJDK}
-or use \myref{https://sdkman.io/}{SDKMAN} to manage your Java installation.
+% This book is optimized for reading on a tablet (e.g., an iPad) or a laptop.
+% We include links to further reading in the running text, primarily to
+% \myref{https://en.wikipedia.org/}{Wikipedia} articles.
 
-More detailed setup instructions can be found in
-\myref{https://github.com/schoeberl/chisel-lab/blob/master/Setup.md}{Setup.md}
-from the \myref{https://github.com/schoeberl/chisel-lab}{chisel-lab}.
-The \myref{https://github.com/schoeberl/chisel-lab/tree/master/lab1}{first lab}
-explains how to open an existing Chisel project in IntelliJ.
+Este libro está optimizado para leerse en una tablet (por ejemplo, un iPad) o en un portátil.
+Incluimos enlaces para ampliar información dentro del propio texto, principalmente a
+artículos de \myref{https://en.wikipedia.org/}{Wikipedia}.
+
+\section{Instalación de Chisel y de las herramientas para FPGA}
+
+% Chisel is a Scala library, and the easiest way to install Chisel and Scala is
+% with \code{sbt}, the Scala build tool. Scala itself depends on the installation
+% of \myref{https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html}{Java JDK 8}
+% (or a later version up to Java 21).
+% As Oracle has changed the license for Java, it may be easier to
+% install OpenJDK from \myref{https://adoptopenjdk.net/}{AdoptOpenJDK}
+% or use \myref{https://sdkman.io/}{SDKMAN} to manage your Java installation.
+
+Chisel es una biblioteca de Scala, y la forma más sencilla de instalar Chisel y Scala es
+con \code{sbt}, la herramienta de compilación de Scala. El propio Scala, a su vez, depende de la instalación
+de \myref{https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html}{Java JDK 8}
+(o de una versión posterior hasta Java 21).
+Como Oracle ha cambiado la licencia de Java, puede resultar más sencillo
+instalar OpenJDK desde \myref{https://adoptopenjdk.net/}{AdoptOpenJDK}
+o usar \myref{https://sdkman.io/}{SDKMAN} para gestionar tu instalación de Java.
+
+% More detailed setup instructions can be found in
+% \myref{https://github.com/schoeberl/chisel-lab/blob/master/Setup.md}{Setup.md}
+% from the \myref{https://github.com/schoeberl/chisel-lab}{chisel-lab}.
+% The \myref{https://github.com/schoeberl/chisel-lab/tree/master/lab1}{first lab}
+% explains how to open an existing Chisel project in IntelliJ.
+
+Puedes encontrar instrucciones de instalación más detalladas en
+\myref{https://github.com/schoeberl/chisel-lab/blob/master/Setup.md}{Setup.md},
+dentro de \myref{https://github.com/schoeberl/chisel-lab}{chisel-lab}.
+La \myref{https://github.com/schoeberl/chisel-lab/tree/master/lab1}{primera práctica}
+explica cómo abrir un proyecto Chisel ya existente en IntelliJ.
 
 \subsection{macOS}
 
-Install the Java OpenJDK 8 (up to 21) from \myref{https://adoptopenjdk.net/}{AdoptOpenJDK}.
-On Mac OS X, with the packet manager \myref{https://brew.sh/}{Homebrew},
-\code{sbt} and git can be installed with:
+% Install the Java OpenJDK 8 (up to 21) from \myref{https://adoptopenjdk.net/}{AdoptOpenJDK}.
+% On Mac OS X, with the packet manager \myref{https://brew.sh/}{Homebrew},
+% \code{sbt} and git can be installed with:
+
+Instala Java OpenJDK 8 (hasta la 21) desde \myref{https://adoptopenjdk.net/}{AdoptOpenJDK}.
+En Mac OS X, con el gestor de paquetes \myref{https://brew.sh/}{Homebrew},
+\code{sbt} y git se pueden instalar con:
 
 \begin{verbatim}
 $ brew install sbt git
 \end{verbatim}
 
-Install \myref{http://gtkwave.sourceforge.net/}{GTKWave} and
-\myref{https://www.jetbrains.com/idea/download/}{IntelliJ} (the community edition).
-When importing a project, select the JDK you installed before.
+% Install \myref{http://gtkwave.sourceforge.net/}{GTKWave} and
+% \myref{https://www.jetbrains.com/idea/download/}{IntelliJ} (the community edition).
+% When importing a project, select the JDK you installed before.
+
+Instala \myref{http://gtkwave.sourceforge.net/}{GTKWave} e
+\myref{https://www.jetbrains.com/idea/download/}{IntelliJ} (la edición \emph{community}).
+Al importar un proyecto, selecciona el JDK que has instalado antes.
 
 \subsection{Linux/Ubuntu}
 
-Install Java and useful tools in Ubuntu with:
+% Install Java and useful tools in Ubuntu with:
+
+Instala Java y algunas herramientas útiles en Ubuntu con:
 \begin{verbatim}
 $ sudo apt install openjdk-8-jdk git make gtkwave
 \end{verbatim}
 
-For Ubuntu, which is based on Debian, programs are usually installed from a
-Debian file (.deb). However, as of the time of this writing, \code{sbt} is not
-available as a ready to install package. Therefore, the installation process
-is a little bit more involved.
-Follow the instructions from \myref{https://www.scala-sbt.org/download.html}{sbt download}
+% For Ubuntu, which is based on Debian, programs are usually installed from a
+% Debian file (.deb). However, as of the time of this writing, \code{sbt} is not
+% available as a ready to install package. Therefore, the installation process
+% is a little bit more involved.
+% Follow the instructions from \myref{https://www.scala-sbt.org/download.html}{sbt download}
+
+En Ubuntu, que está basado en Debian, los programas se instalan normalmente a partir de un
+archivo Debian (.deb). Sin embargo, en el momento de escribir estas líneas, \code{sbt} no
+está disponible como paquete listo para instalar. Por eso, el proceso de instalación
+es algo más laborioso.
+Sigue las instrucciones de \myref{https://www.scala-sbt.org/download.html}{sbt download}
 
 \subsection{Windows}
 
-Install the Java OpenJDK (8 or up to 21) from \myref{https://adoptopenjdk.net/}{AdoptOpenJDK}.
-Chisel and Scala can also be installed and used under Windows.
-Install \myref{http://gtkwave.sourceforge.net/}{GTKWave} and
-\myref{https://www.jetbrains.com/idea/download/}{IntelliJ} (the community edition).
-When importing a project, select the JDK you installed before.
-\code{sbt} can be installed with a Windows installer, see:
+% Install the Java OpenJDK (8 or up to 21) from \myref{https://adoptopenjdk.net/}{AdoptOpenJDK}.
+% Chisel and Scala can also be installed and used under Windows.
+% Install \myref{http://gtkwave.sourceforge.net/}{GTKWave} and
+% \myref{https://www.jetbrains.com/idea/download/}{IntelliJ} (the community edition).
+% When importing a project, select the JDK you installed before.
+% \code{sbt} can be installed with a Windows installer, see:
+% \myref{https://www.scala-sbt.org/1.x/docs/Installing-sbt-on-Windows.html}{Installing sbt on Windows}.
+% Install a \myref{https://git-scm.com/download/win}{git client}.
+
+Instala Java OpenJDK (la 8 o hasta la 21) desde \myref{https://adoptopenjdk.net/}{AdoptOpenJDK}.
+Chisel y Scala también se pueden instalar y utilizar en Windows.
+Instala \myref{http://gtkwave.sourceforge.net/}{GTKWave} e
+\myref{https://www.jetbrains.com/idea/download/}{IntelliJ} (la edición \emph{community}).
+Al importar un proyecto, selecciona el JDK que has instalado antes.
+\code{sbt} se puede instalar con un instalador de Windows; véase
 \myref{https://www.scala-sbt.org/1.x/docs/Installing-sbt-on-Windows.html}{Installing sbt on Windows}.
-Install a \myref{https://git-scm.com/download/win}{git client}.
+Instala un \myref{https://git-scm.com/download/win}{cliente de git}.
 
-\subsection{FPGA Tools}
+\subsection{Herramientas para FPGA}
 
-To build hardware for an FPGA, you need a synthesize tool. The two major
-FPGA vendors, Altera, an Intel Company\footnote{former Intel and former Altera}
-and AMD,\footnote{former Xilinx} provide free versions of
-their tools that cover small to medium-sized FPGAs. Those medium-sized
-FPGAs are large enough to build a multicore RISC style processor.
-Intel provides the \myref{https://www.intel.com/content/www/us/en/products/details/fpga/development-tools/quartus-prime/resource.html}{Quartus Prime Lite Edition} and AMD the
+% To build hardware for an FPGA, you need a synthesize tool. The two major
+% FPGA vendors, Altera, an Intel Company\footnote{former Intel and former Altera}
+% and AMD,\footnote{former Xilinx} provide free versions of
+% their tools that cover small to medium-sized FPGAs. Those medium-sized
+% FPGAs are large enough to build a multicore RISC style processor.
+% Intel provides the \myref{https://www.intel.com/content/www/us/en/products/details/fpga/development-tools/quartus-prime/resource.html}{Quartus Prime Lite Edition} and AMD the
+% \myref{https://www.xilinx.com/products/design-tools/vivado/vivado-webpack.html}{Vivado Design Suite, WebPACK Edition}.
+% Both tools are available for Windows and Linux, but not for macOS.
+
+Para diseñar hardware para una FPGA necesitas una herramienta de síntesis. Los dos grandes
+fabricantes de FPGA, Altera\footnote{Una compañía de Intel}
+y Xilinx,\footnote{Una compañía de AMD} ofrecen versiones gratuitas de
+sus herramientas que cubren las FPGA pequeñas y medianas. Esas FPGA
+medianas son lo bastante grandes como para construir un procesador multinúcleo de tipo RISC.
+Intel proporciona \myref{https://www.intel.com/content/www/us/en/products/details/fpga/development-tools/quartus-prime/resource.html}{Quartus Prime Lite Edition} y AMD,
 \myref{https://www.xilinx.com/products/design-tools/vivado/vivado-webpack.html}{Vivado Design Suite, WebPACK Edition}.
-Both tools are available for Windows and Linux, but not for macOS.
+Ambas herramientas están disponibles para Windows y Linux, pero no para macOS.
 
-With \myref{https://f4pga.org/}{F4PGA} it is now possible to use a fully open-source synthesis tool
-for selected FPGAs.
+% With \myref{https://f4pga.org/}{F4PGA} it is now possible to use a fully open-source synthesis tool
+% for selected FPGAs.
 
-\section{Hello World}
+Con \myref{https://f4pga.org/}{F4PGA} ya es posible utilizar una herramienta de síntesis totalmente de código abierto
+para determinados modelos de FPGA.
 
-Each book on a programming language shall start with a minimal example,
-called the \emph{Hello World} example. The following code is a first approach:
+\section{Hola Mundo}
 
+% Each book on a programming language shall start with a minimal example,
+% called the \emph{Hello World} example. The following code is a first approach:
+
+Todo libro sobre un lenguaje de programación debe empezar con un ejemplo mínimo,
+llamado el ejemplo ``Hola Mundo'' (\emph{Hello World}). El siguiente código es una primera aproximación:
 
 \shortlist{code/hello_scala.txt}
 
+% \noindent Compiling and executing this short program with \code{sbt}
 
-\noindent Compiling and executing this short program with \code{sbt}
+\noindent Al compilar y ejecutar este pequeño programa con \code{sbt}:
 
-\begin{chisel}
+\begin{verbatim}
 $ sbt run
-\end{chisel}
+\end{verbatim}
 
-\noindent leads to the expected output of a Hello World program:
+% \noindent leads to the expected output of a Hello World program:
+
+\noindent Se obtiene la salida esperada de un programa Hello World:
 
 \begin{chisel}
 [info] Running HelloScala
 Hello Chisel World!
 \end{chisel}
 
-\noindent However, is this Chisel? Is this hardware generated to print a string?
-No, this is plain Scala code and not a representative Hello World
-program for a hardware design.
+% \noindent However, is this Chisel? Is this hardware generated to print a string?
+% No, this is plain Scala code and not a representative Hello World
+% program for a hardware design.
 
-\section{Chisel Hello World}
+\noindent Sin embargo, ¿esto es Chisel? ¿Es esto hardware generado para imprimir una cadena de texto?
+No, esto es simplemente código Scala y no un programa Hello World representativo de un diseño hardware.
 
-What is then the equivalent of a Hello World program for a hardware design?
-The minimal useful and visible design? A blinking LED is the hardware (or even
-embedded software) version of Hello World. If a LED blinks, we are ready to
-solve bigger problems!
+\section{Chisel Hola Mundo}
 
-\longlist{code/hello.txt}{A hardware Hello World in Chisel}{lst:chisel:hello}
+% What is then the equivalent of a Hello World program for a hardware design?
+% The minimal useful and visible design? A blinking LED is the hardware (or even
+% embedded software) version of Hello World. If a LED blinks, we are ready to
+% solve bigger problems!
+
+¿Cuál es entonces el equivalente de un programa Hello World en un diseño hardware?
+¿El diseño mínimo útil y visible? Un LED que parpadea es la versión hardware (o incluso
+de software embebido) del Hello World. Si un LED parpadea, ¡ya estamos listos para
+resolver problemas mayores!
+
+\verylonglist{code/hello.txt}{Un Hello World hardware en Chisel}{lst:chisel:hello}
 
 %\index{Hello World} The index on this page does not work, it references to a intro
 % page. Strange!
-Listing~\ref{lst:chisel:hello} shows a blinking LED, described in Chisel.
-It is not important that you understand the details of this code example.
-We will cover those in the following chapters. Just note that the circuit is
-usually clocked with a high frequency, e.g., 50~MHz, and we need a counter
-to derive timing in the Hz range to achieve a visible blinking. In the above
-example, we count from 0 up to 25000000-1 and then toggle the blinking signal
-(\code{blkReg := ~blkReg}) and restart the counter (\code{cntReg := 0.U}).
-That hardware then blinks the LED at 1~Hz.
+
+% Listing~\ref{lst:chisel:hello} shows a blinking LED, described in Chisel.
+% It is not important that you understand the details of this code example.
+% We will cover those in the following chapters. Just note that the circuit is
+% usually clocked with a high frequency, e.g., 50~MHz, and we need a counter
+% to derive timing in the Hz range to achieve a visible blinking. In the above
+% example, we count from 0 up to 25000000-1 and then toggle the blinking signal
+% (\code{blkReg := ~blkReg}) and restart the counter (\code{cntReg := 0.U}).
+% That hardware then blinks the LED at 1~Hz.
+
+El código~\ref{lst:chisel:hello} muestra un LED parpadeante descrito en Chisel.
+No es importante que entiendas los detalles de este ejemplo de código.
+Los veremos en los capítulos siguientes. Fíjate simplemente en que el circuito
+suele ir gobernado por un reloj de alta frecuencia, por ejemplo de 50~MHz, y necesitamos un contador
+para obtener una temporización en el rango de los hercios y conseguir así un parpadeo visible. En el
+ejemplo anterior contamos desde 0 hasta 25000000-1, y entonces conmutamos la señal de parpadeo
+(\code{blkReg := ~blkReg}) y reiniciamos el contador (\code{cntReg := 0.U}).
+Ese hardware hace parpadear el LED a 1~Hz.
 
 \section{An IDE for Chisel}
 
