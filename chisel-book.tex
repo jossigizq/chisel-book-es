@@ -86,8 +86,8 @@
 \usepackage[procnames]{listings}
 
 % listings trae sus propios rótulos y babel no los traduce
-\renewcommand{\lstlistingname}{Listado}
-\renewcommand{\lstlistlistingname}{Índice de listados}
+\renewcommand{\lstlistingname}{Código}
+\renewcommand{\lstlistlistingname}{Índice de código}
 
 
 \ifbook
@@ -818,101 +818,161 @@ explica cómo abrir un proyecto Chisel ya existente en IntelliJ.
 
 \subsection{macOS}
 
-Install the Java OpenJDK 8 (up to 21) from \myref{https://adoptopenjdk.net/}{AdoptOpenJDK}.
-On Mac OS X, with the packet manager \myref{https://brew.sh/}{Homebrew},
-\code{sbt} and git can be installed with:
+% Install the Java OpenJDK 8 (up to 21) from \myref{https://adoptopenjdk.net/}{AdoptOpenJDK}.
+% On Mac OS X, with the packet manager \myref{https://brew.sh/}{Homebrew},
+% \code{sbt} and git can be installed with:
+
+Instala Java OpenJDK 8 (hasta la 21) desde \myref{https://adoptopenjdk.net/}{AdoptOpenJDK}.
+En Mac OS X, con el gestor de paquetes \myref{https://brew.sh/}{Homebrew},
+\code{sbt} y git se pueden instalar con:
 
 \begin{verbatim}
 $ brew install sbt git
 \end{verbatim}
 
-Install \myref{http://gtkwave.sourceforge.net/}{GTKWave} and
-\myref{https://www.jetbrains.com/idea/download/}{IntelliJ} (the community edition).
-When importing a project, select the JDK you installed before.
+% Install \myref{http://gtkwave.sourceforge.net/}{GTKWave} and
+% \myref{https://www.jetbrains.com/idea/download/}{IntelliJ} (the community edition).
+% When importing a project, select the JDK you installed before.
+
+Instala \myref{http://gtkwave.sourceforge.net/}{GTKWave} e
+\myref{https://www.jetbrains.com/idea/download/}{IntelliJ} (la edición \emph{community}).
+Al importar un proyecto, selecciona el JDK que has instalado antes.
 
 \subsection{Linux/Ubuntu}
 
-Install Java and useful tools in Ubuntu with:
+% Install Java and useful tools in Ubuntu with:
+
+Instala Java y algunas herramientas útiles en Ubuntu con:
 \begin{verbatim}
 $ sudo apt install openjdk-8-jdk git make gtkwave
 \end{verbatim}
 
-For Ubuntu, which is based on Debian, programs are usually installed from a
-Debian file (.deb). However, as of the time of this writing, \code{sbt} is not
-available as a ready to install package. Therefore, the installation process
-is a little bit more involved.
-Follow the instructions from \myref{https://www.scala-sbt.org/download.html}{sbt download}
+% For Ubuntu, which is based on Debian, programs are usually installed from a
+% Debian file (.deb). However, as of the time of this writing, \code{sbt} is not
+% available as a ready to install package. Therefore, the installation process
+% is a little bit more involved.
+% Follow the instructions from \myref{https://www.scala-sbt.org/download.html}{sbt download}
+
+En Ubuntu, que está basado en Debian, los programas se instalan normalmente a partir de un
+archivo Debian (.deb). Sin embargo, en el momento de escribir estas líneas, \code{sbt} no
+está disponible como paquete listo para instalar. Por eso, el proceso de instalación
+es algo más laborioso.
+Sigue las instrucciones de \myref{https://www.scala-sbt.org/download.html}{sbt download}
 
 \subsection{Windows}
 
-Install the Java OpenJDK (8 or up to 21) from \myref{https://adoptopenjdk.net/}{AdoptOpenJDK}.
-Chisel and Scala can also be installed and used under Windows.
-Install \myref{http://gtkwave.sourceforge.net/}{GTKWave} and
-\myref{https://www.jetbrains.com/idea/download/}{IntelliJ} (the community edition).
-When importing a project, select the JDK you installed before.
-\code{sbt} can be installed with a Windows installer, see:
+% Install the Java OpenJDK (8 or up to 21) from \myref{https://adoptopenjdk.net/}{AdoptOpenJDK}.
+% Chisel and Scala can also be installed and used under Windows.
+% Install \myref{http://gtkwave.sourceforge.net/}{GTKWave} and
+% \myref{https://www.jetbrains.com/idea/download/}{IntelliJ} (the community edition).
+% When importing a project, select the JDK you installed before.
+% \code{sbt} can be installed with a Windows installer, see:
+% \myref{https://www.scala-sbt.org/1.x/docs/Installing-sbt-on-Windows.html}{Installing sbt on Windows}.
+% Install a \myref{https://git-scm.com/download/win}{git client}.
+
+Instala Java OpenJDK (la 8 o hasta la 21) desde \myref{https://adoptopenjdk.net/}{AdoptOpenJDK}.
+Chisel y Scala también se pueden instalar y utilizar en Windows.
+Instala \myref{http://gtkwave.sourceforge.net/}{GTKWave} e
+\myref{https://www.jetbrains.com/idea/download/}{IntelliJ} (la edición \emph{community}).
+Al importar un proyecto, selecciona el JDK que has instalado antes.
+\code{sbt} se puede instalar con un instalador de Windows; véase
 \myref{https://www.scala-sbt.org/1.x/docs/Installing-sbt-on-Windows.html}{Installing sbt on Windows}.
-Install a \myref{https://git-scm.com/download/win}{git client}.
+Instala un \myref{https://git-scm.com/download/win}{cliente de git}.
 
-\subsection{FPGA Tools}
+\subsection{Herramientas para FPGA}
 
-To build hardware for an FPGA, you need a synthesize tool. The two major
-FPGA vendors, Altera, an Intel Company\footnote{former Intel and former Altera}
-and AMD,\footnote{former Xilinx} provide free versions of
-their tools that cover small to medium-sized FPGAs. Those medium-sized
-FPGAs are large enough to build a multicore RISC style processor.
-Intel provides the \myref{https://www.intel.com/content/www/us/en/products/details/fpga/development-tools/quartus-prime/resource.html}{Quartus Prime Lite Edition} and AMD the
+% To build hardware for an FPGA, you need a synthesize tool. The two major
+% FPGA vendors, Altera, an Intel Company\footnote{former Intel and former Altera}
+% and AMD,\footnote{former Xilinx} provide free versions of
+% their tools that cover small to medium-sized FPGAs. Those medium-sized
+% FPGAs are large enough to build a multicore RISC style processor.
+% Intel provides the \myref{https://www.intel.com/content/www/us/en/products/details/fpga/development-tools/quartus-prime/resource.html}{Quartus Prime Lite Edition} and AMD the
+% \myref{https://www.xilinx.com/products/design-tools/vivado/vivado-webpack.html}{Vivado Design Suite, WebPACK Edition}.
+% Both tools are available for Windows and Linux, but not for macOS.
+
+Para diseñar hardware para una FPGA necesitas una herramienta de síntesis. Los dos grandes
+fabricantes de FPGA, Altera\footnote{Una compañía de Intel}
+y Xilinx,\footnote{Una compañía de AMD} ofrecen versiones gratuitas de
+sus herramientas que cubren las FPGA pequeñas y medianas. Esas FPGA
+medianas son lo bastante grandes como para construir un procesador multinúcleo de tipo RISC.
+Intel proporciona \myref{https://www.intel.com/content/www/us/en/products/details/fpga/development-tools/quartus-prime/resource.html}{Quartus Prime Lite Edition} y AMD,
 \myref{https://www.xilinx.com/products/design-tools/vivado/vivado-webpack.html}{Vivado Design Suite, WebPACK Edition}.
-Both tools are available for Windows and Linux, but not for macOS.
+Ambas herramientas están disponibles para Windows y Linux, pero no para macOS.
 
-With \myref{https://f4pga.org/}{F4PGA} it is now possible to use a fully open-source synthesis tool
-for selected FPGAs.
+% With \myref{https://f4pga.org/}{F4PGA} it is now possible to use a fully open-source synthesis tool
+% for selected FPGAs.
 
-\section{Hello World}
+Con \myref{https://f4pga.org/}{F4PGA} ya es posible utilizar una herramienta de síntesis totalmente de código abierto
+para determinados modelos de FPGA.
 
-Each book on a programming language shall start with a minimal example,
-called the \emph{Hello World} example. The following code is a first approach:
+\section{Hola Mundo}
 
+% Each book on a programming language shall start with a minimal example,
+% called the \emph{Hello World} example. The following code is a first approach:
+
+Todo libro sobre un lenguaje de programación debe empezar con un ejemplo mínimo,
+llamado el ejemplo ``Hola Mundo'' (\emph{Hello World}). El siguiente código es una primera aproximación:
 
 \shortlist{code/hello_scala.txt}
 
+% \noindent Compiling and executing this short program with \code{sbt}
 
-\noindent Compiling and executing this short program with \code{sbt}
+\noindent Al compilar y ejecutar este pequeño programa con \code{sbt}:
 
 \begin{chisel}
 $ sbt run
 \end{chisel}
 
-\noindent leads to the expected output of a Hello World program:
+% \noindent leads to the expected output of a Hello World program:
+
+\noindent Se obtiene la salida esperada de un programa Hello World:
 
 \begin{chisel}
 [info] Running HelloScala
 Hello Chisel World!
 \end{chisel}
 
-\noindent However, is this Chisel? Is this hardware generated to print a string?
-No, this is plain Scala code and not a representative Hello World
-program for a hardware design.
+% \noindent However, is this Chisel? Is this hardware generated to print a string?
+% No, this is plain Scala code and not a representative Hello World
+% program for a hardware design.
 
-\section{Chisel Hello World}
+\noindent Sin embargo, ¿esto es Chisel? ¿Es esto hardware generado para imprimir una cadena de texto?
+No, esto es simplemente código Scala y no un programa Hello World representativo de un diseño hardware.
 
-What is then the equivalent of a Hello World program for a hardware design?
-The minimal useful and visible design? A blinking LED is the hardware (or even
-embedded software) version of Hello World. If a LED blinks, we are ready to
-solve bigger problems!
+\section{Chisel Hola Mundo}
 
-\longlist{code/hello.txt}{A hardware Hello World in Chisel}{lst:chisel:hello}
+% What is then the equivalent of a Hello World program for a hardware design?
+% The minimal useful and visible design? A blinking LED is the hardware (or even
+% embedded software) version of Hello World. If a LED blinks, we are ready to
+% solve bigger problems!
+
+¿Cuál es entonces el equivalente de un programa Hello World en un diseño hardware?
+¿El diseño mínimo útil y visible? Un LED que parpadea es la versión hardware (o incluso
+de software embebido) del Hello World. Si un LED parpadea, ¡ya estamos listos para
+resolver problemas mayores!
+
+\verylonglist{code/hello.txt}{Un Hello World hardware en Chisel}{lst:chisel:hello}
 
 %\index{Hello World} The index on this page does not work, it references to a intro
 % page. Strange!
-Listing~\ref{lst:chisel:hello} shows a blinking LED, described in Chisel.
-It is not important that you understand the details of this code example.
-We will cover those in the following chapters. Just note that the circuit is
-usually clocked with a high frequency, e.g., 50~MHz, and we need a counter
-to derive timing in the Hz range to achieve a visible blinking. In the above
-example, we count from 0 up to 25000000-1 and then toggle the blinking signal
-(\code{blkReg := ~blkReg}) and restart the counter (\code{cntReg := 0.U}).
-That hardware then blinks the LED at 1~Hz.
+
+% Listing~\ref{lst:chisel:hello} shows a blinking LED, described in Chisel.
+% It is not important that you understand the details of this code example.
+% We will cover those in the following chapters. Just note that the circuit is
+% usually clocked with a high frequency, e.g., 50~MHz, and we need a counter
+% to derive timing in the Hz range to achieve a visible blinking. In the above
+% example, we count from 0 up to 25000000-1 and then toggle the blinking signal
+% (\code{blkReg := ~blkReg}) and restart the counter (\code{cntReg := 0.U}).
+% That hardware then blinks the LED at 1~Hz.
+
+El código~\ref{lst:chisel:hello} muestra un LED parpadeante descrito en Chisel.
+No es importante que entiendas los detalles de este ejemplo de código.
+Los veremos en los capítulos siguientes. Fíjate simplemente en que el circuito
+suele ir gobernado por un reloj de alta frecuencia, por ejemplo de 50~MHz, y necesitamos un contador
+para obtener una temporización en el rango de los hercios y conseguir así un parpadeo visible. En el
+ejemplo anterior contamos desde 0 hasta 25000000-1, y entonces conmutamos la señal de parpadeo
+(\code{blkReg := ~blkReg}) y reiniciamos el contador (\code{cntReg := 0.U}).
+Ese hardware hace parpadear el LED a 1~Hz.
 
 \section{An IDE for Chisel}
 
