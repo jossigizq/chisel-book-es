@@ -974,128 +974,230 @@ ejemplo anterior contamos desde 0 hasta 25000000-1, y entonces conmutamos la se�
 (\code{blkReg := ~blkReg}) y reiniciamos el contador (\code{cntReg := 0.U}).
 Ese hardware hace parpadear el LED a 1~Hz.
 
-\section{An IDE for Chisel}
+\section{Un IDE para Chisel}
 
-This book makes no assumptions about your programming environment or editor you use.
-Learning the basics should be easy with just using \code{sbt} at the command line
-and an editor of your choice. In the tradition of other books, all commands that you
-shall type in a shell/terminal/CLI are preceded by a \code{\$} character, which you
-shall not type in. As an example, here is the Unix \code{ls} command, which lists files in
-the current folder:
+% This book makes no assumptions about your programming environment or editor you use.
+% Learning the basics should be easy with just using \code{sbt} at the command line
+% and an editor of your choice. In the tradition of other books, all commands that you
+% shall type in a shell/terminal/CLI are preceded by a \code{\$} character, which you
+% shall not type in. As an example, here is the Unix \code{ls} command, which lists files in
+% the current folder:
+
+Este libro no presupone nada sobre tu entorno de programación o el editor que utilices.
+Aprender lo básico debería resultar sencillo con solo usar \code{sbt} en la línea de comandos
+y un editor de tu elección. Siguiendo la tradición de otros libros, todos los comandos que
+debas teclear en un intérprete de órdenes/terminal/CLI/Consola (\emph{shell/terminal/CLI/Console}) van
+precedidas por el carácter \code{\$}, que no debes teclear. Como ejemplo, aquí está el comando
+\code{ls} de Unix, que proporciona un listado de los ficheros de la carpeta actual:
 
 \begin{verbatim}
 $ ls
 \end{verbatim}
 
-That said, an integrated development environment (IDE), where a compiler is running in
-the background, can speed up coding. As Chisel is a Scala library, all IDEs
-that support Scala are also good IDEs for Chisel.
-It is possible in
+% That said, an integrated development environment (IDE), where a compiler is running in
+% the background, can speed up coding. As Chisel is a Scala library, all IDEs
+% that support Scala are also good IDEs for Chisel.
+% It is possible in
+% \myref{https://www.jetbrains.com/help/idea/discover-intellij-idea-for-scala.html}{IntelliJ},
+% \myref{https://code.visualstudio.com/}{Visual Studio Code}, and
+%  \myref{https://www.eclipse.org/}{Eclipse}
+% to generate a project from the sbt project configuration in \code{build.sbt}.
+
+Dicho esto, un entorno de desarrollo integrado (IDE, \emph{integrated development
+environment}), donde un compilador se ejecuta en segundo plano, puede acelerar la
+escritura de código. Como Chisel es una biblioteca de Scala, todos los IDE
+que soportan Scala son también buenos IDE para Chisel.
+Es posible en
 \myref{https://www.jetbrains.com/help/idea/discover-intellij-idea-for-scala.html}{IntelliJ},
-\myref{https://code.visualstudio.com/}{Visual Studio Code}, and
+\myref{https://code.visualstudio.com/}{Visual Studio Code} y
  \myref{https://www.eclipse.org/}{Eclipse}
-to generate a project from the sbt project configuration in \code{build.sbt}.
+generar un proyecto a partir de la configuración del proyecto sbt en \code{build.sbt}.
 
-In IntelliJ you need to install the Scala plugin. Then you can create a new project from existing sources with:
-\emph{File - New - Project from Existing Sources...} and then select the \code{build.sbt}
-file from the project.
+% In IntelliJ you need to install the Scala plugin. Then you can create a new project from existing sources with:
+% \emph{File - New - Project from Existing Sources...} and then select the \code{build.sbt}
+% file from the project.
 
-In Eclipse you can create a project via
+En IntelliJ necesitas instalar el plugin de Scala. Después puedes crear un nuevo proyecto a partir de archivos fuentes 
+existentes con: \emph{File - New - Project from Existing Sources...} y seleccionar entonces el fichero
+\code{build.sbt} del proyecto.
+
+% In Eclipse you can create a project via
+En Eclipse puedes crear un proyecto mediante:
 \begin{verbatim}
 $ sbt eclipse
 \end{verbatim}
-and import that project into Eclipse.\footnote{This function needs the Eclipse plugin for sbt.}
+% and import that project into Eclipse.\footnote{This function needs the Eclipse plugin for sbt.}
+e importar ese proyecto en Eclipse.\footnote{Esta función necesita el plugin de Eclipse para sbt.}
 
-\myref{https://code.visualstudio.com/}{Visual Studio Code} is another option for a Chisel IDE.
-The \myref{https://marketplace.visualstudio.com/items?itemName=scalameta.metals}{Scala Metals}
-extension provides Scala support.
-On the left bar select \emph{Extensions} and search for \emph{Metals} and install \emph{Scala (Metals)}.
-To import an \code{sbt}-based project, open the folder with \emph{File - Open}.
+% \myref{https://code.visualstudio.com/}{Visual Studio Code} is another option for a Chisel IDE.
+% The \myref{https://marketplace.visualstudio.com/items?itemName=scalameta.metals}{Scala Metals}
+% extension provides Scala support.
+% On the left bar select \emph{Extensions} and search for \emph{Metals} and install \emph{Scala (Metals)}.
+% To import an \code{sbt}-based project, open the folder with \emph{File - Open}.
+
+\myref{https://code.visualstudio.com/}{Visual Studio Code} es otra opción como IDE para Chisel.
+La extensión \myref{https://marketplace.visualstudio.com/items?itemName=scalameta.metals}{Scala Metals}
+proporciona soporte para Scala.
+En la barra de la izquierda selecciona \emph{Extensions}, busca \emph{Metals} e instala \emph{Scala (Metals)}.
+Para importar un proyecto basado en \code{sbt}, abre la carpeta con \emph{File - Open}.
 
 %Open the project folder, e.g., t-crest/patmos/hardware, by selecting File/Open Folder. Make sure the sbt project uses at least Scala version 2.11.12
 %On the left bar select "Metals" and then select "Import build" - This may take a while
 %That's it. However, running and debugging the project still doesn't work.
 
 
-\section{Source Access and eBook Features}
+\section{Acceso al código fuente y al libro electrónico}
 
-This book is open source and hosted at GitHub: \myref{https://github.com/schoeberl/chisel-book}{schoeberl/chisel-book}.
-All Chisel code examples, shown in this book, are included in the repository.
-All code shown in the book passed the compiler and therefore should not contain any syntax errors.
-Furthermore, most examples also include a test bench.
-The code is extracted automatically from that source.
-\index{Chisel!Examples}
-We collect larger Chisel examples in the accompanying repository
+% This book is open source and hosted at GitHub: \myref{https://github.com/schoeberl/chisel-book}{schoeberl/chisel-book}.
+% All Chisel code examples, shown in this book, are included in the repository.
+% All code shown in the book passed the compiler and therefore should not contain any syntax errors.
+% Furthermore, most examples also include a test bench.
+% The code is extracted automatically from that source.
+% \index{Chisel!Examples}
+% We collect larger Chisel examples in the accompanying repository
+% \myref{https://github.com/schoeberl/chisel-examples}{chisel-examples}
+% and in \myref{https://github.com/freechipsproject/ip-contributions}{ip-contributions}.
+
+Este libro es de código abierto y está alojado en GitHub: \myref{https://github.com/schoeberl/chisel-book}{schoeberl/chisel-book}.
+Todos los ejemplos de código Chisel que se muestran en este libro están incluidos en el repositorio.
+Todo el código mostrado en el libro ha pasado por el compilador y, por tanto, no debería contener errores de sintaxis.
+Además, la mayoría de los ejemplos incluyen también un banco de pruebas (\emph{test bench}).
+El código se extrae automáticamente de ese código fuente.
+\index{Chisel!Ejemplos}
+Recopilamos ejemplos de Chisel más extensos en el repositorio complementario
 \myref{https://github.com/schoeberl/chisel-examples}{chisel-examples}
-and in \myref{https://github.com/freechipsproject/ip-contributions}{ip-contributions}.
+y en \myref{https://github.com/freechipsproject/ip-contributions}{ip-contributions}.
 
-If you find an error or typo in the book, a GitHub pull request is the most convenient way to incorporate your improvement.
-You can also provide feedback or comments for improvements by filing an issue on GitHub
-or sending a plain, old school email.
+% If you find an error or typo in the book, a GitHub pull request is the most convenient way to incorporate your improvement.
+% You can also provide feedback or comments for improvements by filing an issue on GitHub
+% or sending a plain, old school email.
 
-The repository of the book also contains
-\myref{https://github.com/schoeberl/chisel-book/tree/master/slides}{slides in Latex}
-that I use for a 13 week course on
-\myref{http://www2.imm.dtu.dk/courses/02139/}{Digital Electronics}\footnote{The course page
-contains the PDF versions of the slides} at the Technical University of Denmark.
-That course also contains \myref{https://github.com/schoeberl/chisel-lab}{lab exercises}
-in Chisel.
-If you are teaching digital design with Chisel, feel free to adapt the slides and lab
-exercises to your needs. All material is open-source. To build the book and slides
-you need a recent version of Latex and the needed tools for Chisel (\code{sbt} and
-a Java JDK installation). All code is compiled, tested, extracted, and the Latex compiled with
-a simple:
+Si encuentras algún error o errata en el libro, una \emph{pull request} en GitHub es la forma más cómoda de incorporar tu mejora.
+También puedes aportar comentarios o sugerencias de mejora abriendo un \emph{issue} en GitHub
+o enviando un simple correo electrónico a la vieja usanza.
 
-\begin{chisel}
+% The repository of the book also contains
+% \myref{https://github.com/schoeberl/chisel-book/tree/master/slides}{slides in Latex}
+% that I use for a 13 week course on
+% \myref{http://www2.imm.dtu.dk/courses/02139/}{Digital Electronics}\footnote{The course page
+% contains the PDF versions of the slides} at the Technical University of Denmark.
+% That course also contains \myref{https://github.com/schoeberl/chisel-lab}{lab exercises}
+% in Chisel.
+% If you are teaching digital design with Chisel, feel free to adapt the slides and lab
+% exercises to your needs. All material is open-source. To build the book and slides
+% you need a recent version of Latex and the needed tools for Chisel (\code{sbt} and
+% a Java JDK installation). All code is compiled, tested, extracted, and the Latex compiled with
+% a simple:
+
+El repositorio del libro también contiene
+\myref{https://github.com/schoeberl/chisel-book/tree/master/slides}{transparencias en Latex}
+que utilizo para un curso de 13 semanas sobre
+\myref{http://www2.imm.dtu.dk/courses/02139/}{Electrónica Digital}\footnote{La página del curso
+contiene las versiones en PDF de las transparencias} en la Universidad Técnica de Dinamarca.
+Ese curso incluye además \myref{https://github.com/schoeberl/chisel-lab}{ejercicios de laboratorio}
+en Chisel.
+Si enseñas diseño digital con Chisel, siéntete libre de adaptar las transparencias y los ejercicios
+de laboratorio a tus necesidades. Todo el material es de código abierto. Para compilar el libro y las
+transparencias necesitas una versión reciente de Latex y las herramientas necesarias para Chisel
+(\code{sbt} y una instalación de un JDK de Java). Todo el código se compila, se prueba, se extrae, y el
+Latex se compila con un simple:
+
+\begin{verbatim}
 $ make
-\end{chisel}
+\end{verbatim}
 
-This book is freely available as a PDF eBook and in classical printed version from
+% This book is freely available as a PDF eBook and in classical printed version from
+% \myref{https://www.amazon.com/dp/168933603X/}{Amazon}.
+% The eBook version features links to further resources
+% and \myref{https://www.wikipedia.org/}{Wikipedia} entries.
+% We use Wikipedia entries for background information (e.g., binary number system)
+% that does not directly fit into this book.
+% We optimized the format of the eBook for reading on a tablet, such as an iPad.
+
+Este libro está disponible gratuitamente como libro electrónico en PDF y en versión impresa clásica en
 \myref{https://www.amazon.com/dp/168933603X/}{Amazon}.
-The eBook version features links to further resources
-and \myref{https://www.wikipedia.org/}{Wikipedia} entries.
-We use Wikipedia entries for background information (e.g., binary number system)
-that does not directly fit into this book.
-We optimized the format of the eBook for reading on a tablet, such as an iPad.
+La versión electrónica incluye enlaces a recursos adicionales
+y a entradas de \myref{https://www.wikipedia.org/}{Wikipedia}.
+Usamos entradas de Wikipedia para información de contexto (por ejemplo, el sistema numérico binario)
+que no encaja directamente en este libro.
+Hemos optimizado el formato del libro electrónico para su lectura en una tablet, como un iPad.
 
+\section{Lecturas adicionales}
 
-
-\section{Further Reading}
-
-Here a list of further reading for digital design and Chisel:
+% Here a list of further reading for digital design and Chisel:
+Aquí una lista de lecturas adicionales sobre diseño digital y Chisel:
 \begin{itemize}
-\item \myref{http://www.cambridge.org/es/academic/subjects/engineering/circuits-and-systems/digital-design-systems-approach}{Digital Design: A Systems Approach}, by William J. Dally and R. Curtis Harting,
-is a textbook on digital design. It is available in two versions: using Verilog or VHDL as a hardware description language.
+% \item \myref{http://www.cambridge.org/es/academic/subjects/engineering/circuits-and-systems/digital-design-systems-approach}{Digital Design: A Systems Approach}, by William J. Dally and R. Curtis Harting,
+% is a textbook on digital design. It is available in two versions: using Verilog or VHDL as a hardware description language.
+\item \myref{http://www.cambridge.org/es/academic/subjects/engineering/circuits-and-systems/digital-design-systems-approach}{Digital Design: A Systems Approach}, de William J. Dally y R. Curtis Harting,
+es un libro de texto sobre diseño digital. Está disponible en dos versiones: usando Verilog o VHDL como lenguaje de descripción de hardware.
 \end{itemize}
 
-The official Chisel documentation and further documents are available online:
+% The official Chisel documentation and further documents are available online:
+La documentación oficial de Chisel y otros documentos adicionales están disponibles en línea:
 
 \begin{itemize}
-\item The \myref{https://www.chisel-lang.org/}{Chisel} home page is the official starting point to
-download and learn Chisel.
-\item The website of the \myref{http://www2.imm.dtu.dk/courses/02139/}{Digital Electronics 2} course
-at the Technical University of Denmark contains the slides for a 13 weeks course, based on Chisel.
-The source code for the \myref{https://github.com/schoeberl/chisel-book/tree/master/slides}{slides}
-is available as part of the source code for this book. Feel free to adapt them for your teaching needs.
-\item The \myref{https://github.com/schoeberl/chisel-lab}{schoeberl/chisel-lab} GitHub repo
-contains Chisel exercises for the course \myref{http://www2.imm.dtu.dk/courses/02139/}{Digital Electronics 2}.
-The exercises also fit well for a selfstudy with this book.
-\item The \myref{https://github.com/schoeberl/chisel-empty}{empty Chisel project} is a good starting
-point with a very minimal hardware (an adder) and a test. That project is a GitHub template where you
-can base your GitHub repository on.
-\item The \myref{https://github.com/freechipsproject/chisel-cheatsheet/releases/latest/download/chisel_cheatsheet.pdf}{Chisel3 Cheat Sheet} summarizes the main constructs of Chisel on a single page.
-\item Scott Beamer's course \myref{https://classes.soe.ucsc.edu/cse228a/Winter24/}{Agile Hardware Design}
-contains advanced Chisel examples. The \myref{https://github.com/agile-hw/lectures}{lectures}
-include executable source examples and are available as Jupyter notebooks.
+% \item The \myref{https://www.chisel-lang.org/}{Chisel} home page is the official starting point to
+% download and learn Chisel.
+\item La página web de \myref{https://www.chisel-lang.org/}{Chisel} es el punto de partida oficial para
+descargar y aprender Chisel.
+
+% \item The website of the \myref{http://www2.imm.dtu.dk/courses/02139/}{Digital Electronics 2} course
+% at the Technical University of Denmark contains the slides for a 13 weeks course, based on Chisel.
+% The source code for the \myref{https://github.com/schoeberl/chisel-book/tree/master/slides}{slides}
+% is available as part of the source code for this book. Feel free to adapt them for your teaching needs.
+\item El sitio web del curso \myref{http://www2.imm.dtu.dk/courses/02139/}{Digital Electronics 2}
+de la Universidad Técnica de Dinamarca contiene las transparencias de un curso de 13 semanas basado en Chisel.
+El código fuente de las \myref{https://github.com/schoeberl/chisel-book/tree/master/slides}{transparencias}
+está disponible como parte del código fuente de este libro. Siéntete libre de adaptarlas a tus necesidades docentes.
+
+% \item The \myref{https://github.com/schoeberl/chisel-lab}{schoeberl/chisel-lab} GitHub repo
+% contains Chisel exercises for the course \myref{http://www2.imm.dtu.dk/courses/02139/}{Digital Electronics 2}.
+% The exercises also fit well for a selfstudy with this book.
+\item El repositorio de GitHub \myref{https://github.com/schoeberl/chisel-lab}{schoeberl/chisel-lab}
+contiene ejercicios de Chisel para el curso \myref{http://www2.imm.dtu.dk/courses/02139/}{Digital Electronics 2}.
+Los ejercicios encajan también bien para un autoaprendizaje con este libro.
+
+% \item The \myref{https://github.com/schoeberl/chisel-empty}{empty Chisel project} is a good starting
+% point with a very minimal hardware (an adder) and a test. That project is a GitHub template where you
+% can base your GitHub repository on.
+
+\item El \myref{https://github.com/schoeberl/chisel-empty}{proyecto Chisel vacío} es un buen punto de
+partida, con un hardware mínimo (un sumador) y una prueba. Ese proyecto es una plantilla de GitHub sobre
+la que puedes basar tu propio repositorio de GitHub.
+
+% \item The \myref{https://github.com/freechipsproject/chisel-cheatsheet/releases/latest/download/chisel_cheatsheet.pdf}{Chisel3 Cheat Sheet} summarizes the main constructs of Chisel on a single page.
+\item La \myref{https://github.com/freechipsproject/chisel-cheatsheet/releases/latest/download/chisel_cheatsheet.pdf}{chuleta de Chisel3} (\emph{Chisel3 Cheat Sheet}) resume los principales elementos de Chisel en una sola página.
+
+% \item Scott Beamer's course \myref{https://classes.soe.ucsc.edu/cse228a/Winter24/}{Agile Hardware Design}
+% contains advanced Chisel examples. The \myref{https://github.com/agile-hw/lectures}{lectures}
+% include executable source examples and are available as Jupyter notebooks.
 %\item The \myref{https://github.com/freechipsproject/chisel3/wiki}{Chisel Wiki} contains
 %a short users guide to Chisel and links to further information.
-\item \myref{https://github.com/ucb-bar/chiseltest}{ChiselTest} is in
-its own repository.
-\item The \myref{https://github.com/freechipsproject/chisel-bootcamp}{Generator Bootcamp} is
-a Chisel course focusing on hardware generators, as a \myref{https://jupyter.org/}{Jupyter} notebook
-\item The \myref{https://github.com/ucb-bar/chisel-tutorial}{Chisel Tutorial} provides a ready setup
-project containing small exercises with testers and solutions. However, it is a bit outdated.
-\item A \myref{https://github.com/ccelio/chisel-style-guide}{Chisel Style Guide} by Christopher Celio.
+
+\item El curso \myref{https://classes.soe.ucsc.edu/cse228a/Winter24/}{Agile Hardware Design} de Scott Beamer
+contiene ejemplos avanzados de Chisel. Las \myref{https://github.com/agile-hw/lectures}{lecciones}
+incluyen ejemplos de código ejecutables y están disponibles como cuadernos de Jupyter.
+
+% \item \myref{https://github.com/ucb-bar/chiseltest}{ChiselTest} is in
+% its own repository.
+\item \myref{https://github.com/ucb-bar/chiseltest}{ChiselTest} está en
+su propio repositorio.
+
+% \item The \myref{https://github.com/freechipsproject/chisel-bootcamp}{Generator Bootcamp} is
+% a Chisel course focusing on hardware generators, as a \myref{https://jupyter.org/}{Jupyter} notebook
+
+\item El \myref{https://github.com/freechipsproject/chisel-bootcamp}{Generator Bootcamp} es
+un curso de Chisel centrado en los generadores de hardware, en forma de cuaderno de \myref{https://jupyter.org/}{Jupyter}
+
+% \item The \myref{https://github.com/ucb-bar/chisel-tutorial}{Chisel Tutorial} provides a ready setup
+% project containing small exercises with testers and solutions. However, it is a bit outdated.
+
+\item El \myref{https://github.com/ucb-bar/chisel-tutorial}{Chisel Tutorial} proporciona un proyecto ya
+configurado con pequeños ejercicios, con probadores (\emph{testers}) y soluciones. No obstante, está algo desactualizado.
+
+% \item A \myref{https://github.com/ccelio/chisel-style-guide}{Chisel Style Guide} by Christopher Celio.
+\item Una \myref{https://github.com/ccelio/chisel-style-guide}{guía de estilo de Chisel} de Christopher Celio.
 
 \end{itemize}
 
