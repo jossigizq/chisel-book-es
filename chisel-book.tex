@@ -1194,25 +1194,37 @@ un curso de Chisel centrado en los generadores de hardware, en forma de cuaderno
 % project containing small exercises with testers and solutions. However, it is a bit outdated.
 
 \item El \myref{https://github.com/ucb-bar/chisel-tutorial}{Chisel Tutorial} proporciona un proyecto ya
-configurado con pequeños ejercicios, con probadores (\emph{testers}) y soluciones. No obstante, está algo desactualizado.
+configurado con pequeños ejercicios, con \emph{testers} y soluciones. No obstante, está algo desactualizado.
 
 % \item A \myref{https://github.com/ccelio/chisel-style-guide}{Chisel Style Guide} by Christopher Celio.
 \item Una \myref{https://github.com/ccelio/chisel-style-guide}{guía de estilo de Chisel} de Christopher Celio.
 
 \end{itemize}
 
-\section{Exercises}
+\section{Ejercicios}
 
-Each chapter ends with a hands-on exercises. For the introduction exercise, we will use an
-FPGA board to get one \myref{https://en.wikipedia.org/wiki/Light-emitting_diode}{LED}
-blinking.\footnote{If you at the moment have no FPGA board available, continue to read
-as we will show you a simulation version at the end of the exercise.}
-As a first step clone (or fork) the \myref{https://github.com/schoeberl/chisel-examples}{chisel-examples}
-repository from GitHub.
-The Hello World example is in the folder \code{hello-world}, set up as
-a minimal project. You can explore the Chisel code of the blinking LED
-in \code{src/main/scala/Hello.scala}.
-Compile the blinking LED with the following steps:
+% Each chapter ends with a hands-on exercises. For the introduction exercise, we will use an
+% FPGA board to get one \myref{https://en.wikipedia.org/wiki/Light-emitting_diode}{LED}
+% blinking.\footnote{If you at the moment have no FPGA board available, continue to read
+% as we will show you a simulation version at the end of the exercise.}
+% As a first step clone (or fork) the \myref{https://github.com/schoeberl/chisel-examples}{chisel-examples}
+% repository from GitHub.
+% The Hello World example is in the folder \code{hello-world}, set up as
+% a minimal project. You can explore the Chisel code of the blinking LED
+% in \code{src/main/scala/Hello.scala}.
+% Compile the blinking LED with the following steps:
+
+Cada capítulo termina con unos ejercicios prácticos. Para el ejercicio de la introducción, usaremos una
+placa FPGA para hacer parpadear un \myref{https://en.wikipedia.org/wiki/Light-emitting_diode}{LED}.\footnote{Si en
+este momento no dispones de una placa FPGA, sigue leyendo, ya que al final del ejercicio te mostraremos una
+versión en simulación.}
+Como primer paso, clona (o haz un \emph{fork}) del repositorio
+\myref{https://github.com/schoeberl/chisel-examples}{chisel-examples}
+de GitHub.
+El ejemplo del Hola Mundo está en la carpeta \code{hello-world}, configurada como
+un proyecto mínimo. Puedes explorar el código Chisel del LED parpadeante
+en \code{src/main/scala/Hello.scala}.
+Compila el LED parpadeante con los siguientes pasos:
 
 \begin{verbatim}
 $ git clone https://github.com/schoeberl/chisel-examples.git
@@ -1220,58 +1232,106 @@ $ cd chisel-examples/hello-world/
 $ sbt run
 \end{verbatim}
 
-After some initial downloading of Chisel components, this will produce the Verilog file \code{Hello.v}.
-Explore this Verilog file. You will see that it contains two inputs \code{clock} and \code{reset}
-and one output \code{io\_led}. When you compare this Verilog file with the Chisel module,
-you will notice that the Chisel module does not contain \code{clock} or \code{reset}.
-Those signals are implicitly generated, and in most designs, it is convenient not to need to
-deal with these low-level details. Chisel provides register components, and those
-are connected automatically to \code{clock} and \code{reset} (if needed).
+% After some initial downloading of Chisel components, this will produce the Verilog file \code{Hello.v}.
+% Explore this Verilog file. You will see that it contains two inputs \code{clock} and \code{reset}
+% and one output \code{io\_led}. When you compare this Verilog file with the Chisel module,
+% you will notice that the Chisel module does not contain \code{clock} or \code{reset}.
+% Those signals are implicitly generated, and in most designs, it is convenient not to need to
+% deal with these low-level details. Chisel provides register components, and those
+% are connected automatically to \code{clock} and \code{reset} (if needed).
 
-The next step is to set up an FPGA project file for the synthesize tool, assign the pins,
-compile\footnote{The real process is more elaborated with following steps: synthesizing the logic,
-performing place and route, performing timing analysis, and generating a bitfile.
-However, for the purpose of this introduction example we simply call it ``compile''
-your code.} the Verilog code, and configure the FPGA with the resulting bitfile.
-We cannot provide the details of these steps. Please consult the manual of
-your Intel Quartus or AMD Vivado tool.
-However, the examples repository contains some ready to use Quartus
-projects in folder \code{quartus} for several popular FPGA boards (e.g., DE2-115).
-If the repository contains support for your board, start Quartus, open the project,
-compile it by pressing the \emph{Play} button, and configure the FPGA board
-with the \emph{Programmer} button and one of the LEDs should blink.
+Tras una descarga inicial de los componentes de Chisel, esto producirá el fichero Verilog \code{Hello.v}.
+Explora ese fichero Verilog. Verás que contiene dos entradas, \code{clock} y \code{reset},
+y una salida, \code{io\_led}. Cuando compares este fichero Verilog con el módulo de Chisel,
+notarás que el módulo de Chisel no contiene \code{clock} ni \code{reset}.
+Esas señales se generan implícitamente y, en la mayoría de los diseños, resulta cómodo no tener que
+lidiar con estos detalles de bajo nivel. Chisel proporciona componentes de registro, y estos
+se conectan automáticamente a \code{clock} y \code{reset} (si es necesario).
 
-{\bf Congratulations! You managed to get your first design in Chisel running in an FPGA!}
+% The next step is to set up an FPGA project file for the synthesize tool, assign the pins,
+% compile\footnote{The real process is more elaborated with following steps: synthesizing the logic,
+% performing place and route, performing timing analysis, and generating a bitfile.
+% However, for the purpose of this introduction example we simply call it ``compile''
+% your code.} the Verilog code, and configure the FPGA with the resulting bitfile.
+% We cannot provide the details of these steps. Please consult the manual of
+% your Intel Quartus or AMD Vivado tool.
+% However, the examples repository contains some ready to use Quartus
+% projects in folder \code{quartus} for several popular FPGA boards (e.g., DE2-115).
+% If the repository contains support for your board, start Quartus, open the project,
+% compile it by pressing the \emph{Play} button, and configure the FPGA board
+% with the \emph{Programmer} button and one of the LEDs should blink.
 
-If the LED is not blinking, check the status of reset. On the DE2-115 configuration,
-the reset input is connected to SW0.
+El siguiente paso es preparar un proyecto de FPGA para la herramienta de síntesis, asignar los pines,
+compilar\footnote{El proceso real es más elaborado, con los siguientes pasos: sintetizar la lógica,
+realizar el emplazado y rutado (\emph{place and route}), realizar el análisis temporal y generar un fichero de
+configuración (\emph{bitfile}).
+No obstante, para el propósito de este ejemplo introductorio simplemente lo llamamos ``compilar''
+tu código.} el código Verilog y configurar la FPGA con el \emph{bitfile} resultante.
+No podemos dar más detalles para estos pasos. Si tienes curiosidad, consulta el manual de
+tu herramienta Intel Quartus o AMD Vivado.
+De todas formas, el repositorio de ejemplos contiene algunos proyectos de Quartus listos
+para usar en la carpeta \code{quartus} para varias placas FPGA populares (por ejemplo, la DE2-115).
+Si el repositorio incluye soporte para tu placa, arranca Quartus, abre el proyecto,
+compílalo pulsando el botón \emph{Play} y configura la placa FPGA
+con el botón \emph{Programmer}; entonces uno de los LED debería parpadear.
 
-Now change the blinking frequency to a slower or a faster value and
-rerun the build process. Blinking frequencies and also blinking patterns
-communicate different ``emotions''. For example, a slow blinking LED signals that
-everything is ok, a fast blinking LED signals an alarm state.
-Explore which frequencies express best those two different emotions.
+% {\bf Congratulations! You managed to get your first design in Chisel running in an FPGA!}
+{\bf ¡Enhorabuena! ¡Has conseguido poner en marcha tu primer diseño en Chisel en una FPGA!}
 
-As a more challenging extension to the exercise, generate the following blinking pattern:
-the LED shall be on for 200~ms every second. For this pattern, you might
-decouple the change of the LED blinking from the counter reset.
-You will need a second constant where you change the state of the
-\code{blkReg} register. What kind of emotion does this pattern produce?
-Is it alarming or more like a sign-of-live signal?
+% If the LED is not blinking, check the status of reset. On the DE2-115 configuration,
+% the reset input is connected to SW0.
+Si el LED no parpadea, comprueba el estado de la señal de \emph{reset}. En la configuración de la DE2-115,
+la entrada de \emph{reset} está conectada al SW0.
 
-If you do not (yet) have an FPGA board, you can still run the blinking LED example.
-You will use  the Chisel simulation. To avoid a too long simulation time change the
-clock frequency in the Chisel code from 50000000 to 50000. Execute following
-instruction to simulate the blinking LED:
+% Now change the blinking frequency to a slower or a faster value and
+% rerun the build process. Blinking frequencies and also blinking patterns
+% communicate different ``emotions''. For example, a slow blinking LED signals that
+% everything is ok, a fast blinking LED signals an alarm state.
+% Explore which frequencies express best those two different emotions.
+
+Ahora cambia la frecuencia de parpadeo a un valor mayor o menor y
+vuelve a ejecutar el proceso de construcción. Las frecuencias de parpadeo, y también los patrones de parpadeo,
+transmiten distintas ``emociones''. Por ejemplo, un LED que parpadea despacio indica que
+todo está bien, mientras que un LED que parpadea rápido indica un estado de alarma.
+Explora qué frecuencias expresan mejor esas dos emociones distintas.
+
+% As a more challenging extension to the exercise, generate the following blinking pattern:
+% the LED shall be on for 200~ms every second. For this pattern, you might
+% decouple the change of the LED blinking from the counter reset.
+% You will need a second constant where you change the state of the
+% \code{blkReg} register. What kind of emotion does this pattern produce?
+% Is it alarming or more like a sign-of-live signal?
+
+Como extensión más compleja del ejercicio, genera el siguiente patrón de parpadeo:
+el LED debe estar encendido durante 200~ms cada segundo. Para este patrón, quizá te convenga
+desacoplar el cambio del parpadeo del LED del instante en que se reinicia el contador.
+Necesitarás una segunda constante en la que cambies el estado del
+registro \code{blkReg}. ¿Qué tipo de emoción produce este patrón?
+¿Resulta alarmante o más bien una señal de que el sistema ``está vivo''?
+
+% If you do not (yet) have an FPGA board, you can still run the blinking LED example.
+% You will use  the Chisel simulation. To avoid a too long simulation time change the
+% clock frequency in the Chisel code from 50000000 to 50000. Execute following
+% instruction to simulate the blinking LED:
+
+Si (todavía) no dispones de una placa FPGA, también puedes ejecutar el ejemplo del LED parpadeante.
+Para ello usarás la simulación de Chisel. Para evitar un tiempo de simulación demasiado largo, cambia la
+frecuencia de reloj en el código Chisel de 50000000 a 50000. Ejecuta la siguiente
+instrucción para simular el LED parpadeante:
 
 \begin{verbatim}
 $ sbt test
 \end{verbatim}
 
-This will execute the tester that runs for one million clock cycles.
-The blinking frequency depends on the simulation speed, which depends on the
-speed of your computer. Therefore, you might need to experiment a little bit
-with the assumed clock frequency to see the simulated blinking LED.
+% This will execute the tester that runs for one million clock cycles.
+% The blinking frequency depends on the simulation speed, which depends on the
+% speed of your computer. Therefore, you might need to experiment a little bit
+% with the assumed clock frequency to see the simulated blinking LED.
+
+Esto ejecutará el tester, que funciona durante un millón de ciclos de reloj.
+La frecuencia de parpadeo depende de la velocidad de simulación, que a su vez depende de la
+velocidad de tu ordenador. Por tanto, quizá necesites experimentar un poco
+con la frecuencia de reloj supuesta para poder ver el LED parpadeando en la simulación.
 
 \chapter{Basic Components}
 
