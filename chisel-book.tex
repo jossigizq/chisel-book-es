@@ -1481,131 +1481,231 @@ y \code{false} en constantes \code{Bool} de Chisel.
 \shortlist{code/bool.txt}
 \index{Bool}
 
+\section{Circuitos combinacionales}
 
-\section{Combinational Circuits}
+% Chisel uses \myref{https://en.wikipedia.org/wiki/Boolean_algebra}{Boolean algebra} operators,
+% as they are defined in C, Java, Scala, and several other programming languages,
+% to described combinational circuits: \code{\&} is the AND operator and \code{|} is
+% the OR operator.
+% Following line of code defines a circuit that combines signals \code{a} and \code{b} with \emph{and}
+% gates and combines the result with signal \code{c} with \emph{or} gates and names it \code{logic}.
 
-Chisel uses \myref{https://en.wikipedia.org/wiki/Boolean_algebra}{Boolean algebra} operators,
-as they are defined in C, Java, Scala, and several other programming languages,
-to described combinational circuits: \code{\&} is the AND operator and \code{|} is
-the OR operator.
-Following line of code defines a circuit that combines signals \code{a} and \code{b} with \emph{and}
-gates and combines the result with signal \code{c} with \emph{or} gates and names it \code{logic}.
+Chisel utiliza los operadores del \myref{https://en.wikipedia.org/wiki/Boolean_algebra}{álgebra de Boole},
+tal y como se definen en C, Java, Scala y en otros lenguajes de programación,
+para describir circuitos combinacionales: \code{\&} es el operador AND y \code{|} es
+el operador OR.
+La siguiente línea de código define un circuito que combina las señales \code{a} y \code{b} con una puerta
+\emph{and}, combina el resultado de la \emph{and} con la señal \code{c} mediante una puerta \emph{or} y 
+al resultado final lo denomina \code{logic}.
 
 \shortlist{code/logic.txt}
 
-\begin{figure}
+% \begin{figure}[h]
+%   \centering
+%   \includegraphics[scale=\scale]{figures/logic}
+%   \caption{Logic for the expression \code{(a \& b) | c}.
+%   The wires can be a single bit or multiple bits. The Chisel expression, and the schematics are the same.}
+%   \label{fig:logic}
+% \end{figure}
+
+\begin{figure}[h]
   \centering
   \includegraphics[scale=\scale]{figures/logic}
-  \caption{Logic for the expression \code{(a \& b) | c}.
-  The wires can be a single bit or multiple bits. The Chisel expression, and the schematics are the same.}
+  \caption{Lógica para la expresión \code{(a \& b) | c}.
+  Los cables pueden ser de un solo bit o de varios bits. La expresión de Chisel y el esquema son los mismos.}
   \label{fig:logic}
 \end{figure}
 
+% \noindent Figure~\ref{fig:logic} shows the schematic of this combinatorial expression.
+% Note that this circuit may be for a vector of bits and not only single wires
+% combined with the AND and OR circuits.
 
-\noindent Figure~\ref{fig:logic} shows the schematic of this combinatorial expression.
-Note that this circuit may be for a vector of bits and not only single wires
-combined with the AND and OR circuits.
+\noindent La figura~\ref{fig:logic} muestra el esquema de esta expresión combinacional.
+Cabe señalar que este circuito puede corresponder a un vector de bits y no solo a cables individuales
+combinados con circuitos AND y OR.
 
-In this example, we do not define the type nor the width of signal \code{logic}.
-Both are inferred from the type and width of the expression.
-The standard logic operations in Chisel are:
+% In this example, we do not define the type nor the width of signal \code{logic}.
+% Both are inferred from the type and width of the expression.
+% The standard logic operations in Chisel are:
+
+En este ejemplo no definimos ni el tipo ni la anchura de la señal \code{logic}.
+Ambos se infieren a partir del tipo y la anchura de la expresión.
+Las operaciones lógicas estándar de Chisel son:
 
 \index{logical operations}
 
 \shortlist{code/bool_ops.txt}
 
-\noindent The arithmetic operations use the standard operators:
+% \noindent The arithmetic operations use the standard operators:
+\noindent Las operaciones aritméticas usan los operadores estándar:
 
 \index{arithmetic operations}
 
 \shortlist{code/arith_ops.txt}
 
-\noindent The resulting width of the operation is the maximum width of the operators for
-addition and subtraction, the sum of the two widths for the multiplication, and usually
-the width of the numerator for divide and modulo operations.\footnote{
-  The exact details are available in the
+% \noindent The resulting width of the operation is the maximum width of the operators for
+% addition and subtraction, the sum of the two widths for the multiplication, and usually
+% the width of the numerator for divide and modulo operations.\footnote{
+%   The exact details are available in the
+%   \ifbook
+%     FIRRTL specification\footnotemark
+%   \else
+%     \myref{https://github.com/chipsalliance/firrtl-spec/releases/latest/download/spec.pdf}{FIRRTL specification}.
+%   \fi
+% }
+% \ifbook
+%   \footnotetext{\url{https://github.com/chipsalliance/firrtl-spec/releases/latest/download/spec.pdf}}
+% \fi
+
+\noindent La anchura resultante de la operación es la mayor de las anchuras de los operandos en
+la suma y la resta, la suma de ambas anchuras en la multiplicación y, normalmente,
+la anchura del numerador en las operaciones de división y módulo.\footnote{
+  Los detalles exactos están disponibles en la
   \ifbook
-    FIRRTL specification\footnotemark
+    especificación de FIRRTL\footnotemark
   \else
-    \myref{https://github.com/chipsalliance/firrtl-spec/releases/latest/download/spec.pdf}{FIRRTL specification}.
+    \myref{https://github.com/chipsalliance/firrtl-spec/releases/latest/download/spec.pdf}{especificación de FIRRTL}.
   \fi
 }
 \ifbook
   \footnotetext{\url{https://github.com/chipsalliance/firrtl-spec/releases/latest/download/spec.pdf}}
 \fi
 
+% A signal can also first be defined as a \code{Wire} of some type. Afterward, we can assign a
+% value to the wire with the \code{:=} update operator.
 
+Una señal también puede definirse primero como un \code{Wire} de algún tipo. Después podemos asignarle
+un valor al cable con el operador de actualización \code{:=}.
 
-A signal can also first be defined as a \code{Wire} of some type. Afterward, we can assign a
-value to the wire with the \code{:=} update operator.
 \index{Wire}
 
 \shortlist{code/wire.txt}
 
-A single bit can be extracted as follows:
+% A single bit can be extracted as follows:
+Un único bit puede extraerse de la siguiente manera:
+
 \shortlist{code/single_bit.txt}
 \index{Bit!extraction}
 
-\noindent A subfield can be extracted from end to start position:
+% \noindent A subfield can be extracted from end to start position:
+\noindent Se puede extraer un subcampo desde la posición final hasta la inicial:
+
 \shortlist{code/sub_field.txt}
 
-\noindent Bit fields are concatenated with the \code{\#\#} operator.\footnote{Note that there is a \codefoot{Cat} function available that performs the same
-operation with \codefoot{Cat(highByte, lowByte)}.}
+% \noindent Bit fields are concatenated with the \code{\#\#} operator.\footnote{Note that there is a \codefoot{Cat} function available that performs the same
+% operation with \codefoot{Cat(highByte, lowByte)}.}
+
+\noindent Los campos de bits se concatenan con el operador \code{\#\#}.\footnote{Ten en cuenta que existe una función \codefoot{Cat} que realiza la misma
+operación con \codefoot{Cat(highByte, lowByte)}.}
 
 \shortlist{code/concat.txt}
 \index{Bit!concatenation}
 
-Table~\ref{tab:operators} shows the full list of operators
-(see also \myref{https://www.chisel-lang.org/chisel3/docs/explanations/operators.html}{builtin operators}).
-The Chisel operator precedence is determined by the evaluation order of the circuit,
-which follows the \myref{https://docs.scala-lang.org/tour/operators.html}{Scala operator precedence}.
-If in doubt, it is always a good practice to use parentheses.\footnote{The operator precedence in
-Chisel is a side effect of the hardware elaboration when the tree of hardware nodes
-is created by executing the Scala operators. The Scala operator precedence is similar but
-not identical to Java/C. Verilog has the same operator precedence as C, but VHDL
-has a different one. Verilog has precedence ordering for logic operations, but in VHDL
-those operators have the same precedence and are evaluated from left to right.}
+% Table~\ref{tab:operators} shows the full list of operators
+% (see also \myref{https://www.chisel-lang.org/chisel3/docs/explanations/operators.html}{builtin operators}).
+% The Chisel operator precedence is determined by the evaluation order of the circuit,
+% which follows the \myref{https://docs.scala-lang.org/tour/operators.html}{Scala operator precedence}.
+% If in doubt, it is always a good practice to use parentheses.\footnote{The operator precedence in
+% Chisel is a side effect of the hardware elaboration when the tree of hardware nodes
+% is created by executing the Scala operators. The Scala operator precedence is similar but
+% not identical to Java/C. Verilog has the same operator precedence as C, but VHDL
+% has a different one. Verilog has precedence ordering for logic operations, but in VHDL
+% those operators have the same precedence and are evaluated from left to right.}
 
-Table~\ref{tab:functions} shows various functions defined on and for Chisel data types.
+La tabla~\ref{tab:operators} muestra la lista completa de operadores
+(véanse también los \myref{https://www.chisel-lang.org/chisel3/docs/explanations/operators.html}{builtin operators}).
+La precedencia de operadores de Chisel viene determinada por el orden de evaluación del circuito,
+que sigue el \myref{https://docs.scala-lang.org/tour/operators.html}{Scala operator precedence}.
+En caso de duda, siempre es buena práctica usar paréntesis.\footnote{La precedencia de operadores en
+Chisel es un efecto secundario de la elaboración del hardware, cuando el árbol de nodos de hardware
+se crea al ejecutar los operadores de Scala. La precedencia de operadores de Scala es parecida a la de
+Java/C, pero no idéntica. Verilog tiene la misma precedencia de operadores que C, pero VHDL
+tiene otra distinta. Verilog establece un orden de precedencia para las operaciones lógicas, mientras que en VHDL
+esos operadores tienen la misma precedencia y se evalúan de izquierda a derecha.}
 
-\begin{table}
+% Table~\ref{tab:functions} shows various functions defined on and for Chisel data types.
+La tabla~\ref{tab:functions} muestra varias funciones definidas sobre y para los tipos de datos de Chisel.
+
+% \begin{table}[h]
+%  \centering
+%   \begin{tabular}{lll}
+%     \toprule
+%     Operator & Description & Data types \\
+%     \midrule
+%     \code{* / \%} & multiplication, division, modulus & UInt, SInt \\
+%     \code{+ -} & addition, subtraction & UInt, SInt \\
+%     \code{=== =/=} & equal, not equal & UInt, SInt, returns Bool \\
+%     \code{> >= < <=} & comparison & UInt, SInt, returns Bool \\
+%     \code{<< >>} & shift left, shift right (sign extend on SInt) & UInt, SInt \\
+%     \code{\~} & NOT & UInt, SInt, Bool \\
+%     \code{\& | \^} & AND, OR, XOR & UInt, SInt, Bool \\
+%     \code{!} & logical NOT & Bool \\
+%     \code{\&\& ||} & logical AND, OR & Bool \\
+%     \bottomrule
+%   \end{tabular}
+%   \caption{Chisel defined hardware operators.}
+%  \label{tab:operators}
+% \end{table}
+
+\begin{table}[h]
  \centering
+ \renewcommand{\arraystretch}{1.3}
   \begin{tabular}{lll}
     \toprule
-    Operator & Description & Data types \\
+    Operador & Descripción & Tipos de datos \\
     \midrule
-    \code{* / \%} & multiplication, division, modulus & UInt, SInt \\
-    \code{+ -} & addition, subtraction & UInt, SInt \\
-    \code{=== =/=} & equal, not equal & UInt, SInt, returns Bool \\
-    \code{> >= < <=} & comparison & UInt, SInt, returns Bool \\
-    \code{<< >>} & shift left, shift right (sign extend on SInt) & UInt, SInt \\
+    \code{* / \%} & multiplicación, división, módulo & UInt, SInt \\
+    \code{+ -} & suma, resta & UInt, SInt \\
+    \code{=== =/=} & igual, distinto & UInt, SInt, devuelve Bool \\
+    \code{> >= < <=} & comparación & UInt, SInt, devuelve Bool \\
+    \multirow{2}{*}{\code{<< >>}} & desplazamiento a izquierda y a derecha & \multirow{2}{*}{UInt, SInt} \\
+     & (con extensión de signo en SInt) & \\
     \code{\~} & NOT & UInt, SInt, Bool \\
     \code{\& | \^} & AND, OR, XOR & UInt, SInt, Bool \\
-    \code{!} & logical NOT & Bool \\
-    \code{\&\& ||} & logical AND, OR & Bool \\
+    \code{!} & NOT lógico & Bool \\
+    \code{\&\& ||} & AND y OR lógicos & Bool \\
     \bottomrule
   \end{tabular}
-  \caption{Chisel defined hardware operators.}
+  \caption{Operadores hardware definidos por Chisel.}
  \label{tab:operators}
 \end{table}
 
 \index{Operators}
 
-\begin{table}
+% \begin{table}[h]
+%  \centering
+%   \begin{tabular}{lll}
+%     \toprule
+%     Function & Description & Data types \\
+%     \midrule
+%     \code{v.andR v.orR v.xorR} & AND, OR, XOR reduction & UInt, SInt, returns Bool \\
+%     \code{v(n)} & extraction of a single bit & UInt, SInt \\
+%     \code{v(end, start)} & bitfield extraction & UInt, SInt \\
+%     \code{Fill(n, v)} & bitstring replication, n times & UInt, SInt \\
+%     \code{a \#\# b} & bitfield concatenation & UInt, SInt \\
+%     \code{Cat(a, b, ...)} & bitfield concatenation & UInt, SInt \\
+%     \bottomrule
+%   \end{tabular}
+%   \caption{Chisel defined hardware functions, invoked on \code{v}.}
+%    \label{tab:functions}
+% \end{table}
+
+\begin{table}[h]
  \centering
+ \renewcommand{\arraystretch}{1.3}
   \begin{tabular}{lll}
     \toprule
-    Function & Description & Data types \\
+    Función & Descripción & Tipos de datos \\
     \midrule
-    \code{v.andR v.orR v.xorR} & AND, OR, XOR reduction & UInt, SInt, returns Bool \\
-    \code{v(n)} & extraction of a single bit & UInt, SInt \\
-    \code{v(end, start)} & bitfield extraction & UInt, SInt \\
-    \code{Fill(n, v)} & bitstring replication, n times & UInt, SInt \\
-    \code{a \#\# b} & bitfield concatenation & UInt, SInt \\
-    \code{Cat(a, b, ...)} & bitfield concatenation & UInt, SInt \\
+    \code{v.andR v.orR v.xorR} & reducción AND, OR, XOR & UInt, SInt, devuelve Bool \\
+    \code{v(n)} & extracción de un único bit & UInt, SInt \\
+    \code{v(end, start)} & extracción de un campo de bits & UInt, SInt \\
+    \code{Fill(n, v)} & replicación de bits, n veces & UInt, SInt \\
+    \code{a \#\# b} & concatenación de campos de bits & UInt, SInt \\
+    \code{Cat(a, b, ...)} & concatenación de campos de bits & UInt, SInt \\
     \bottomrule
   \end{tabular}
-  \caption{Chisel defined hardware functions, invoked on \code{v}.}
+  \caption{Funciones hardware definidas por Chisel, invocadas sobre \code{v}.}
    \label{tab:functions}
 \end{table}
 
@@ -1613,41 +1713,62 @@ Table~\ref{tab:functions} shows various functions defined on and for Chisel data
 \index{Bitfield!extraction}
 \index{Bitfield!concatenation}
 
-
-\subsection{Multiplexer}
+\newpage
+\subsection{Multiplexor}
 
 \index{Multiplexer}
 
-A \myref{https://en.wikipedia.org/wiki/Multiplexer}{multiplexer} is a circuit that selects between alternatives.
-In the most basic form, it selects between two alternatives. Figure~\ref{fig:mux} shows
-such a 2:1 multiplexer, or mux for short. Depending on the value of the
-select signal (\code{sel}) signal \code{y} will represent signal \code{a} or
-signal \code{b}.
+% A \myref{https://en.wikipedia.org/wiki/Multiplexer}{multiplexer} is a circuit that selects between alternatives.
+% In the most basic form, it selects between two alternatives. Figure~\ref{fig:mux} shows
+% such a 2:1 multiplexer, or mux for short. Depending on the value of the
+% select signal (\code{sel}) signal \code{y} will represent signal \code{a} or
+% signal \code{b}.
 
-\begin{figure}
+Un \myref{https://en.wikipedia.org/wiki/Multiplexer}{multiplexor} es un circuito que selecciona entre varias alternativas.
+En su forma más básica, selecciona entre dos alternativas. La figura~\ref{fig:mux} muestra
+uno de esos multiplexores 2:1, o \emph{mux} para abreviar. Según el valor de la
+señal de selección (\code{sel}), la señal \code{y} representará la señal \code{a} o
+la señal \code{b}.
+
+\begin{figure}[h]
   \centering
   \includegraphics[scale=\scale]{figures/mux}
-  \caption{A basic 2:1 multiplexer.}
+  \caption{Un multiplexor 2:1 básico.}
   \label{fig:mux}
 \end{figure}
 
-A multiplexer can be built from logic.
-However, as multiplexing  is such a standard operation, Chisel provides a multiplexer,
+% A multiplexer can be built from logic.
+% However, as multiplexing  is such a standard operation, Chisel provides a multiplexer,
+Un multiplexor puede construirse a partir de lógica.
+No obstante, como el multiplexado es una operación tan habitual, Chisel proporciona un multiplexor,
 
 \shortlist{code/mux.txt}
 
-\noindent where \code{a} is selected when the \code{sel} is \code{true.B}, otherwise \code{b}
-is selected. The type of \code{sel} is a Chisel \code{Bool}; the inputs \code{a} and \code{b}
-can be any Chisel base type or aggregate (bundles or vectors) as long as they are the same
-type.
+% \noindent where \code{a} is selected when the \code{sel} is \code{true.B}, otherwise \code{b}
+% is selected. The type of \code{sel} is a Chisel \code{Bool}; the inputs \code{a} and \code{b}
+% can be any Chisel base type or aggregate (bundles or vectors) as long as they are the same
+% type.
 
-With logical and arithmetical operations and a multiplexer, every combinational
-circuit can be described. However, Chisel provides further components and control abstractions
-for a more elegant description of a combinational circuit, which are described in
-Chapter~\ref{chap:comb}.
+\noindent donde se selecciona \code{a} cuando \code{sel} es \code{true.B}, y en caso contrario se
+selecciona \code{b}. El tipo de \code{sel} es un \code{Bool} de Chisel; las entradas \code{a} y \code{b}
+pueden ser cualquier tipo base de Chisel o agregado (\emph{bundles} o vectores), siempre que sean del
+mismo tipo.
 
-The second basic component needed to describe a digital circuit is a state element,
-also called register, which is described next.
+% With logical and arithmetical operations and a multiplexer, every combinational
+% circuit can be described. However, Chisel provides further components and control abstractions
+% for a more elegant description of a combinational circuit, which are described in
+% Chapter~\ref{chap:comb}.
+
+Mediante operaciones lógicas y aritméticas y un multiplexor, se puede describir cualquier
+circuito combinacional. Sin embargo, Chisel ofrece componentes adicionales y abstracciones de control
+que permiten una descripción más elegante de un circuito combinacional, tal y como se explica en
+el capítulo~\ref{chap:comb}.
+
+% The second basic component needed to describe a digital circuit is a state element,
+% also called register, which is described next.
+
+El segundo componente básico necesario para describir un circuito digital es un elemento de estado,
+también llamado registro, que se describe a continuación.
 
 \section{Registers}
 
