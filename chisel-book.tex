@@ -1333,88 +1333,150 @@ La frecuencia de parpadeo depende de la velocidad de simulación, que a su vez d
 velocidad de tu ordenador. Por tanto, quizá necesites experimentar un poco
 con la frecuencia de reloj supuesta para poder ver el LED parpadeando en la simulación.
 
-\chapter{Basic Components}
+\chapter{Componentes básicos}
 
-In this section, we introduce the basic components for digital design:
-combinational circuits and flip-flops.
-These essential elements can be combined to build larger, more interesting circuits.
+% In this section, we introduce the basic components for digital design:
+% combinational circuits and flip-flops.
+% These essential elements can be combined to build larger, more interesting circuits.
 
-Digital systems, in general, use binary signals, which means a single bit or signal
-can only have one of two possible values. These values are often called 0 and 1. However, we
-also use following terms: low/high, false/true, and deasserted/asserted.
-These terms mean the same two possible values of a binary signal.
+En esta sección presentamos los componentes básicos del diseño digital:
+los circuitos combinacionales y los biestables (\emph{flip-flops}).
+Estos elementos esenciales pueden combinarse para construir circuitos más grandes e interesantes.
 
-\section{Chisel Types and Constants}
+% Digital systems, in general, use binary signals, which means a single bit or signal
+% can only have one of two possible values. These values are often called 0 and 1. However, we
+% also use following terms: low/high, false/true, and deasserted/asserted.
+% These terms mean the same two possible values of a binary signal.
 
-Chisel provides three data types to describe connections, combinational logic, and registers:
-\code{Bits}, \code{UInt}, and \code{SInt}. \code{UInt} and \code{SInt} extend \code{Bits},
-and all three types represent a vector of bits. \code{UInt} gives this vector of
-bits the meaning of an unsigned integer and \code{SInt} of a signed
-integer.\footnote{The type \codefoot{Bits} in the current version of Chisel is missing operations and
-therefore not very useful for user code.}
-Chisel uses \myref{https://en.wikipedia.org/wiki/Two\%27s\_complement}{two's complement}
-as signed integer representation.
-Here is the definition for different types, an 8-bit \code{Bits}, an 8-bit unsigned integer, and a 10-bit
-signed integer:
+Los sistemas digitales, en general, utilizan señales binarias, lo que significa que un único bit o señal
+solo puede tomar uno de dos valores posibles. Esos valores suelen denominarse 0 y 1. Sin embargo,
+también empleamos los siguientes términos: bajo/alto (\emph{low/high}), falso/verdadero (\emph{false/true})
+y desactivado/activado (\emph{deasserted/asserted}).
+Estos términos se refieren a los mismos dos valores posibles de una señal binaria.
+
+\section{Tipos y constantes en Chisel}
+
+% Chisel provides three data types to describe connections, combinational logic, and registers:
+% \code{Bits}, \code{UInt}, and \code{SInt}. \code{UInt} and \code{SInt} extend \code{Bits},
+% and all three types represent a vector of bits. \code{UInt} gives this vector of
+% bits the meaning of an unsigned integer and \code{SInt} of a signed
+% integer.\footnote{The type \codefoot{Bits} in the current version of Chisel is missing operations and
+% therefore not very useful for user code.}
+% Chisel uses \myref{https://en.wikipedia.org/wiki/Two\%27s\_complement}{two's complement}
+% as signed integer representation.
+% Here is the definition for different types, an 8-bit \code{Bits}, an 8-bit unsigned integer, and a 10-bit
+% signed integer:
+
+Chisel proporciona tres tipos de datos para describir conexiones, lógica combinacional y registros:
+\code{Bits}, \code{UInt} y \code{SInt}. \code{UInt} y \code{SInt} extienden \code{Bits},
+y los tres tipos representan un vector de bits. \code{UInt} otorga a ese vector de
+bits el significado de un entero sin signo, y \code{SInt} el de un entero
+con signo.\footnote{Al tipo \codefoot{Bits}, en la versión actual de Chisel, le faltan operaciones y
+por lo tanto no resulta muy útil en el código final del usuario.}
+Chisel utiliza el \myref{https://en.wikipedia.org/wiki/Two\%27s\_complement}{complemento a dos}
+como representación de los enteros con signo.
+Aquí está la definición de distintos tipos: un \code{Bits} de 8 bits, un entero sin signo de 8 bits y un entero
+con signo de 10 bits:
+
 \index{Integer!unsigned}
 \index{Integer!signed}
 
 \shortlist{code/types.txt}
 
-\noindent The width of a vector of bits is defined by a Chisel width type (\code{Width}).
-The following expression casts the Scala integer \code{n} to a Chisel \code{width},
-which we use for the definition of the \code{Bits} vector:
+% \noindent The width of a vector of bits is defined by a Chisel width type (\code{Width}).
+% The following expression casts the Scala integer \code{n} to a Chisel \code{width},
+% which we use for the definition of the \code{Bits} vector:
+
+\noindent La anchura de un vector de bits viene definida por un tipo \emph{Width} de Chisel (\code{Width}).
+La siguiente expresión convierte el entero de Scala \code{n} a un \code{width} de Chisel,
+que usamos para la definición del vector \code{Bits}:
 
 \shortlist{code/n_w.txt}
 
 \index{Integer!width}
 
 
-\noindent Constants can be defined by using a Scala integer and converting it to a Chisel type:
+% \noindent Constants can be defined by using a Scala integer and converting it to a Chisel type:
+
+\noindent Las constantes pueden definirse usando un entero de Scala y convirtiéndolo a un tipo de Chisel:
 
 \shortlist{code/constants.txt}
 \index{Integer!constant}
 
-\noindent Constants can also be defined with a width, by using the Chisel width type:
+% \noindent Constants can also be defined with a width, by using the Chisel width type:
+
+\noindent Las constantes también pueden definirse con una anchura, usando el tipo \code{Width} de Chisel:
 
 \shortlist{code/const_width.txt}
 
-\noindent If you find the notation of \code{3.U} and \code{4.W} a little bit funny, consider it as a variant of an integer
-constant with a type. For example, \code{3L}, representing a long integer constant in C, Java, and Scala.
+% \noindent If you find the notation of \code{3.U} and \code{4.W} a little bit funny, consider it as a variant of an integer
+% constant with a type. For example, \code{3L}, representing a long integer constant in C, Java, and Scala.
 
-{\bf Possible pitfall:} One possible error when defining constants with a dedicated width is missing the \code{.W}
-specifier for a width. E.g., \code{1.U(32)} will \emph{not} define a 32-bit wide constant representing 1.
-Instead, the expression \code{(32)} is interpreted as bit extraction from position 32, which results
-in a single bit constant of 0. Probably not what the original intention of the programmer was.
+\noindent Si la notación \code{3.U} y \code{4.W} te resulta un poco extraña, considérala una variante de una constante
+entera con un tipo. Por ejemplo, \code{3L}, que representa una constante entera larga en C, Java y Scala.
 
+% {\bf Possible pitfall:} One possible error when defining constants with a dedicated width is missing the \code{.W}
+% specifier for a width. E.g., \code{1.U(32)} will \emph{not} define a 32-bit wide constant representing 1.
+% Instead, the expression \code{(32)} is interpreted as bit extraction from position 32, which results
+% in a single bit constant of 0. Probably not what the original intention of the programmer was.
 
-Chisel benefits from Scala's type inference, and in many places, type information can be left out.
-The same is also valid for bit widths. In many cases, Chisel will automatically infer the correct width.
-Therefore, a Chisel description of hardware is more concise and better readable than VHDL or
+{\bf Posible trampa:} un error frecuente al definir constantes con una anchura concreta es olvidar el
+especificador de anchura \code{.W}. Por ejemplo, \code{1.U(32)} \emph{no} define una constante de 32 bits de anchura
+que represente el valor 1.
+En su lugar, la expresión \code{(32)} se interpreta como una extracción del bit de la posición 32, lo que da como
+resultado una constante de un solo bit con el valor 0. Lo cuál, probablemente no era la intención original del programador.
+
+% Chisel benefits from Scala's type inference, and in many places, type information can be left out.
+% The same is also valid for bit widths. In many cases, Chisel will automatically infer the correct width.
+% Therefore, a Chisel description of hardware is more concise and better readable than VHDL or
+% Verilog.
+
+Chisel se beneficia de la inferencia de tipos de Scala y, en muchos lugares, la información de tipo puede omitirse.
+Lo mismo vale para el ancho de \code{Bits}. En muchos casos, Chisel infiere automáticamente la anchura correcta.
+Por eso, una descripción de hardware en Chisel es más concisa y más legible que en VHDL o
 Verilog.
 
-For constants defined in other bases than decimal, the constant is defined in a string with
-a preceding \code{h} for hexadecimal (base 16), \code{o} for octal (base 8), and \code{b}
-for binary (base 2). The following example shows the definition of constant 255 in different
-bases. In this example we omit the bit width and Chisel infers the minimum width to fit
-the constants in, in this case 8 bits.
+% For constants defined in other bases than decimal, the constant is defined in a string with
+% a preceding \code{h} for hexadecimal (base 16), \code{o} for octal (base 8), and \code{b}
+% for binary (base 2). The following example shows the definition of constant 255 in different
+% bases. In this example we omit the bit width and Chisel infers the minimum width to fit
+% the constants in, in this case 8 bits.
+
+Para las constantes definidas en bases distintas de la decimal, la constante se define en una cadena con
+una \code{h} delante para hexadecimal (base 16), una \code{o} para octal (base 8) y una \code{b}
+para binario (base 2). El siguiente ejemplo muestra la definición de la constante 255 en distintas
+bases. En este ejemplo omitimos la anchura en bits y Chisel infiere la anchura mínima en la que caben
+las constantes, en este caso 8 bits.
 
 \shortlist{code/const_base.txt}
 
-\noindent The above code shows how to use an underscore to group digits in the
-string that represents a constant. The underscore is ignored.
+% \noindent The above code shows how to use an underscore to group digits in the
+% string that represents a constant. The underscore is ignored.
 
-Characters to represent text (in \myref{https://en.wikipedia.org/wiki/ASCII}{ASCII} encoding)
-can also be used as constants in Chisel:
+\noindent El código anterior muestra cómo usar el guion bajo para agrupar los dígitos de la
+cadena que representa una constante. El guion bajo se ignora.
+
+% Characters to represent text (in \myref{https://en.wikipedia.org/wiki/ASCII}{ASCII} encoding)
+% can also be used as constants in Chisel:
+
+\newpage
+
+Los caracteres que representan texto (en codificación \myref{https://en.wikipedia.org/wiki/ASCII}{ASCII})
+también pueden usarse como constantes en Chisel:
 
 \shortlist{code/const_char.txt}
 
+% To represent logic values, Chisel defines the type \code{Bool}.
+% \code{Bool} can represent a \emph{true} or \emph{false} value.
+% The following code shows the definition of type \code{Bool} and the definition of
+% \code{Bool} constants, by converting the Scala Boolean constants \code{true}
+% and \code{false} to Chisel \code{Bool} constants.
 
-To represent logic values, Chisel defines the type \code{Bool}.
-\code{Bool} can represent a \emph{true} or \emph{false} value.
-The following code shows the definition of type \code{Bool} and the definition of
-\code{Bool} constants, by converting the Scala Boolean constants \code{true}
-and \code{false} to Chisel \code{Bool} constants.
+Para representar valores lógicos, Chisel define el tipo \code{Bool}.
+\code{Bool} puede representar un valor \emph{true} o \emph{false}.
+El siguiente código muestra la definición del tipo \code{Bool} y la definición de
+constantes \code{Bool}, convirtiendo las constantes booleanas de Scala \code{true}
+y \code{false} en constantes \code{Bool} de Chisel.
 
 \shortlist{code/bool.txt}
 \index{Bool}
