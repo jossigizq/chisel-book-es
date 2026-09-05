@@ -1889,7 +1889,7 @@ hasta 9 y vuelve a 0 al llegar a 9.
 
 \shortlist{code/counter.txt}
 
-\section{Structure with Bundle and Vec}
+\section{Estructuras con Bundle y Vec}
 
 \index{Structure}
 \index{Array}
@@ -1898,30 +1898,51 @@ hasta 9 y vuelve a 0 al llegar a 9.
 \index{Bundle}
 \index{Vec}
 
-Chisel provides two constructs to group related signals: (1) a \code{Bundle} and (2) a \code{Vec}.
-A \code{Bundle} groups signals of different types as named fields.
-A \code{Vec} represents an indexable collection of signals (elements) of the same type.
-\code{Bundle}s and \code{Vec}s create new, user-defined Chisel types and can be arbitrarily nested.
+% Chisel provides two constructs to group related signals: (1) a \code{Bundle} and (2) a \code{Vec}.
+% A \code{Bundle} groups signals of different types as named fields.
+% A \code{Vec} represents an indexable collection of signals (elements) of the same type.
+% \code{Bundle}s and \code{Vec}s create new, user-defined Chisel types and can be arbitrarily nested.
+
+Chisel proporciona dos constructores para agrupar señales relacionadas: (1) un \code{Bundle} y (2) un \code{Vec}.
+Un \code{Bundle} agrupa señales de distintos tipos como campos con nombre.
+Un \code{Vec} representa una colección indexable de señales (elementos) del mismo tipo.
+Los \code{Bundle} y los \code{Vec} crean tipos de Chisel nuevos, definidos por el usuario, y pueden anidarse
+de forma arbitraria.
 
 \subsection{Bundle}
 
-A Chisel \code{Bundle} groups several signals. The entire bundle can be referenced
-as a whole, or individual fields can be accessed by their name.
-A \code{Bundle} is similar to a \code{struct} in C and SystemVerilog or a \code{record} in VHDL.
-We can define a bundle (collection of signals) by defining a class that
-extends \code{Bundle} and list the fields as \code{val}s within the constructor block.
+% A Chisel \code{Bundle} groups several signals. The entire bundle can be referenced
+% as a whole, or individual fields can be accessed by their name.
+% A \code{Bundle} is similar to a \code{struct} in C and SystemVerilog or a \code{record} in VHDL.
+% We can define a bundle (collection of signals) by defining a class that
+% extends \code{Bundle} and list the fields as \code{val}s within the constructor block.
+
+Un \code{Bundle} de Chisel agrupa varias señales. Se puede hacer referencia al bundle entero
+como un todo, o acceder a cada campo por su nombre.
+Un \code{Bundle} es parecido a un \code{struct} de C y SystemVerilog, o a un \code{record} de VHDL.
+Podemos definir un bundle (una colección de señales) definiendo una clase que
+extienda \code{Bundle} y enumerando los campos como \code{val} dentro del bloque del constructor.
 
 \shortlist{code/bundle.txt}
 
-\noindent To use a bundle, we create it with \code{new} and wrap it into a \code{Wire}.
-The fields are accessed with the dot notation:
+% \noindent To use a bundle, we create it with \code{new} and wrap it into a \code{Wire}.
+% The fields are accessed with the dot notation:
+
+\noindent Para usar un bundle, lo creamos con \code{new} y lo envolvemos en un \code{Wire}.
+A los campos se accede con la notación de punto:
 
 \shortlist{code/bundle_use.txt}
 
-Dot notation is common in object-oriented languages, where \code{x.y} means
-\code{x} is a reference to an object and \code{y} is a field of that object.
-As Chisel is object-oriented, we use dot notation to access fields in a bundle.
-A bundle can also be referenced as a whole:
+% Dot notation is common in object-oriented languages, where \code{x.y} means
+% \code{x} is a reference to an object and \code{y} is a field of that object.
+% As Chisel is object-oriented, we use dot notation to access fields in a bundle.
+% A bundle can also be referenced as a whole:
+
+La notación de punto es habitual en los lenguajes orientados a objetos, donde \code{x.y} significa
+que \code{x} es una referencia a un objeto e \code{y} es un campo de ese objeto.
+Como Chisel está orientado a objetos, usamos la notación de punto para acceder a los
+\newpage 
+campos de un bundle. También se puede hacer referencia a un bundle como un todo:
 
 \shortlist{code/bundle_ref.txt}
 
