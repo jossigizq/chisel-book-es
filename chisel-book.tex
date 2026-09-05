@@ -53,6 +53,7 @@
 
 \usepackage{booktabs}
 \usepackage{graphicx}
+\usepackage{float}
 \usepackage{xcolor}
 \usepackage{multirow}
 \usepackage{cite}
@@ -1740,7 +1741,8 @@ la señal \code{b}.
 % A multiplexer can be built from logic.
 % However, as multiplexing  is such a standard operation, Chisel provides a multiplexer,
 Un multiplexor puede construirse a partir de lógica.
-No obstante, como el multiplexado es una operación tan habitual, Chisel proporciona un multiplexor,
+No obstante, como el multiplexado es una operación tan habitual, Chisel proporciona una clase para 
+instanciar directamente un multiplexor,
 
 \shortlist{code/mux.txt}
 
@@ -1770,73 +1772,120 @@ el capítulo~\ref{chap:comb}.
 El segundo componente básico necesario para describir un circuito digital es un elemento de estado,
 también llamado registro, que se describe a continuación.
 
-\section{Registers}
+\section{Registros}
 
 \index{Register}
 \index{Reg}
 
-Chisel provides a register, which is a collection of
-\myref{https://en.wikipedia.org/wiki/Flip-flop\_(electronics)\#D\_flip-flop}{D flip-flops}.
-The register is implicitly connected to a global clock and is updated on the rising edge.
-When an initialization value is provided at the declaration of the register,
-it uses a synchronous reset connected to a global reset signal.
-A register can be any Chisel type that can be represented as a collection of bits.
-Following code defines an 8-bit register, initialized with 0 at reset:
+% Chisel provides a register, which is a collection of
+% \myref{https://en.wikipedia.org/wiki/Flip-flop\_(electronics)\#D\_flip-flop}{D flip-flops}.
+% The register is implicitly connected to a global clock and is updated on the rising edge.
+% When an initialization value is provided at the declaration of the register,
+% it uses a synchronous reset connected to a global reset signal.
+% A register can be any Chisel type that can be represented as a collection of bits.
+% Following code defines an 8-bit register, initialized with 0 at reset:
+
+Chisel también proporciona una clase para instanciar registros. Un registro es un conjunto de
+\myref{https://en.wikipedia.org/wiki/Flip-flop\_(electronics)\#D\_flip-flop}{biestables de tipo D}.
+El registro se conecta por defecto a una señal de reloj global y se actualiza su estado en el flanco de subida.
+Cuando se proporciona un valor de inicialización en la declaración del registro,
+este usa un reset síncrono conectado a una señal global de reset.
+Un registro puede ser cualquier tipo de Chisel que pueda representarse como un conjunto de bits.
+El siguiente código define un registro de 8 bits, inicializado a 0 en el reset:
 
 \shortlist{code/register.txt}
 
-\noindent An input is connected to the register with the \code{:=} update operator and
-the output of the register can be used just with the name in an expression:
+% \noindent An input is connected to the register with the \code{:=} update operator and
+% the output of the register can be used just with the name in an expression:
+
+\noindent Una entrada se conecta al registro con el operador de actualización \code{:=}, y
+la salida del registro puede usarse en una expresión utilizando directamente su nombre:
 
 \shortlist{code/reg_con.txt}
 
-\begin{figure}
-  \centering
-  \includegraphics[scale=\scale]{figures/register-reset-0}
-  \caption{A D flip-flop based register with a synchronous reset to 0.}
-  \label{fig:register-reset-0}
-\end{figure}
+% \noindent A register can also be connected to its input at the definition:
 
-\noindent A register can also be connected to its input at the definition:
+% \noindent Un registro también puede conectarse a su entrada en la propia definición:
+\noindent A un registro tambíen se le puede conectar directamente su entrada en la propia definición:
 
 \shortlist{code/reg_next.txt}
 
-Figure~\ref{fig:register-reset-0} shows the circuit of our register definition with
-a clock, a synchronous reset to \code{0.U}, input \code{d}, and output \code{q}.
-The global signals \code{clock} and \code{reset} are implicitly connected to
-each register defined.
+% Figure~\ref{fig:register-reset-0} shows the circuit of our register definition with
+% a clock, a synchronous reset to \code{0.U}, input \code{d}, and output \code{q}.
+% The global signals \code{clock} and \code{reset} are implicitly connected to
+% each register defined.
 
-\noindent A register can also be connected to its input and a constant as
-initial value at the definition:
+La figura~\ref{fig:register-reset-0} muestra el circuito del registro definido anteriormente, con
+un reloj, un reset síncrono a \code{0.U}, la entrada \code{d} y la salida \code{q}.
+Las señales globales \code{clock} y \code{reset} se conectan implícitamente a
+cada registro que se define.
+
+% \begin{figure}[h]
+%   \centering
+%   \includegraphics[scale=\scale]{figures/register-reset-0}
+%   \caption{A D flip-flop based register with a synchronous reset to 0.}
+%   \label{fig:register-reset-0}
+% \end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=\scale]{figures/register-reset-0}
+  \caption{Un registro basado en biestables D con reset síncrono a 0.}
+  \label{fig:register-reset-0}
+\end{figure}
+
+% \noindent A register can also be connected to its input and a constant as
+% initial value at the definition:
+
+\noindent A un registro también se le puede conectar, en la propia definición, la entrada y asignarle una
+constante como valor inicial:
 
 \shortlist{code/reg_both.txt}
 
-\noindent To distinguish between signals representing combinational logic and registers,
-a common practice is to postfix register names with \code{Reg}.
-Another common practice, coming from Java and Scala, is to use
-\myref{https://en.wikipedia.org/wiki/Camel_case}{CamelCase} for
-identifiers consisting of several words. The convention is to start
-functions and variables with a lower case letter and classes (types),
-e.g., a \code{Module} name, with an upper case letter.
+% \noindent To distinguish between signals representing combinational logic and registers,
+% a common practice is to postfix register names with \code{Reg}.
+% Another common practice, coming from Java and Scala, is to use
+% \myref{https://en.wikipedia.org/wiki/Camel_case}{CamelCase} for
+% identifiers consisting of several words. The convention is to start
+% functions and variables with a lower case letter and classes (types),
+% e.g., a \code{Module} name, with an upper case letter.
 
-In Chisel you are relative free to name your identifiers. However, use taste and
-descriptive names. Furthermore, several words are reserved. They are listed
-in Appendix~\ref{sec:reserved}.
+\noindent Para distinguir entre las señales que representan lógica combinacional y los registros,
+una práctica habitual es añadir el sufijo \code{Reg} a los nombres de los registros.
+Otra práctica habitual, heredada de Java y Scala, es usar
+\myref{https://en.wikipedia.org/wiki/Camel_case}{CamelCase} para
+los identificadores formados por varias palabras. El convenio es empezar
+las funciones y las variables con minúscula, y las clases (los tipos),
+por ejemplo el nombre de un \code{Module}, con mayúscula.
 
+% In Chisel you are relative free to name your identifiers. However, use taste and
+% descriptive names. Furthermore, several words are reserved. They are listed
+% in Appendix~\ref{sec:reserved}.
 
+En Chisel tienes bastante libertad a la hora de nombrar tus identificadores. Sin embargo, se recomienda usar 
+nombres descriptivos y el sentido común. Además, hay varias palabras reservadas, que están recogidas
+en el apéndice~\ref{sec:reserved}.
 
-
-\subsection{Counting}
+\subsection{Contar}
 
 \index{Counting}
-Counting is a fundamental operation in digital systems. One might count events.
-However, more often counting is used to define a time interval. Counting the
-clock cycles and triggering an action when the time interval has expired.
+% Counting is a fundamental operation in digital systems. One might count events.
+% However, more often counting is used to define a time interval. Counting the
+% clock cycles and triggering an action when the time interval has expired.
 
-A simple approach is counting up to a value. However, in computer science,
-and digital design, counting starts at 0. Therefore, if we want to count
-10 clock cycles, we count from 0 to 9. The following code shows such a counter that counts
-till 9 and wraps around to 0 when reaching 9.
+Contar es una operación fundamental en los sistemas digitales. Se pueden contar sucesos,
+pero lo más habitual es que contar sirva para definir un intervalo de tiempo: se cuentan
+los ciclos de reloj y se dispara una acción cuando el intervalo ha terminado.
+
+% A simple approach is counting up to a value. However, in computer science,
+% and digital design, counting starts at 0. Therefore, if we want to count
+% 10 clock cycles, we count from 0 to 9. The following code shows such a counter that counts
+% till 9 and wraps around to 0 when reaching 9.
+
+Un enfoque sencillo consiste en contar hacia arriba hasta un valor. Ahora bien, en informática
+y en diseño digital se empieza a contar en 0. Por lo tanto, si queremos contar
+10 ciclos de reloj, contamos de 0 a 9. El siguiente código muestra uno de esos contadores, que cuenta
+hasta 9 y vuelve a 0 al llegar a 9.
 
 \shortlist{code/counter.txt}
 
