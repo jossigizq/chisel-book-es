@@ -2059,52 +2059,82 @@ entradas del \code{Vec}.
 \shortlist{code/vec_init_sig.txt}
 
 
-\subsubsection{Register Vec}
+\subsubsection{Vec de registros}
 
-We can also wrap a \code{Vec} into a register to define an array of registers.
-The following code shows a vector of three registers.
+% We can also wrap a \code{Vec} into a register to define an array of registers.
+% The following code shows a vector of three registers.
+
+También podemos envolver un \code{Vec} en un registro para definir un array de registros.
+El siguiente código muestra un vector de tres registros.
+
 \shortlist{code/vec_reg.txt}
 
-Figure~\ref{fig:vec-reg} shows the schematic of that circuit. It contains three registers.
-The read index (\code{rdIdx}) selects the multiplexer connected to the output of the three
-registers. The output signal is \code{dout}
-The write index (\code{wrIdx}) selects which register will be written with the data
-from \code{din}. \code{wrIdx} is driving a decoder that selects one of the three
-enable signals of the registers.
+% Figure~\ref{fig:vec-reg} shows the schematic of that circuit. It contains three registers.
+% The read index (\code{rdIdx}) selects the multiplexer connected to the output of the three
+% registers. The output signal is \code{dout}
+% The write index (\code{wrIdx}) selects which register will be written with the data
+% from \code{din}. \code{wrIdx} is driving a decoder that selects one of the three
+% enable signals of the registers.
 
-\begin{figure}[t]
+La figura~\ref{fig:vec-reg} muestra el esquema de ese circuito, que contiene tres registros.
+La señal de lectura (\code{rdIdx}) gobierna el multiplexor conectado a la salida de los tres
+registros. La señal de salida es \code{dout}.
+La señal de escritura (\code{wrIdx}) selecciona en qué registro se escribirán los datos
+procedentes de \code{din}. \code{wrIdx} ataca a un decodificador que activa una de las tres
+señales de habilitación de los registros.
+
+\begin{figure}[H]
   \centering
-  \includegraphics[scale=\scale]{figures/vec-reg}
-  \caption{A vector of registers.}
+  \includegraphics[scale=0.525]{figures/vec-reg}
+  \caption{Un vector de registros.}
   \label{fig:vec-reg}
 \end{figure}
 
 
 \index{Register file}
-Following example defines a register file for a processor; 32 registers
-each 32-bits wide, as used in a classic 32-bit
+% Following example defines a register file for a processor; 32 registers
+% each 32-bits wide, as used in a classic 32-bit
+% \myref{https://en.wikipedia.org/wiki/Reduced_instruction_set_computer}{RISC}
+% processor such as the 32-bit version of \myref{https://en.wikipedia.org/wiki/RISC-V}{RISC-V}.
+
+El siguiente ejemplo define un banco de registros para un procesador: 32 registros
+de 32 bits cada uno, como los que se usan en un procesador
 \myref{https://en.wikipedia.org/wiki/Reduced_instruction_set_computer}{RISC}
-processor such as the 32-bit version of \myref{https://en.wikipedia.org/wiki/RISC-V}{RISC-V}.
+clásico de 32 bits, como la versión de 32 bits de \myref{https://en.wikipedia.org/wiki/RISC-V}{RISC-V}.
 
 \shortlist{code/reg_file.txt}
 
-\noindent An element of that register file is accessed with an index and used as a normal register.
+% \noindent An element of that register file is accessed with an index and used as a normal register.
+
+\noindent A un elemento de ese banco de registros se accede con un índice y se usa como un registro normal.
 
 \shortlist{code/reg_file_access.txt}
 
-A register of a vector can also be initialized. This is then the value that the register is reset to.
-To initialize the register file, we use A \code{VecInit} with the constants for reset, wrapped
-into a \code{RegInit}. The input of the three registers are then connected to wires \code{d},
-\code{e}, and \code{f}.
+% A register of a vector can also be initialized. This is then the value that the register is reset to.
+% To initialize the register file, we use A \code{VecInit} with the constants for reset, wrapped
+% into a \code{RegInit}. The input of the three registers are then connected to wires \code{d},
+% \code{e}, and \code{f}.
+
+Un registro de un vector también puede inicializarse. Ese es el valor al que se pone el registro en el reset.
+Para inicializar el banco de registros se utilizan constantes haciendo uso de un \code{VecInit}, envuelto
+en un \code{RegInit}. Las entradas de los tres registros se conectan después a los cables \code{d},
+\code{e} y \code{f}.
 
 \shortlist{code/reg_vec_init.txt}
 
-If we want to reset all elements of a large register file to the same value (probably 0), we
-can use a Scala sequence \code{Seq}. \code{VecInit} can be constructed with a sequence
-containing Chisel types. \code{Seq} contains a creation function \code{fill} to initialize a sequence
-with identical values.
-The following code constructs a register file containing 32 registers, each 32-bit wide and reset to
-0:
+% If we want to reset all elements of a large register file to the same value (probably 0), we
+% can use a Scala sequence \code{Seq}. \code{VecInit} can be constructed with a sequence
+% containing Chisel types. \code{Seq} contains a creation function \code{fill} to initialize a sequence
+% with identical values.
+% The following code constructs a register file containing 32 registers, each 32-bit wide and reset to
+% 0:
+
+Si queremos poner todos los elementos de un banco de registros grande al mismo valor en el reset
+(probablemente ese valor sea 0), podemos usar una secuencia \code{Seq} de Scala. Un \code{VecInit} puede 
+construirse con una secuencia que contenga tipos de Chisel. \code{Seq} dispone de una función de creación,
+\code{fill}, que inicializa una secuencia con valores idénticos.
+El siguiente código construye un banco de registros con 32 registros, cada uno de 32 bits y con
+el reset a 0:
 
 \shortlist{code/reg_vec_reset.txt}
 
