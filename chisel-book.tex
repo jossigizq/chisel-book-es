@@ -2077,9 +2077,9 @@ El siguiente código muestra un vector de tres registros.
 % enable signals of the registers.
 
 La figura~\ref{fig:vec-reg} muestra el esquema de ese circuito, que contiene tres registros.
-La señal de lectura (\code{rdIdx}) gobierna el multiplexor conectado a la salida de los tres
+El índice de lectura (\code{rdIdx}) gobierna el multiplexor conectado a la salida de los tres
 registros. La señal de salida es \code{dout}.
-La señal de escritura (\code{wrIdx}) selecciona en qué registro se escribirán los datos
+El índice de escritura (\code{wrIdx}) selecciona en qué registro se escribirán los datos
 procedentes de \code{din}. \code{wrIdx} ataca a un decodificador que activa una de las tres
 señales de habilitación de los registros.
 
