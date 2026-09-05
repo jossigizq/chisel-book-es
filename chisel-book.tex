@@ -1948,64 +1948,113 @@ campos de un bundle. También se puede hacer referencia a un bundle como un todo
 
 \subsection{Vec}
 
-A Chisel \code{Vec} (a vector) represents a collection of Chisel types of the same type.
-Each element can be accessed by an index. A Chisel \code{Vec} is similar
-to array data structures in other programming languages.\footnote{The name \codefoot{Array}
-is already used in Scala.}
+% A Chisel \code{Vec} (a vector) represents a collection of Chisel types of the same type.
+% Each element can be accessed by an index. A Chisel \code{Vec} is similar
+% to array data structures in other programming languages.\footnote{The name \codefoot{Array}
+% is already used in Scala.}
 
-A \code{Vec} is used for three different purposes: (1) dynamic addressing in hardware,
-which is a multiplexer; (2) a register file, which includes multiplexing the read and
-generating the enable signal for the write; (3) parametrization of the number of
-ports of a \code{Module}. For other collections of \emph{things}, being it hardware elements
-or other generator data, it is better to use the Scala collection \code{Seq}.
+Un \code{Vec} de Chisel (un vector) representa una colección de elementos de Chisel del mismo tipo.
+A cada elemento se accede mediante un índice. Un \code{Vec} de Chisel es parecido
+a las estructuras de datos de tipo array de otros lenguajes de programación.\footnote{El nombre
+\codefoot{Array} ya se usa en Scala.}
 
-\subsubsection{Combinational Vec}
+% A \code{Vec} is used for three different purposes: (1) dynamic addressing in hardware,
+% which is a multiplexer; (2) a register file, which includes multiplexing the read and
+% generating the enable signal for the write; (3) parametrization of the number of
+% ports of a \code{Module}. For other collections of \emph{things}, being it hardware elements
+% or other generator data, it is better to use the Scala collection \code{Seq}.
 
+Un \code{Vec} se usa para tres fines distintos: (1) el direccionamiento dinámico en hardware,
+con esto nos referimos básicamente a un multiplexor; (2) un banco de registros, que incluye el multiplexado 
+de la lectura y la generación de la señal de habilitación (\emph{enable}) para la escritura; (3) la 
+parametrización del número de puertos de un \code{Module}. 
 
-A \code{Vec} is created by calling the constructor with two parameters: the
-number of elements and the type of the elements. A combinational \code{Vec}
-needs to be wrapped into a \code{Wire}
+Para otras colecciones de \emph{cosas}, ya sean 
+componentes hardware u otros datos del generador, es mejor usar la colección \code{Seq} de Scala.
+
+\subsubsection{Vec combinacional}
+
+% A \code{Vec} is created by calling the constructor with two parameters: the
+% number of elements and the type of the elements. A combinational \code{Vec}
+% needs to be wrapped into a \code{Wire}
+
+Un \code{Vec} se crea llamando al constructor con dos parámetros: el
+número de elementos y el tipo de los elementos. Un \code{Vec} combinacional
+necesita envolverse en un \code{Wire}:
 
 \shortlist{code/vec.txt}
 
-\noindent Individual elements are accessed with \code{(index)}.
-A vector wrapped into a \code{Wire} is just a multiplexer.
+% \noindent Individual elements are accessed with \code{(index)}.
+% A vector wrapped into a \code{Wire} is just a multiplexer.
+
+\noindent A los elementos individuales se accede con \code{(index)}.
+Un vector envuelto en un \code{Wire} no es más que un multiplexor.
 
 \shortlist{code/vec_access.txt}
 
-Here is another example of using \code{Vec} as a multiplexer.
-The three inputs are connected to the three wires \code{x}, \code{y},
-and \code{z}. The \code{select} wire selects which input is used and
-connects it to \code{muxOut}.
+% Here is another example of using \code{Vec} as a multiplexer.
+% The three inputs are connected to the three wires \code{x}, \code{y},
+% and \code{z}. The \code{select} wire selects which input is used and
+% connects it to \code{muxOut}.
+
+Aquí tenemos otro ejemplo de uso de un \code{Vec} como multiplexor.
+Las tres entradas se conectan a los tres cables \code{x}, \code{y}
+y \code{z}. El cable \code{select} elige qué entrada se usa y
+la conecta a \code{muxOut}.
 
 \shortlist{code/vec_mux.txt}
 
-\noindent Figure~\ref{fig:vec-mux} shows the resulting schematic of the above code snippet.
+% \noindent Figure~\ref{fig:vec-mux} shows the resulting schematic of the above code snippet.
 
-\begin{figure}
+\noindent La figura~\ref{fig:vec-mux} muestra el esquema resultante del fragmento de código anterior.
+
+% \begin{figure}
+%   \centering
+%   \includegraphics[scale=\scale]{figures/vec-mux}
+%   \caption{A vector wrapped in a \code{Wire} is just a multiplexer.}
+%   \label{fig:vec-mux}
+% \end{figure}
+
+\begin{figure}[H]
   \centering
   \includegraphics[scale=\scale]{figures/vec-mux}
-  \caption{A vector wrapped in a \code{Wire} is just a multiplexer.}
+  \caption{Un vector envuelto en un \code{Wire} no es más que un multiplexor.}
   \label{fig:vec-mux}
 \end{figure}
 
 \index{VecInit}
-Similar to using a \code{WireDefault}, we can set default values of a \code{Vec} with \code{VecInit}.
-The following code represents a 3:1 multiplexer with three constant defaults. Note that we specify
-the size (3 bits) of the \code{UInt} data types with the first constant.
-With the condition (\code{cond}) we can overwrite those default values.
-This overwrite hardware itself consists of three 2:1 multiplexers. The last line selects
-one of the three inputs of the \code{defVec} multiplexer. Note that \code{VecInit} already returns
-Chisel hardware, so we do not need to wrap it in a \code{Wire}.\footnote{This is different from
-a plain \codefoot{Vec} that needs to be wrapped into a \codefoot{Wire}. We could wrap the \codefoot{VecInit}
-into a \codefoot{WireDefault}, but this uncommon coding style.}
+% Similar to using a \code{WireDefault}, we can set default values of a \code{Vec} with \code{VecInit}.
+% The following code represents a 3:1 multiplexer with three constant defaults. Note that we specify
+% the size (3 bits) of the \code{UInt} data types with the first constant.
+% With the condition (\code{cond}) we can overwrite those default values.
+% This overwrite hardware itself consists of three 2:1 multiplexers. The last line selects
+% one of the three inputs of the \code{defVec} multiplexer. Note that \code{VecInit} already returns
+% Chisel hardware, so we do not need to wrap it in a \code{Wire}.\footnote{This is different from
+% a plain \codefoot{Vec} that needs to be wrapped into a \codefoot{Wire}. We could wrap the \codefoot{VecInit}
+% into a \codefoot{WireDefault}, but this uncommon coding style.}
+
+De forma parecida a como se usa un \code{WireDefault}, podemos fijar los valores por defecto de un
+\code{Vec} con \code{VecInit}.
+El siguiente código representa un multiplexor 3:1 con tres constantes por defecto. Fíjate en que
+especificamos el tamaño (3 bits) de los tipos de datos \code{UInt} con la primera constante.
+Con la condición (\code{cond}) podemos sobrescribir esos valores por defecto.
+Ese hardware de sobrescritura consiste, a su vez, en tres multiplexores 2:1. La última línea selecciona
+una de las tres entradas del multiplexor \code{defVec}. Ten en cuenta que \code{VecInit} ya devuelve
+hardware de Chisel, así que no necesitamos envolverlo en un \code{Wire}.\footnote{Esto es distinto de
+un \codefoot{Vec} normal, que sí necesita envolverse en un \codefoot{Wire}. Podríamos envolver el
+\codefoot{VecInit} en un \codefoot{WireDefault}, pero es un estilo de programación poco habitual.}
 
 \shortlist{code/vec_init.txt}
 
-It is not only possible to set initial constants (like in \code{WireDefault}) for the \code{Vec} input,
-but we can also connect signals (wires) with \code{VecInit} to the inputs of the \code{Vec}.
-The following example connects the wires \code{d}, \code{e}, and \code{f} to the three
-inputs of the \code{Vec}.
+% It is not only possible to set initial constants (like in \code{WireDefault}) for the \code{Vec} input,
+% but we can also connect signals (wires) with \code{VecInit} to the inputs of the \code{Vec}.
+% The following example connects the wires \code{d}, \code{e}, and \code{f} to the three
+% inputs of the \code{Vec}.
+
+No solo es posible fijar constantes iniciales (como en \code{WireDefault}) para la entrada del \code{Vec};
+también podemos conectar señales (cables) con \code{VecInit} a las entradas del \code{Vec}.
+El siguiente ejemplo conecta los cables \code{d}, \code{e} y \code{f} a las tres
+entradas del \code{Vec}.
 
 \shortlist{code/vec_init_sig.txt}
 
