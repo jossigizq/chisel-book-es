@@ -1421,7 +1421,7 @@ entera con un tipo. Por ejemplo, \code{3L}, que representa una constante entera 
 % Instead, the expression \code{(32)} is interpreted as bit extraction from position 32, which results
 % in a single bit constant of 0. Probably not what the original intention of the programmer was.
 
-{\bf Posible trampa:} un error frecuente al definir constantes con una anchura concreta es olvidar el
+{\bf Posible fallo:} un error frecuente al definir constantes con una anchura concreta es olvidar el
 especificador de anchura \code{.W}. Por ejemplo, \code{1.U(32)} \emph{no} define una constante de 32 bits de anchura
 que represente el valor 1.
 En su lugar, la expresión \code{(32)} se interpreta como una extracción del bit de la posición 32, lo que da como
@@ -2138,45 +2138,73 @@ el reset a 0:
 
 \shortlist{code/reg_vec_reset.txt}
 
-\subsubsection{Combining Bundle and Vec}
+\subsubsection{Combinar Bundle y Vec}
 
-We can freely mix bundles and vectors. When creating a vector with a bundle
-type, we need to pass a prototype for the vector fields. Using our
-\code{Channel}, which we defined above, we can create a vector of channels with:
+% We can freely mix bundles and vectors. When creating a vector with a bundle
+% type, we need to pass a prototype for the vector fields. Using our
+% \code{Channel}, which we defined above, we can create a vector of channels with:
+
+Podemos mezclar libremente bundles y vectores. Al crear un vector con un tipo
+bundle, necesitamos pasar un prototipo del tipo para poder definir los campos del vector. 
+Usando el ejemplo \code{Channel}, que definimos más arriba, podemos crear un vector de canales con:
 
 \shortlist{code/vec_bundle.txt}
 
-\noindent A bundle may as well contain a vector:
+% \noindent A bundle may as well contain a vector:
+
+\noindent Del mismo modo, un bundle puede contener un vector:
 
 \shortlist{code/bundle_vec.txt}
 
-When we want a register of a bundle type that needs a reset value,
-we first create a \code{Wire} of that bundle, set the individual fields
-as needed, and then pass this bundle to a \code{RegInit}:
+% When we want a register of a bundle type that needs a reset value,
+% we first create a \code{Wire} of that bundle, set the individual fields
+% as needed, and then pass this bundle to a \code{RegInit}:
+
+Cuando queremos un registro de un tipo bundle que necesita un valor de reset,
+primero creamos un \code{Wire} de ese bundle, damos a cada campo el valor
+que corresponda y después pasamos ese bundle a un \code{RegInit}:
 
 \shortlist{code/bundle_reg_init.txt}
 
-With combinations of \code{Bundle}s and \code{Vec}s we can define our own data
-structures, which are powerful abstractions.
+% With combinations of \code{Bundle}s and \code{Vec}s we can define our own data
+% structures, which are powerful abstractions.
 
-{\bf Possible pitfall:} In Chisel 3, partial assignments are not allowed, although they have been
-allowed in Chisel 2 and are possible in Verilog and VHDL. The following code will generate
-an error during circuit elaboration:
+Combinando \code{Bundle} y \code{Vec} podemos definir nuestras propias estructuras
+de datos, que son abstracciones muy potentes.
+
+% {\bf Possible pitfall:} In Chisel 3, partial assignments are not allowed, although they have been
+% allowed in Chisel 2 and are possible in Verilog and VHDL. The following code will generate
+% an error during circuit elaboration:
+
+{\bf Posible fallo:} en Chisel 3 no se permiten las asignaciones parciales, aunque sí estaban
+soportadas en Chisel 2 y son posibles en Verilog y VHDL. El siguiente código generará
+un error durante la elaboración del circuito:
 
 \shortlist{code/no_partial_assign.txt}
 
-\noindent The argument is that it would be better to use bundles for this use case.
-One possible workaround for this issue is to create a (local) bundle, create a \code{Wire}
-from that bundle, assign the individual fields, casting that bundle with \code{asUInt}
-to a \code{UInt}, and assign this value to the target \code{UInt}.
-Note that we define here a \code{Bundle} as a local data structure as we need it only
-locally.
+% \noindent The argument is that it would be better to use bundles for this use case.
+% One possible workaround for this issue is to create a (local) bundle, create a \code{Wire}
+% from that bundle, assign the individual fields, casting that bundle with \code{asUInt}
+% to a \code{UInt}, and assign this value to the target \code{UInt}.
+% Note that we define here a \code{Bundle} as a local data structure as we need it only
+% locally.
+
+\noindent El argumento es que, para este caso de uso, es preferible utilizar bundles.
+Una posible solución consiste en crear un bundle (local), crear un \code{Wire}
+a partir de ese bundle, asignar cada uno de los campos, convertir ese bundle a un
+\code{UInt} con \code{asUInt} y asignar ese valor al \code{UInt} de destino.
+Fíjate en que aquí definimos un \code{Bundle} como una estructura de datos local, ya que solo
+lo necesitamos ahí.
 
 \shortlist{code/partial_assign_solution.txt}
 
-\noindent The small drawback of this solution is that one needs to know in which orders
-bundle fields are merged to a single bit vector. Another option is to use a vector of \code{Bool}
-to individually assign values and then convert it to a \code{UInt}.
+% \noindent The small drawback of this solution is that one needs to know in which orders
+% bundle fields are merged to a single bit vector. Another option is to use a vector of \code{Bool}
+% to individually assign values and then convert it to a \code{UInt}.
+
+\noindent El pequeño inconveniente de esta solución es que hay que saber en qué orden se
+combinan los campos del bundle para formar un único vector de bits. Otra opción es usar un vector de
+\code{Bool} para asignar los valores uno a uno y convertirlo después a un \code{UInt}.
 
 \shortlist{code/partial_vec_bool.txt}
 
