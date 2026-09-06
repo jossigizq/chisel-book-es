@@ -2331,37 +2331,66 @@ crear en hardware sin necesidad de dividir tu aplicación en hilos de ejecución
 ni de gestionar los bloqueos para la comunicación entre ellos.
 
 
-\section{Exercises}
+\section{Ejercicios}
 
-In the introduction you implemented a blinking LED on an FPGA board
-(from \myref{https://github.com/schoeberl/chisel-examples}{chisel-examples}), which is a reasonable
-hardware \emph{Hello World} example. It used only internal state, a single LED output, and no input.
-Copy that project into a new folder and extend it by adding some inputs to the \code{io} \code{Bundle}
-with \code{val sw = Input(UInt(2.W))}.
+% In the introduction you implemented a blinking LED on an FPGA board
+% (from \myref{https://github.com/schoeberl/chisel-examples}{chisel-examples}), which is a reasonable
+% hardware \emph{Hello World} example. It used only internal state, a single LED output, and no input.
+% Copy that project into a new folder and extend it by adding some inputs to the \code{io} \code{Bundle}
+% with \code{val sw = Input(UInt(2.W))}.
+
+En la introducción implementaste un LED parpadeante en una placa FPGA
+(a partir de \myref{https://github.com/schoeberl/chisel-examples}{chisel-examples}), que es un ejemplo
+razonable de \emph{Hola Mundo} en hardware. Solo usaba estado interno, una única salida al LED y ninguna
+entrada.
+Copia ese proyecto en una carpeta nueva y amplíalo añadiendo algunas entradas al \code{Bundle} \code{io}
+con \code{val sw = Input(UInt(2.W))}.
 
 \shortlist{code/basic_exercise.txt}
 
-\noindent For those switches, you also need to assign the pins for the FPGA board.
-You can find examples of pin assignments in the Quartus project files of the ALU project
-(e.g., for the \myref{https://github.com/schoeberl/chisel-examples/blob/master/quartus/altde2-115/alu.qsf}{DE2-115
-FPGA board}).
+% \noindent For those switches, you also need to assign the pins for the FPGA board.
+% You can find examples of pin assignments in the Quartus project files of the ALU project
+% (e.g., for the \myref{https://github.com/schoeberl/chisel-examples/blob/master/quartus/altde2-115/alu.qsf}{DE2-115
+% FPGA board}).
 
-When you have defined those inputs and the pin assignment, start with a simple test:
-drop all blinking logic from the design and connect one switch to the LED output;
-compile and configure the FPGA device. Can you switch the LED on an off with the switch?
-If yes, you have now inputs available. If not, you need to debug your FPGA configuration.
-The pin assignment can also be done with the GUI version of the tool.
+\noindent Para esos interruptores también necesitas asignar los pines de la placa FPGA.
+Puedes encontrar ejemplos de asignaciones de pines en el proyecto de la ALU en Quartus (por ejemplo, para la
+\myref{https://github.com/schoeberl/chisel-examples/blob/master/quartus/altde2-115/alu.qsf}{placa FPGA
+DE2-115}).
 
-Now use two switches and implement one of the basic combinational functions,
-e.g., AND two switches and show the result on the LED. Change the function.
-The next step involves three input switches to implement a multiplexer: one acts as
-a select signal, and the other two are the two inputs for the 2:1 multiplexer.
+% When you have defined those inputs and the pin assignment, start with a simple test:
+% drop all blinking logic from the design and connect one switch to the LED output;
+% compile and configure the FPGA device. Can you switch the LED on an off with the switch?
+% If yes, you have now inputs available. If not, you need to debug your FPGA configuration.
+% The pin assignment can also be done with the GUI version of the tool.
 
-Now you have been able to implement simple combinational functions and test them
-in real hardware in an FPGA. As a next step, we will take a first look at how the build
-process works to generate an FPGA configuration. Furthermore, we will also
-explore a simple testing framework from Chisel, which allows you to test circuits
-without configuring an FPGA and toggle switches.
+Cuando hayas definido esas entradas y la asignación de pines, empieza con una prueba sencilla:
+elimina del diseño toda la lógica de parpadeo y conecta un interruptor a la salida del LED;
+compila y configura el dispositivo FPGA. ¿Puedes encender y apagar el LED con el interruptor?
+Si es así, ya tienes entradas disponibles. Si no, tendrás que depurar la configuración de la FPGA.
+La asignación de pines también puede hacerse con la interfaz gráfica de usuario de la herramienta.
+
+% Now use two switches and implement one of the basic combinational functions,
+% e.g., AND two switches and show the result on the LED. Change the function.
+% The next step involves three input switches to implement a multiplexer: one acts as
+% a select signal, and the other two are the two inputs for the 2:1 multiplexer.
+
+Usa ahora dos interruptores e implementa una de las funciones combinacionales básicas.
+Por ejemplo, haz la AND de los dos interruptores y muestra el resultado en el LED. Después puedes probar con otras funciones.
+El siguiente paso consiste en usar tres interruptores de entrada para implementar un multiplexor: uno hace
+de señal de selección y los otros dos son las dos entradas del multiplexor 2:1.
+
+% Now you have been able to implement simple combinational functions and test them
+% in real hardware in an FPGA. As a next step, we will take a first look at how the build
+% process works to generate an FPGA configuration. Furthermore, we will also
+% explore a simple testing framework from Chisel, which allows you to test circuits
+% without configuring an FPGA and toggle switches.
+
+Ya has podido implementar funciones combinacionales sencillas y probarlas
+en hardware real en una FPGA. Como siguiente paso, veremos por primera vez cómo funciona el proceso
+de construcción que genera la configuración de la FPGA. Además, también
+exploraremos un sencillo entorno de pruebas de Chisel que te permite probar circuitos
+sin configurar una FPGA ni accionar interruptores.
 
 \chapter{Build Process and Testing}
 \label{chap:build:test}
