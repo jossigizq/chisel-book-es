@@ -2208,46 +2208,77 @@ combinan los campos del bundle para formar un único vector de bits. Otra opció
 
 \shortlist{code/partial_vec_bool.txt}
 
-\section{Wire, Reg, and IO}
+\section{Wire, Reg e IO}
 \index{Wire}
 \index{Reg}
 \index{IO}
 
-\code{UInt}, \code{SInt}, and \code{Bits} are Chisel types which by themselves do not
-represent hardware. Only wrapping them into a \code{Wire}, \code{Reg}, or \code{IO}
-generates hardware. A \code{Wire} represents combinational logic, a \code{Reg}
-represents a register (collection of D flip-flops), and an \code{IO} represents ports
-for the connection of a module (like pins of a concrete integrated circuit (IC)).
-Any Chisel type can be wrapped into a \code{Wire}, \code{Reg}, or \code{IO}.
+% \code{UInt}, \code{SInt}, and \code{Bits} are Chisel types which by themselves do not
+% represent hardware. Only wrapping them into a \code{Wire}, \code{Reg}, or \code{IO}
+% generates hardware. A \code{Wire} represents combinational logic, a \code{Reg}
+% represents a register (collection of D flip-flops), and an \code{IO} represents ports
+% for the connection of a module (like pins of a concrete integrated circuit (IC)).
+% Any Chisel type can be wrapped into a \code{Wire}, \code{Reg}, or \code{IO}.
 
-You give a hardware component a name by assigning it to a Scala immutable
-variable:\footnote{Scala also supports mutable variables with \codefoot{var}, but those are useless
-when describing hardware in Chisel.}
+\code{UInt}, \code{SInt} y \code{Bits} son tipos de Chisel que por sí solos no
+representan hardware. Solo se genera hardware al envolverlos en un \code{Wire}, un \code{Reg}
+o un \code{IO}. Un \code{Wire} representa lógica combinacional, un \code{Reg}
+representa un registro (un conjunto de biestables D) y un \code{IO} representa los puertos
+para la conexión de un módulo (como las patillas, o pines, de un circuito integrado concreto).
+Cualquier tipo de Chisel puede envolverse en un \code{Wire}, un \code{Reg} o un \code{IO}.
+
+% You give a hardware component a name by assigning it to a Scala immutable
+% variable:\footnote{Scala also supports mutable variables with \codefoot{var}, but those are useless
+% when describing hardware in Chisel.}
+
+A un componente hardware se le da nombre asignándolo a una variable inmutable de
+Scala:\footnote{Scala también admite variables mutables con \codefoot{var}, pero no sirven de nada
+al describir hardware en Chisel.}
 
 \shortlist{code/wire_reg.txt}
 
-\noindent You can later assign (or reassign) a value or expression to a \code{Wire}, \code{Reg}, or \code{IO}
-with the Chisel operator \code{:=}
+% \noindent You can later assign (or reassign) a value or expression to a \code{Wire}, \code{Reg}, or \code{IO}
+% with the Chisel operator \code{:=}
+
+\noindent Más adelante puedes asignar (o reasignar) un valor o una expresión a un \code{Wire}, a un \code{Reg}
+o a un \code{IO} con el operador \code{:=} de Chisel
 
 \shortlist{code/wire_reg_reassign.txt}
 
-\noindent Note the small difference between the Scala assignment operator ``\code{=}''
-and the Chisel operator ``\code{:=}''. You use Scala's ``\code{=}'' operator when \emph{creating} a hardware
-object (and giving it a name) but you use Chisel's ``\code{:=}'' operator when assigning or reassigning a value to
-an \emph{existing} hardware object.
+% \noindent Note the small difference between the Scala assignment operator ``\code{=}''
+% and the Chisel operator ``\code{:=}''. You use Scala's ``\code{=}'' operator when \emph{creating} a hardware
+% object (and giving it a name) but you use Chisel's ``\code{:=}'' operator when assigning or reassigning a value to
+% an \emph{existing} hardware object.
 
-Combinational values can be conditionally assigned, but they need to be assigned in every branch
-of the condition. Otherwise, one would describe a latch, which the Chisel compiler will reject.
-The best practice is to define a default value at the creation of the \code{Wire}.
-Therefore, the former code is better rewritten as follows.
+\noindent Fíjate en la pequeña diferencia que hay entre el operador de asignación ``\code{=}'' de Scala
+y el operador ``\code{:=}'' de Chisel. El operador ``\code{=}'' de Scala se usa al \emph{crear} un objeto
+hardware (y darle un nombre), mientras que el operador ``\code{:=}'' de Chisel se usa al asignar o reasignar
+un valor a un objeto hardware \emph{ya existente}.
+
+% Combinational values can be conditionally assigned, but they need to be assigned in every branch
+% of the condition. Otherwise, one would describe a latch, which the Chisel compiler will reject.
+% The best practice is to define a default value at the creation of the \code{Wire}.
+% Therefore, the former code is better rewritten as follows.
+
+Los valores combinacionales pueden asignarse de forma condicional, pero hay que asignarlos en todas las
+ramas de la condición. De lo contrario se estaría describiendo un \emph{latch}, algo que el compilador de
+Chisel rechazará.
+La mejor práctica es definir un valor por defecto al crear el \code{Wire}.
+Por lo tanto, es mejor reescribir el código anterior de la siguiente manera.
 
 \shortlist{code/wire_reg_default.txt}
 
-\noindent Although Chisel infers the needed bit width for signals and registers, it is also a good practice
-to specify the intended bit width at the creation of the hardware object.
-In most cases it is also good practice to set registers to known initial values on
-reset:\footnote{Leaving the register value undefined on reset may save some load on the reset
-wire. However, testing and verification is simplified with known reset values.}
+% \noindent Although Chisel infers the needed bit width for signals and registers, it is also a good practice
+% to specify the intended bit width at the creation of the hardware object.
+% In most cases it is also good practice to set registers to known initial values on
+% reset:\footnote{Leaving the register value undefined on reset may save some load on the reset
+% wire. However, testing and verification is simplified with known reset values.}
+
+\noindent Aunque Chisel infiere la anchura en bits necesaria para las señales y los registros, es una
+buena práctica especificar la anchura en bits que se pretende al crear el objeto hardware.
+En la mayoría de los casos también es una buena práctica poner los registros a valores iniciales conocidos en el
+reset:\footnote{Dejar el valor del registro indefinido en el reset puede aliviar algo de carga en el cable de
+reset. Sin embargo, las pruebas y la verificación se simplifican con valores de reset conocidos.}
 
 \shortlist{code/wire_reg_init.txt}
 
