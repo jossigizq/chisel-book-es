@@ -1291,7 +1291,7 @@ la entrada de \emph{reset} está conectada al SW0.
 % Explore which frequencies express best those two different emotions.
 
 Ahora cambia la frecuencia de parpadeo a un valor mayor o menor y
-vuelve a ejecutar el proceso de construcción. Las frecuencias de parpadeo, y también los patrones de parpadeo,
+vuelve a ejecutar el proceso de compilación. Las frecuencias de parpadeo, y también los patrones de parpadeo,
 transmiten distintas ``emociones''. Por ejemplo, un LED que parpadea despacio indica que
 todo está bien, mientras que un LED que parpadea rápido indica un estado de alarma.
 Explora qué frecuencias expresan mejor esas dos emociones distintas.
@@ -2392,34 +2392,54 @@ de construcción que genera la configuración de la FPGA. Además, también
 exploraremos un sencillo entorno de pruebas de Chisel que te permite probar circuitos
 sin configurar una FPGA ni accionar interruptores.
 
-\chapter{Build Process and Testing}
+\chapter{Proceso de compilación y pruebas}
 \label{chap:build:test}
 
-To get started with more interesting Chisel code we first need to learn how to compile
-Chisel programs, how to generate Verilog code for execution in an FPGA,
-and how to write tests for debugging and to verify that our circuits are correct.
+% To get started with more interesting Chisel code we first need to learn how to compile
+% Chisel programs, how to generate Verilog code for execution in an FPGA,
+% and how to write tests for debugging and to verify that our circuits are correct.
 %A more detailed description on debugging, testing, and verification is given
 %in Chapter~\ref{chap:testing}.
 
-Chisel is written in Scala, so any build process that supports Scala is possible
-with a Chisel project. One popular build tool for Scala is \myref{https://www.scala-sbt.org/}{sbt},
-which stands for the Scala interactive build tool.
-Besides driving the build and test process, \code{sbt} also downloads the correct
-version of Scala and the Chisel libraries.
+Para comenzar con código Chisel más interesante, primero necesitamos aprender a compilar
+programas en Chisel, a generar código Verilog para ejecutarlo en una FPGA
+y a escribir pruebas que sirvan para depurar y para verificar que nuestros circuitos son correctos.
 
-\section{Building your Project with sbt}
+% Chisel is written in Scala, so any build process that supports Scala is possible
+% with a Chisel project. One popular build tool for Scala is \myref{https://www.scala-sbt.org/}{sbt},
+% which stands for the Scala interactive build tool.
+% Besides driving the build and test process, \code{sbt} also downloads the correct
+% version of Scala and the Chisel libraries.
+
+Chisel está escrito en Scala, así que con un proyecto de Chisel es posible usar cualquier proceso de
+compilación que soporte Scala. Una herramienta de compilación popular para Scala es
+\myref{https://www.scala-sbt.org/}{sbt}, siglas de \emph{Scala interactive build tool}.
+Además de dirigir el proceso de compilación y de pruebas, \code{sbt} también descarga la versión
+correcta de Scala y de las bibliotecas de Chisel.
+
+\section{Compilar tu proyecto con sbt}
 
 \index{sbt}
 
-The Scala library that represents Chisel and the Chisel tester are automatically
-downloaded during the build process from a Maven repository.
-The libraries are referenced by \code{build.sbt}. It is possible to configure \code{build.sbt}
-with \code{latest.release} to always use the most recent version of Chisel.
-However, this means that on each build, the version is looked up from the Maven
-repository. This lookup needs an Internet connection for the build to succeed.
-It is better to use a dedicated version of Chisel and all other Scala libraries in your \code{build.sbt}.
-Sometimes, it is good to be able to write hardware code and test it without an Internet connection.
-For example, it is cool to do hardware design on a plane.
+% The Scala library that represents Chisel and the Chisel tester are automatically
+% downloaded during the build process from a Maven repository.
+% The libraries are referenced by \code{build.sbt}. It is possible to configure \code{build.sbt}
+% with \code{latest.release} to always use the most recent version of Chisel.
+% However, this means that on each build, the version is looked up from the Maven
+% repository. This lookup needs an Internet connection for the build to succeed.
+% It is better to use a dedicated version of Chisel and all other Scala libraries in your \code{build.sbt}.
+% Sometimes, it is good to be able to write hardware code and test it without an Internet connection.
+% For example, it is cool to do hardware design on a plane.
+
+La biblioteca de Scala que representa a Chisel y el tester de Chisel se descargan automáticamente
+de un repositorio Maven durante el proceso de compilación.
+Las bibliotecas se referencian desde \code{build.sbt}. Es posible configurar \code{build.sbt}
+con \code{latest.release} para usar siempre la versión más reciente de Chisel.
+Sin embargo, eso significa que en cada compilación hay que consultar la versión en el repositorio
+Maven, y esa consulta necesita conexión a Internet para que la compilación tenga éxito.
+Es mejor fijar en tu \code{build.sbt} una versión concreta de Chisel y del resto de bibliotecas de Scala.
+A veces viene bien poder escribir código hardware y probarlo sin conexión a Internet.
+Por ejemplo, resulta estupendo hacer diseño hardware en un avión.
 
 \subsection{Source Organization}
 
