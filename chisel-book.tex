@@ -728,7 +728,7 @@ Además, se presupone algo de experiencia de programación en cualquier lenguaje
 No se necesita conocer Verilog ni VHDL.
 Chisel puede ser tu primer lenguaje de programación para describir hardware digital.
 Como el proceso de compilación de los ejemplos se basa en \code{sbt} y \code{make},
-resultará útil un conocimiento básico de la interfaz de línea de órdenes (CLI, también llamada terminal o
+resultará útil un conocimiento básico de la interfaz de línea de comandos (CLI, también llamada terminal o
 consola de Unix).
 
 % Chisel itself is not a big language. The basic constructs fit on
@@ -2469,7 +2469,7 @@ tu primera compilación: \url{https://mvnrepository.com/artifact/edu.berkeley.cs
 .2 target.
 .2 generated.
 }
-\caption{Estructura de un proyecto en Chisel (usando \code{sbt})}
+\caption{Estructura de un proyecto en Chisel (usando \code{sbt}). También denominada árbol de ficheros fuentes.}
 \label{fig:folders}
 \end{figure}
 
@@ -2546,36 +2546,53 @@ usar en su lugar el nombre completo \code{mypack.Abc} para referirse al módulo
 \shortlist{code/usemypack3.txt}
 
 
-\subsection{Running sbt}
+\subsection{Ejecutar sbt}
 
-A Chisel project can be compiled and executed with a simple \code{sbt} command:
+% A Chisel project can be compiled and executed with a simple \code{sbt} command:
+
+Un proyecto de Chisel puede compilarse y ejecutarse con un simple comando de \code{sbt}:
 
 \begin{verbatim}
 $ sbt run
 \end{verbatim}
 
-This command will compile all your Chisel code from the source tree and search
-for classes that contain an \code{object} that either has a \code{main} method or
-extends \code{App}. If there is more than one such object, all objects are listed and
-one can be selected.
-You can also directly specify the object that shall be executed as a parameter to \code{sbt}:
+% This command will compile all your Chisel code from the source tree and search
+% for classes that contain an \code{object} that either has a \code{main} method or
+% extends \code{App}. If there is more than one such object, all objects are listed and
+% one can be selected.
+% You can also directly specify the object that shall be executed as a parameter to \code{sbt}:
+
+Este comando compilará todo tu código Chisel de los ficheros fuentes y buscará
+las clases que contengan un \code{object} que tenga un método \code{main} o que
+extienda \code{App}. Si hay más de un objeto de ese tipo, se listan todos y
+puede elegirse uno.
+También puedes indicar directamente el objeto que quieres ejecutar como parámetro de \code{sbt}:
 
 \begin{verbatim}
 $ sbt "runMain mypacket.MyObject"
 \end{verbatim}
 
-By default, \code{sbt} searches only the \code{main} part of the source tree and not
-the \code{test} part.\footnote{It is a convention from Java/Scala that the test folder contains
-unit tests and not objects with a \codefoot{main}.}
-To execute tests based on ChiselTest you can simply run them with
+% By default, \code{sbt} searches only the \code{main} part of the source tree and not
+% the \code{test} part.\footnote{It is a convention from Java/Scala that the test folder contains
+% unit tests and not objects with a \codefoot{main}.}
+% To execute tests based on ChiselTest you can simply run them with
+
+Por defecto, \code{sbt} solo busca en la parte \code{main} del árbol de ficheros fuentes, y no en la
+parte \code{test}.\footnote{Es un convenio de Java/Scala que la carpeta de pruebas contenga
+pruebas unitarias y no objetos con un \codefoot{main}.}
+Para ejecutar las pruebas basadas en ChiselTest basta con lanzarlas con
 
 \begin{verbatim}
 $ sbt test
 \end{verbatim}
 
-If you have a test that does not follow the ChiselTest convention and it contains a \code{main}
-function, but is placed in the \code{test} part of the source tree you can execute it
-with following \code{sbt} command:
+% If you have a test that does not follow the ChiselTest convention and it contains a \code{main}
+% function, but is placed in the \code{test} part of the source tree you can execute it
+% with following \code{sbt} command:
+
+Si tienes una prueba que no sigue el convenio de ChiselTest y contiene una función \code{main},
+pero está colocada en la parte \code{test} del árbol de ficheros fuentes, puedes ejecutarla
+con el siguiente comando de \code{sbt}:
 
 \begin{verbatim}
 $ sbt "test:runMain mypacket.MyMainTest"
