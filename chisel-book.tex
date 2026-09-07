@@ -2441,14 +2441,19 @@ Es mejor fijar en tu \code{build.sbt} una versión concreta de Chisel y del rest
 A veces viene bien poder escribir código hardware y probarlo sin conexión a Internet.
 Por ejemplo, resulta estupendo hacer diseño hardware en un avión.
 
-\subsection{Source Organization}
+\subsection{Organización del código fuente}
 
 \index{Source organization}
 
-\code{sbt} inherits source conventions from the \myref{https://maven.apache.org/}{Maven}
-build automation tool. Maven also organizes repositories of open-source Java libraries.\footnote{That is
-also the place where you downloaded the Chisel library on your first build:
-\url{https://mvnrepository.com/artifact/edu.berkeley.cs/chisel3}.}
+% \code{sbt} inherits source conventions from the \myref{https://maven.apache.org/}{Maven}
+% build automation tool. Maven also organizes repositories of open-source Java libraries.\footnote{That is
+% also the place where you downloaded the Chisel library on your first build:
+% \url{https://mvnrepository.com/artifact/edu.berkeley.cs/chisel3}.}
+
+\code{sbt} hereda los convenios de organización del código fuente de la herramienta de automatización para
+la compilación \myref{https://maven.apache.org/}{Maven}. Además, Maven organiza repositorios de bibliotecas
+de código abierto en Java.\footnote{Ese es también el sitio del que descargaste la biblioteca de Chisel en
+tu primera compilación: \url{https://mvnrepository.com/artifact/edu.berkeley.cs/chisel3}.}
 
 \begin{figure}
 \dirtree{%
@@ -2464,48 +2469,79 @@ also the place where you downloaded the Chisel library on your first build:
 .2 target.
 .2 generated.
 }
-\caption{Source tree of a Chisel project (using \code{sbt})}
+\caption{Estructura de un proyecto en Chisel (usando \code{sbt})}
 \label{fig:folders}
 \end{figure}
 
-Figure~\ref{fig:folders} shows the organization of the source tree of a typical Chisel project.
-The root of the project is the project home, which contains \code{build.sbt}.
-It may also include a \code{Makefile} for the build process, a README, and a LICENSE file.
-Folder \code{src} contains all source code. From there it is split between \code{main},
-which contains containing the hardware sources and \code{test} containing testers.
-The next folder in both cases is \code{scala}, as Chisel is based on Scala.
-If you want to include Java code, which may be useful for hardware generators,
-you would add a \code{java} folder.
-Chisel inherits from Scala, which itself inherits from Java, the organization of source
-in \myref{https://en.wikipedia.org/wiki/Java_package}{packages}.
-Packages organize your Chisel code into namespaces. Packages can also contain
-sub-packages.
-The folder \code{target} contains the class files and other generated files.
-I recommend to also use a folder for generated Verilog files, which is usually
-call \code{generated}.
+% Figure~\ref{fig:folders} shows the organization of the source tree of a typical Chisel project.
+% The root of the project is the project home, which contains \code{build.sbt}.
+% It may also include a \code{Makefile} for the build process, a README, and a LICENSE file.
+% Folder \code{src} contains all source code. From there it is split between \code{main},
+% which contains containing the hardware sources and \code{test} containing testers.
+% The next folder in both cases is \code{scala}, as Chisel is based on Scala.
+% If you want to include Java code, which may be useful for hardware generators,
+% you would add a \code{java} folder.
+% Chisel inherits from Scala, which itself inherits from Java, the organization of source
+% in \myref{https://en.wikipedia.org/wiki/Java_package}{packages}.
+% Packages organize your Chisel code into namespaces. Packages can also contain
+% sub-packages.
+% The folder \code{target} contains the class files and other generated files.
+% I recommend to also use a folder for generated Verilog files, which is usually
+% call \code{generated}.
 
+La figura~\ref{fig:folders} muestra la organización de los ficheros de código fuente en un proyecto típico de Chisel.
+La raíz del proyecto es la carpeta principal, que contiene el \code{build.sbt}.
+También puede incluir un \code{Makefile} para el proceso de compilación, un README y un fichero LICENSE.
+La carpeta \code{src} contiene todo el código fuente y, a partir de ahí, se divide entre \code{main},
+que contiene los ficheros fuentes del hardware, y \code{test}, que contiene los testers.
+En ambos casos la carpeta siguiente es \code{scala}, ya que Chisel se basa en Scala.
+Si quieres incluir código Java, que puede resultar útil para los generadores de hardware,
+añadirías una carpeta \code{java}.
+Chisel hereda de Scala, que a su vez lo hereda de Java, la organización del código fuente en
+\myref{https://en.wikipedia.org/wiki/Java_package}{paquetes}.
+Los paquetes organizan tu código Chisel en espacios de nombres (\emph{namespaces}). Los paquetes pueden contener
+a su vez subpaquetes.
+La carpeta \code{target} contiene los ficheros de clases y otros ficheros generados.
+Recomiendo usar también una carpeta para los ficheros Verilog generados, que suele
+llamarse \code{generated}.
 
-To use the facility of namespaces in Chisel, you need to declare that a class/module
-is defined in a package, in this example in \code{mypack}:
+% To use the facility of namespaces in Chisel, you need to declare that a class/module
+% is defined in a package, in this example in \code{mypack}:
+
+Para aprovechar los espacios de nombres en Chisel, es necesario declarar que una clase o módulo
+está definido en un paquete, en este ejemplo en \code{mypack}:
 
 \shortlist{code/mypack.txt}
 
-\noindent Note that in this example we see the import of the \code{chisel3} package
-to use Chisel classes.
+% \noindent Note that in this example we see the import of the \code{chisel3} package
+% to use Chisel classes.
 
-To use the module \code{Abc} in a different context (package name space),
-the components of packet \code{mypack} need to be imported. The underscore
-(\code{\_}) acts as wildcard, meaning that all classes of \code{mypack} are imported.
+\noindent Fíjate en que en este ejemplo vemos la importación del paquete \code{chisel3}
+para poder usar las clases de Chisel.
+
+% To use the module \code{Abc} in a different context (package name space),
+% the components of packet \code{mypack} need to be imported. The underscore
+% (\code{\_}) acts as wildcard, meaning that all classes of \code{mypack} are imported.
+
+Para usar el módulo \code{Abc} en otro contexto (en otro espacio de nombres de paquete),
+hay que importar los componentes del paquete \code{mypack}. El guion bajo
+(\code{\_}) actúa como comodín, lo que significa que se importan todas las clases de \code{mypack}.
 
 \shortlist{code/usemypack.txt}
 
-\noindent It is also possible to not import all types from \code{mypack},
-but use the fully qualified name \code{mypack.Abc} to refer to the module
-\code{Abc} in the package \code{mypack}.
+% \noindent It is also possible to not import all types from \code{mypack},
+% but use the fully qualified name \code{mypack.Abc} to refer to the module
+% \code{Abc} in the package \code{mypack}.
+
+\noindent También es posible no importar todos los tipos de \code{mypack} y
+usar en su lugar el nombre completo \code{mypack.Abc} para referirse al módulo
+\code{Abc} del paquete \code{mypack}.
 
 \shortlist{code/usemypack2.txt}
 
-\noindent It is also possible to import just a single class and create an instance of it:
+% \noindent It is also possible to import just a single class and create an instance of it:
+
+\noindent También es posible importar una única clase y crear una instancia de ella:
 
 \shortlist{code/usemypack3.txt}
 
