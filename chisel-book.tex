@@ -2893,35 +2893,52 @@ Scala y de Java que admiten.
 %491 LCs 193 register
 %117 MHz
 
-\subsection{Using a GitHub Template}
+\subsection{Usar una plantilla de GitHub}
 
-The \myref{https://github.com/schoeberl/chisel-empty}{chisel-empty} project is a minimal Chisel
-project that contains an adder circuit, a tester, and a \code{Makefile} to generate
-Verilog code, test the circuit, and cleanup the repository.
-That project is a GitHub template, which means you can simply start a new GitHub repository
-using this template.
+% The \myref{https://github.com/schoeberl/chisel-empty}{chisel-empty} project is a minimal Chisel
+% project that contains an adder circuit, a tester, and a \code{Makefile} to generate
+% Verilog code, test the circuit, and cleanup the repository.
+% That project is a GitHub template, which means you can simply start a new GitHub repository
+% using this template.
 
-Navigate to that GitHub repository and press the button ``Use this template'' to create
-your GitHub project. Then clone your new project locally and explore the \code{Makefile}.
-Generate Verilog code with:
+El proyecto \myref{https://github.com/schoeberl/chisel-empty}{chisel-empty} contiene lo mínimo que un proyecto de
+Chisel necesita. Y en particular contiene un circuito sumador de ejemplo, un tester y un \code{Makefile} para generar
+el código Verilog, probar el circuito y limpiar el repositorio.
+Ese proyecto es una plantilla de GitHub, por lo que puedes crear un nuevo repositorio de 
+GitHub utilizándola.
+
+% Navigate to that GitHub repository and press the button ``Use this template'' to create
+% your GitHub project. Then clone your new project locally and explore the \code{Makefile}.
+% Generate Verilog code with:
+
+Ve al repositorio de GitHub y pulsa el botón ``Use this template'' para crear
+tu proyecto de GitHub. Después clona tu nuevo proyecto en local y explora el \code{Makefile}.
+Genera el código Verilog con:
 
 \begin{chisel}
 make
 \end{chisel}
 
-\noindent Test the adder with:
+% \noindent Test the adder with:
+
+\noindent Prueba el sumador con:
 
 \begin{chisel}
 make test
 \end{chisel}
 
-\noindent Remove all generated files with:
+% \noindent Remove all generated files with:
+
+\noindent Elimina todos los ficheros generados con:
 
 \begin{chisel}
 make clean
 \end{chisel}
 
-\noindent You can also execute these tasks by running the \code{sbt} and \code{git} commands directly.
+% \noindent You can also execute these tasks by running the \code{sbt} and \code{git} commands directly.
+
+\noindent También puedes realizar estas tareas ejecutando directamente los comandos de \code{sbt} y de
+\code{git}.
 
 \section{Testing with Chisel}
 \index{Testing}
