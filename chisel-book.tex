@@ -2598,43 +2598,68 @@ con el siguiente comando de \code{sbt}:
 $ sbt "test:runMain mypacket.MyMainTest"
 \end{verbatim}
 
-\subsection{Generating Verilog}
+\subsection{Generar Verilog}
 
 \index{Verilog}
 \index{generate Verilog}
 \index{emit Verilog}
 
-To synthesize Chisel code for an FPGA or ASIC we need to translate Chisel into
-a hardware description language that a synthesize tool understands.
-With Chisel, we can generate a synthesizable Verilog description of the circuit.
+% To synthesize Chisel code for an FPGA or ASIC we need to translate Chisel into
+% a hardware description language that a synthesize tool understands.
+% With Chisel, we can generate a synthesizable Verilog description of the circuit.
 
-To generate the Verilog description, we need an application. A Scala object that \code{extends App}
-is an application that implicitly generates the main function where the application starts.
-The only action of this application is to create a new Chisel module, in that example \code{Hello},
-and pass it to the Chisel function \code{emitVerilog()}.
-The following code will generate the Verilog file \code{Hello.v}.
+Para poder sintetizar código Chisel teniendo como objetivo una FPGA o un ASIC necesitamos traducir Chisel a
+un lenguaje de descripción de hardware que la herramienta de síntesis entienda.
+Con Chisel podemos generar una descripción sintetizable del circuito en Verilog.
+
+% To generate the Verilog description, we need an application. A Scala object that \code{extends App}
+% is an application that implicitly generates the main function where the application starts.
+% The only action of this application is to create a new Chisel module, in that example \code{Hello},
+% and pass it to the Chisel function \code{emitVerilog()}.
+% The following code will generate the Verilog file \code{Hello.v}.
+
+Para generar la descripción en Verilog necesitamos una aplicación. Un objeto de Scala que haga
+\code{extends App} es una aplicación que genera implícitamente la función main, que es el punto por el que se 
+inicia la aplicación.
+En el ejemplo \code{Hello}, la única acción de la aplicación es crear un nuevo módulo de Chisel, y pasárselo a 
+la función \code{emitVerilog()} de Chisel. El siguiente código generará el fichero Verilog \code{Hello.v}.
 
 \shortlist{code/generate.txt}
 
-Using the default version of \code{emitVerilog()} will put the generated files
-into the root folder of our project (where we run the \code{sbt} command).
-To put the generated files into a subfolder, we need to specify options to \code{emitVerilog()}.
-I recommend to specify a folder \code{generated}, as shown in Figure~\ref{fig:folders}.
-The build options can be set as a second argument, which is an array of Strings.
-The following code will generate the Verilog file \code{Hello.v} in the subfolder \code{generated}.
+% Using the default version of \code{emitVerilog()} will put the generated files
+% into the root folder of our project (where we run the \code{sbt} command).
+% To put the generated files into a subfolder, we need to specify options to \code{emitVerilog()}.
+% I recommend to specify a folder \code{generated}, as shown in Figure~\ref{fig:folders}.
+% The build options can be set as a second argument, which is an array of Strings.
+% The following code will generate the Verilog file \code{Hello.v} in the subfolder \code{generated}.
+
+Si se usa la versión por defecto de \code{emitVerilog()}, los ficheros generados se dejan
+en la carpeta raíz de nuestro proyecto (donde ejecutamos el comando \code{sbt}).
+Para dejarlos en una subcarpeta hay que indicárselo a \code{emitVerilog()} mediante opciones.
+Recomiendo indicar una carpeta \code{generated}, como se muestra en la figura~\ref{fig:folders}.
+Las opciones de compilación se pueden pasar como segundo argumento, el cual es un array de \code{String}.
+El siguiente código generará el fichero Verilog \code{Hello.v} en la subcarpeta \code{generated}.
 
 \shortlist{code/generate_options.txt}
 
-You can also request the Verilog code as a Scala \code{String} without writing a file.
-You can simply print out the string for testing.
+% You can also request the Verilog code as a Scala \code{String} without writing a file.
+% You can simply print out the string for testing.
+
+También puedes pedir el código Verilog como un \code{String} de Scala, sin escribir ningún fichero.
+Para hacer pruebas basta con imprimir esa cadena por pantalla.
 
 \shortlist{code/generate_string.txt}
 
-\noindent This form of output is popular when showing small Chisel examples in
-\myref{https://scastie.scala-lang.org/}{Scastie}, a web-based Scala compiler and runtime.
-See
-\myref{https://scastie.scala-lang.org/schoeberl/SN7rDb9iS027ORiWqXMGsQ/6}{Hello World on Scastie}
-for an example.
+% \noindent This form of output is popular when showing small Chisel examples in
+% \myref{https://scastie.scala-lang.org/}{Scastie}, a web-based Scala compiler and runtime.
+% See
+% \myref{https://scastie.scala-lang.org/schoeberl/SN7rDb9iS027ORiWqXMGsQ/6}{Hello World on Scastie}
+% for an example.
+
+\noindent Esta forma de salida es habitual al mostrar pequeños ejemplos de Chisel en
+\myref{https://scastie.scala-lang.org/}{Scastie}, un compilador y entorno de ejecución de Scala en la web.
+Como ejemplo, véase
+\myref{https://scastie.scala-lang.org/schoeberl/SN7rDb9iS027ORiWqXMGsQ/6}{Hello World en Scastie}.
 
 
 \subsection{Tool Flow}
