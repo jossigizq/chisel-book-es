@@ -2731,22 +2731,35 @@ Las versiones posteriores de Chisel usan un backend distinto (véase la sección
 Ahora que conocemos la estructura básica de un proyecto de Chisel y cómo compilarlo y ejecutarlo
 con \code{sbt}, podemos continuar viendo un sencillo entorno de pruebas.
 
-\subsection{Chisel Versions}
+\subsection{Versiones de Chisel}
 
 \index{Chisel!Versions}
 
-Chisel changed the version scheme from version on 5.0.0 on to a semantic versioning in the
-form of MAJOR.MINOR.PATCH. Prior to Chisel 5.0.0 the scheme was 3.MAJOR.MINOR.
-Changes in the minor version of Chisel contain new functionality, but in a backwards compatible way.
-A change in the major version may introduce breaking changes.
-To emphasize this change in the versions, Chisel skipped version 4.
+% Chisel changed the version scheme from version on 5.0.0 on to a semantic versioning in the
+% form of MAJOR.MINOR.PATCH. Prior to Chisel 5.0.0 the scheme was 3.MAJOR.MINOR.
+% Changes in the minor version of Chisel contain new functionality, but in a backwards compatible way.
+% A change in the major version may introduce breaking changes.
+% To emphasize this change in the versions, Chisel skipped version 4.
 
-Starting with Chisel 5, the backend of Chisel has change from the Scala-based compiler for FIRRTL
-to using \code{firtool} to generate Verilog. \code{firtool} is part of a larger project,
-the \myref{https://circt.llvm.org/}{LLVM CIRCT} project.
-The latest version of ``Chisel 3'' is 3.6 and contains both backends, the Scala based 
-compiler and \code{firtool}.
-The \code{build.sbt} for 3.6 is as follows:
+A partir de la versión 5.0.0, Chisel cambió su esquema de versiones a un versionado semántico con la
+forma MAJOR.MINOR.PATCH. Antes de Chisel 5.0.0 el esquema era 3.MAJOR.MINOR.
+Los cambios en la versión menor de Chisel aportan nuevas funcionalidades, pero siguen siendo retrocompatibles.
+Un cambio en la versión mayor puede introducir cambios que rompan la compatibilidad.
+Para recalcar ese cambio en las versiones, Chisel se saltó la versión 4.
+
+% Starting with Chisel 5, the backend of Chisel has change from the Scala-based compiler for FIRRTL
+% to using \code{firtool} to generate Verilog. \code{firtool} is part of a larger project,
+% the \myref{https://circt.llvm.org/}{LLVM CIRCT} project.
+% The latest version of ``Chisel 3'' is 3.6 and contains both backends, the Scala based
+% compiler and \code{firtool}.
+% The \code{build.sbt} for 3.6 is as follows:
+
+A partir de Chisel 5, el backend de Chisel ha pasado del compilador de FIRRTL basado en Scala a usar
+\code{firtool} para generar Verilog. \code{firtool} forma parte de un proyecto mayor,
+el proyecto \myref{https://circt.llvm.org/}{LLVM CIRCT}.
+La última versión de ``Chisel 3'' es la 3.6 y contiene los dos backends: el compilador basado en
+Scala y \code{firtool}.
+El \code{build.sbt} para la 3.6 es el siguiente:
 
 \begin{chisel}
 scalaVersion := "2.13.14"
@@ -2764,21 +2777,37 @@ libraryDependencies += "edu.berkeley.cs" %% "chisel3" % chiselVersion
 libraryDependencies += "edu.berkeley.cs" %% "chiseltest" % "0.6.1"
 \end{chisel}
 
-With Chisel version 5, the \code{firtool} binary needs to be installed manually.
-Chisel 6 includes \code{firtool} as part of the Chisel library and is therefore the recommended
-latest version of Chisel.
+% With Chisel version 5, the \code{firtool} binary needs to be installed manually.
+% Chisel 6 includes \code{firtool} as part of the Chisel library and is therefore the recommended
+% latest version of Chisel.
 
-The change to CIRCT has implications of the future testing infrastructure.
-Future testing will be performed with a Scala API on top of
-\myref{https://www.veripool.org/verilator/}{Verilator}, which makes installation of
-Verilator mandatory. However, there is development within the CIRCT project
-to simulate within the CIRCT framework. This tool is called Arcilator.
-However, ChiselTest has been ported to Chisel 5 and Chisel 6.
-We expect a compatibility layer in Chisel 7 for a smooth transition to a new
-testing framework.
+Con la versión 5 de Chisel, el binario de \code{firtool} hay que instalarlo a mano.
+Chisel 6 incluye \code{firtool} dentro de la propia biblioteca de Chisel y es, por tanto, la última
+versión recomendada de Chisel.
 
-From Chisel 5 on the libraries are published under \code{org.chipsalliance}.
-Therefore, the \code{build.sbt} need to be changed as follows:
+% The change to CIRCT has implications of the future testing infrastructure.
+% Future testing will be performed with a Scala API on top of
+% \myref{https://www.veripool.org/verilator/}{Verilator}, which makes installation of
+% Verilator mandatory. However, there is development within the CIRCT project
+% to simulate within the CIRCT framework. This tool is called Arcilator.
+% However, ChiselTest has been ported to Chisel 5 and Chisel 6.
+% We expect a compatibility layer in Chisel 7 for a smooth transition to a new
+% testing framework.
+
+El cambio a CIRCT tiene consecuencias para la futura infraestructura de pruebas.
+Las pruebas se harán en el futuro con una API de Scala construida sobre
+\myref{https://www.veripool.org/verilator/}{Verilator}, lo que hace obligatorio instalar
+Verilator. No obstante, dentro del proyecto CIRCT se está trabajando en poder simular con el propio
+entorno de CIRCT. Esa herramienta se llama Arcilator.
+En cualquier caso, ChiselTest se ha portado a Chisel 5 y a Chisel 6.
+Esperamos que Chisel 7 incluya una capa de compatibilidad que permita una transición suave a un nuevo
+entorno de pruebas.
+
+% From Chisel 5 on the libraries are published under \code{org.chipsalliance}.
+% Therefore, the \code{build.sbt} need to be changed as follows:
+
+A partir de Chisel 5, las bibliotecas se publican bajo \code{org.chipsalliance}.
+Por tanto, el \code{build.sbt} debe cambiarse de la siguiente manera:
 
 \begin{chisel}
 scalaVersion := "2.13.14"
@@ -2796,29 +2825,47 @@ libraryDependencies += "org.chipsalliance" %% "chisel" % chiselVersion
 libraryDependencies += "edu.berkeley.cs" %% "chiseltest" % "6.0.0"
 \end{chisel}
 
-This book covers, and has been tested with, Chisel 3.5, 3.6, 5, and 6.
+% This book covers, and has been tested with, Chisel 3.5, 3.6, 5, and 6.
 
-\subsubsection{Chisel, Scala, and Java Versions}
+Este libro cubre las versiones 3.5, 3.6, 5 y 6 de Chisel, y se ha probado con ellas.
+
+\subsubsection{Versiones de Chisel, Scala y Java}
 
 \index{Scala!Versions}
 \index{Java!Versions}
 
-Chisel is a Scala library and therefore is dependent on a Scala version.
-Scala itself is built on top of Java (using the Java library and running on the JVM)
-and therefore depends on a specific Java version. Changes in the Java version needs
-updates in the Scala (patch) version. A safe baseline Java version is Java 8, where all Scala and
-Chisel versions work.\footnote{see \url{https://docs.scala-lang.org/overviews/jdk-compatibility/overview.html}}
-Chisel itself has been maintained to work with Scala 2.12 and 2.13, up to version 5.
-Chisel 6 is based on Scala 2.13 only.\footnote{Getting Chisel to work on top of Scala 3 is work in progress.}
-A safe selection is to use Scala 2.13. However, as Chisel is using a Scala compiler plugin,
-the highest supported patch version of Scala is restricted by the published compiler
-plugin.\footnote{see \url{https://mvnrepository.com/artifact/edu.berkeley.cs/chisel3-plugin}
-and \url{https://mvnrepository.com/artifact/org.chipsalliance/chisel-plugin}}
-Table~\ref{tab:versions} shows Chisel versions with their support of the highest
-Scala and Java versions.
+% Chisel is a Scala library and therefore is dependent on a Scala version.
+% Scala itself is built on top of Java (using the Java library and running on the JVM)
+% and therefore depends on a specific Java version. Changes in the Java version needs
+% updates in the Scala (patch) version. A safe baseline Java version is Java 8, where all Scala and
+% Chisel versions work.\footnote{see \url{https://docs.scala-lang.org/overviews/jdk-compatibility/overview.html}}
+% Chisel itself has been maintained to work with Scala 2.12 and 2.13, up to version 5.
+% Chisel 6 is based on Scala 2.13 only.\footnote{Getting Chisel to work on top of Scala 3 is work in progress.}
+% A safe selection is to use Scala 2.13. However, as Chisel is using a Scala compiler plugin,
+% the highest supported patch version of Scala is restricted by the published compiler
+% plugin.\footnote{see \url{https://mvnrepository.com/artifact/edu.berkeley.cs/chisel3-plugin}
+% and \url{https://mvnrepository.com/artifact/org.chipsalliance/chisel-plugin}}
+% Table~\ref{tab:versions} shows Chisel versions with their support of the highest
+% Scala and Java versions.
+
+Chisel es una biblioteca de Scala y, por tanto, depende de una versión de Scala.
+Scala, a su vez, está construido sobre Java (usa la biblioteca de Java y se ejecuta sobre la JVM)
+y depende por ello de una versión concreta de Java. Los cambios en la versión de Java exigen
+actualizar la versión de parche (\emph{patch}) de Scala. Una versión de Java segura como punto de partida es Java 8,
+con la que funcionan todas las versiones de Scala y de
+Chisel.\footnote{Véase \url{https://docs.scala-lang.org/overviews/jdk-compatibility/overview.html}}
+Chisel se ha mantenido de forma que funcione con Scala 2.12 y 2.13 hasta la versión 5.
+Chisel 6 se basa únicamente en Scala 2.13.\footnote{Conseguir que Chisel funcione sobre Scala 3 es un
+trabajo en curso.}
+Una elección segura es usar Scala 2.13. Ahora bien, como Chisel usa un plugin del compilador de Scala,
+la versión de parche más alta de Scala que se admite viene limitada por el plugin del compilador
+publicado.\footnote{Véase \url{https://mvnrepository.com/artifact/edu.berkeley.cs/chisel3-plugin}
+y \url{https://mvnrepository.com/artifact/org.chipsalliance/chisel-plugin}}
+La tabla~\ref{tab:versions} muestra las versiones de Chisel con las versiones más altas de
+Scala y de Java que admiten.
 
 
-\begin{table}
+\begin{table}[H]
  \centering
   \begin{tabular}{lll}
     \toprule
@@ -2832,7 +2879,7 @@ Scala and Java versions.
     6.7.x & 2.13.16 & 24 \\
     \bottomrule
   \end{tabular}
-  \caption{Chisel and highest supported Scala and Java versions.}
+  \caption{Versiones de Chisel y versiones más altas de Scala y de Java admitidas.}
  \label{tab:versions}
 \end{table}
 
