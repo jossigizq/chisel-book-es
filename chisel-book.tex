@@ -1,13 +1,13 @@
 \documentclass[%draft,
     10pt,
-    headinclude, footexclude,
+    headinclude, footinclude=false,
     % twoside, % this produces strange margins!
     openright, % for new chapters
     notitlepage,
-    cleardoubleempty,
+    cleardoublepage=empty,
     headsepline,
-    pointlessnumbers,
-    bibtotoc, idxtotoc,
+    numbers=noenddot,
+    bibliography=totoc, index=totoc,
     ]{scrbook}
 
 % iPad Air 2 resolution: 1536 x 2048
@@ -19,8 +19,11 @@
 \typearea[1.1cm]{15} % used 18, but 15 gives more space for the binding, TODO: check if 1.1 cm is the correct number
 
 \usepackage{scrlayer-scrpage}
-\setkomafont{pagehead}{\scshape\small}
-\setkomafont{pagenumber}{\scshape\small}
+% \setkomafont{pagehead}{\scshape\small}
+% \setkomafont{pagenumber}{\scshape\small}
+
+\setkomafont{pagehead}{\normalfont\scshape\small}
+\setkomafont{pagenumber}{\normalfont\scshape\small}
 
 
 \newif\ifbook
@@ -49,7 +52,7 @@
 \usepackage[pdftex,
             pdfauthor={Martin Schoeberl},
             pdftitle={Digital Design with Chisel},
-            colorlinks=true,bookmarks=true]{hyperref}
+            colorlinks=true]{hyperref}
 
 \usepackage{booktabs}
 \usepackage{graphicx}
@@ -105,7 +108,6 @@
   citecolor  = blue,
   urlcolor   = blue,
   colorlinks = true,
-  bookmarks=true,
   pdfpagemode=UseOutlines,
 }
 \fi
@@ -1277,7 +1279,7 @@ compílalo pulsando el botón \emph{Play} y configura la placa FPGA
 con el botón \emph{Programmer}; entonces uno de los LED debería parpadear.
 
 % {\bf Congratulations! You managed to get your first design in Chisel running in an FPGA!}
-{\bf ¡Enhorabuena! ¡Has conseguido poner en marcha tu primer diseño en Chisel en una FPGA!}
+\textbf{¡Enhorabuena! ¡Has conseguido poner en marcha tu primer diseño en Chisel en una FPGA!}
 
 % If the LED is not blinking, check the status of reset. On the DE2-115 configuration,
 % the reset input is connected to SW0.
@@ -1421,7 +1423,7 @@ entera con un tipo. Por ejemplo, \code{3L}, que representa una constante entera 
 % Instead, the expression \code{(32)} is interpreted as bit extraction from position 32, which results
 % in a single bit constant of 0. Probably not what the original intention of the programmer was.
 
-{\bf Posible fallo:} un error frecuente al definir constantes con una anchura concreta es olvidar el
+\textbf{Posible fallo:} un error frecuente al definir constantes con una anchura concreta es olvidar el
 especificador de anchura \code{.W}. Por ejemplo, \code{1.U(32)} \emph{no} define una constante de 32 bits de anchura
 que represente el valor 1.
 En su lugar, la expresión \code{(32)} se interpreta como una extracción del bit de la posición 32, lo que da como
@@ -2176,7 +2178,7 @@ de datos, que son abstracciones muy potentes.
 % allowed in Chisel 2 and are possible in Verilog and VHDL. The following code will generate
 % an error during circuit elaboration:
 
-{\bf Posible fallo:} en Chisel 3 no se permiten las asignaciones parciales, aunque sí estaban
+\textbf{Posible fallo:} en Chisel 3 no se permiten las asignaciones parciales, aunque sí estaban
 soportadas en Chisel 2 y son posibles en Verilog y VHDL. El siguiente código generará
 un error durante la elaboración del circuito:
 
