@@ -2942,46 +2942,73 @@ make clean
 \noindent También puedes realizar estas tareas ejecutando directamente los comandos de \code{sbt} y de
 \code{git}.
 
-\section{Testing with Chisel}
+\section{Pruebas con Chisel}
 \index{Testing}
 
-Tests of hardware designs are usually called \myref{https://en.wikipedia.org/wiki/Test_bench}{test benches}.
-The test bench instantiates the design under test (DUT), drives input ports, observes output ports,
-and compares them with expected values.
-Chisel provides the \myref{https://www.chisel-lang.org/chiseltest/}{ChiselTest}
-in package \code{chiseltest}.
+% Tests of hardware designs are usually called \myref{https://en.wikipedia.org/wiki/Test_bench}{test benches}.
+% The test bench instantiates the design under test (DUT), drives input ports, observes output ports,
+% and compares them with expected values.
+% Chisel provides the \myref{https://www.chisel-lang.org/chiseltest/}{ChiselTest}
+% in package \code{chiseltest}.
 
-One strength of Chisel is that it can use the full power of Scala to write
-test benches. One can, for example, code the expected functionality of the hardware
-in a software simulator and compare the simulation of the hardware with the
-software simulation. This method is very efficient when testing an implementation
-of a processor~\cite{lipsi:arcs2018}.
+Las pruebas de los diseños de hardware suelen llamarse bancos de pruebas
+(\myref{https://en.wikipedia.org/wiki/Test_bench}{\emph{test benches}}).
+El banco de pruebas instancia el diseño bajo prueba (DUT, \emph{design under test}), excita los puertos de
+entrada, observa los puertos de salida y los compara con los valores esperados.
+Chisel proporciona \myref{https://www.chisel-lang.org/chiseltest/}{ChiselTest}
+en el paquete \code{chiseltest}.
+
+% One strength of Chisel is that it can use the full power of Scala to write
+% test benches. One can, for example, code the expected functionality of the hardware
+% in a software simulator and compare the simulation of the hardware with the
+% software simulation. This method is very efficient when testing an implementation
+% of a processor~\cite{lipsi:arcs2018}.
+
+Uno de los puntos fuertes de Chisel es que puede usar toda la potencia de Scala para escribir
+bancos de pruebas. Se puede, por ejemplo, programar la funcionalidad esperada del hardware
+en un simulador software y comparar la simulación del hardware con la
+simulación software. Este método resulta muy eficaz al probar la implementación
+de un procesador~\cite{lipsi:arcs2018}.
 
 \subsection{ScalaTest}
 \index{ScalaTest}
 
-\myref{http://www.scalatest.org/}{ScalaTest} is a testing tool for Scala (and Java). ChiselTest is an extension
-of ScalaTest. Therefore, we first explore a simple ScalaTest example. To use it, include the library
-in your \code{build.sbt} with the following line:
+% \myref{http://www.scalatest.org/}{ScalaTest} is a testing tool for Scala (and Java). ChiselTest is an extension
+% of ScalaTest. Therefore, we first explore a simple ScalaTest example. To use it, include the library
+% in your \code{build.sbt} with the following line:
+
+\myref{http://www.scalatest.org/}{ScalaTest} es una herramienta de pruebas para Scala (y Java). ChiselTest es
+una extensión de ScalaTest, así que primero veremos un ejemplo sencillo de ScalaTest. Para usarlo, incluye
+la biblioteca en tu \code{build.sbt} con la siguiente línea:
 
 \begin{chisel}
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.1.4" % "test"
 \end{chisel}
 
-\noindent Tests are usually found in \code{src/test/scala} and the entire test suite can be run with:
+% \noindent Tests are usually found in \code{src/test/scala} and the entire test suite can be run with:
+
+\noindent Las pruebas suelen estar en \code{src/test/scala}, y el conjunto entero de pruebas puede
+ejecutarse con:
 
 \begin{verbatim}
 $ sbt test
 \end{verbatim}
 
-\noindent A minimal test (a testing hello world) to test a Scala integer
-addition and a multiplication looks as follows:
+% \noindent A minimal test (a testing hello world) to test a Scala integer
+% addition and a multiplication looks as follows:
+
+\noindent Una prueba mínima (un hola mundo de las pruebas) que comprueba una suma y una
+multiplicación de enteros de Scala tiene este aspecto:
 
 \shortlist{code/scalatest_hello_world.txt}
 
-ScalaTest enables simple unit tests that read like an executable specification.
-The example above contains two tests and the output of the test run will repeat the specification
-and show that both tests passed:
+% ScalaTest enables simple unit tests that read like an executable specification.
+% The example above contains two tests and the output of the test run will repeat the specification
+% and show that both tests passed:
+
+Con ScalaTest, unas pruebas unitarias sencillas se convierten en una especificación que además se
+ejecuta. El ejemplo anterior enuncia dos pruebas como si fueran frases (``Integers should add''), y al
+ejecutarlas la salida las repite una por una para indicar que las dos se han superado:
 
 \begin{verbatim}
 [info] ExampleTest:
@@ -2999,17 +3026,25 @@ and show that both tests passed:
 \end{verbatim}
 
 
-\code{sbt test} executes all available tests, which is useful for regression
-tests.\footnote{Try \codefoot{sbt test} in the repository of this book and you
-will see more than 90 tests passing.}
-However, if you want to run just a single test (suite) you can do this with:
+% \code{sbt test} executes all available tests, which is useful for regression
+% tests.\footnote{Try \codefoot{sbt test} in the repository of this book and you
+% will see more than 90 tests passing.}
+% However, if you want to run just a single test (suite) you can do this with:
+
+\code{sbt test} ejecuta todas las pruebas disponibles, lo que resulta útil para las pruebas de
+regresión.\footnote{Prueba a ejecutar \codefoot{sbt test} en el repositorio de este libro y verás
+pasar más de 90 pruebas.}
+Ahora bien, si solo quieres ejecutar una prueba (o un conjunto de pruebas), puedes hacerlo con:
 
 \begin{verbatim}
 $ sbt "testOnly ExampleTest"
 \end{verbatim}
 
-\noindent If you misspell the class name, for example, \code{ExampleTest},
-there will be a relatively silent error message: \code{No tests were executed}.
+% \noindent If you misspell the class name, for example, \code{ExampleTest},
+% there will be a relatively silent error message: \code{No tests were executed}.
+
+\noindent Si escribes mal el nombre de la clase, por ejemplo \code{ExampleTest},
+obtendrás un mensaje de error bastante discreto: \code{No tests were executed}.
 
 \subsection{ChiselTest}
 \index{ChiselTest}
