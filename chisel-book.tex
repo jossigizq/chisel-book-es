@@ -3050,59 +3050,94 @@ obtendrás un mensaje de error bastante discreto: \code{No tests were executed}.
 \index{ChiselTest}
 
 
-\myref{https://www.chisel-lang.org/chiseltest/}{ChiselTest} is the standard testing tool
-for Chisel modules based on the \myref{http://www.scalatest.org/}{ScalaTest} tool for Scala
-and Java, which we can use to run Chisel tests.
-To use it, include the \code{chiseltest} library in your \code{build.sbt} with the following line:
+% \myref{https://www.chisel-lang.org/chiseltest/}{ChiselTest} is the standard testing tool
+% for Chisel modules based on the \myref{http://www.scalatest.org/}{ScalaTest} tool for Scala
+% and Java, which we can use to run Chisel tests.
+% To use it, include the \code{chiseltest} library in your \code{build.sbt} with the following line:
+
+\myref{https://www.chisel-lang.org/chiseltest/}{ChiselTest} es la herramienta estándar para probar
+módulos de Chisel. Se apoya en \myref{http://www.scalatest.org/}{ScalaTest}, la herramienta para Scala
+y Java, que es la que nos permite lanzar las pruebas de Chisel.
+Para usarla, incluye la biblioteca \code{chiseltest} en tu \code{build.sbt} con la siguiente línea:
 
 \begin{chisel}
 libraryDependencies += "edu.berkeley.cs" %% "chiseltest" % "0.5.6"
 \end{chisel}
 
-\noindent Including ChiselTest this way automatically includes the necessary version of ScalaTest.
-Therefore, you do not need to include a line for the ScalaTest library.
-To use ChiselTest, the following packages need to be imported:
+% \noindent Including ChiselTest this way automatically includes the necessary version of ScalaTest.
+% Therefore, you do not need to include a line for the ScalaTest library.
+% To use ChiselTest, the following packages need to be imported:
+
+\noindent Al incluir ChiselTest de esta manera se incluye automáticamente la versión necesaria de
+ScalaTest, así que no hace falta añadir una línea para la biblioteca de ScalaTest.
+Para usar ChiselTest hay que importar los siguientes paquetes:
 
 \shortlist{code/test_import.txt}
 
-\noindent Testing a circuit contains (at least) two components: the device under test (often
-called DUT) and the testing logic, also called a test bench. Tests are started with \code{sbt test}.
-No object with a \code{main} function is needed.
+% \noindent Testing a circuit contains (at least) two components: the device under test (often
+% called DUT) and the testing logic, also called a test bench. Tests are started with \code{sbt test}.
+% No object with a \code{main} function is needed.
 
-The following code shows our simple design under test. It contains two input
-ports (2-bit width) and two output ports, a 2-bit width and a \code{Bool}. The circuit does a bit-wise AND
-to its inputs \code{a} and \code{b} and outputs the result on \code{out} and tests the two signals for
-equality:
+\noindent Probar un circuito supone (al menos) dos componentes: el dispositivo bajo prueba (llamado
+a menudo DUT) y la lógica de prueba, también llamada banco de pruebas. Las pruebas se lanzan con
+\code{sbt test}. No hace falta ningún objeto con una función \code{main}.
+
+% The following code shows our simple design under test. It contains two input
+% ports (2-bit width) and two output ports, a 2-bit width and a \code{Bool}. The circuit does a bit-wise AND
+% to its inputs \code{a} and \code{b} and outputs the result on \code{out} and tests the two signals for
+% equality:
+
+El siguiente código muestra nuestro sencillo diseño bajo prueba. Contiene dos puertos de entrada
+(de 2 bits de anchura) y dos puertos de salida, uno de 2 bits y otro \code{Bool}. El circuito hace la AND
+bit a bit de sus entradas \code{a} y \code{b}, saca el resultado por \code{out} y comprueba si las dos
+señales son iguales:
 
 \shortlist{code/test_dut.txt}
 
-The test bench for this DUT extends \code{AnyFlatSpec} with \code{ChiselScalatestTester},
-which provides ChiselTest functionality within ScalaTest.
-The method \code{test()} is invoked with the DUT as parameter and the test code as a function literal.
+% The test bench for this DUT extends \code{AnyFlatSpec} with \code{ChiselScalatestTester},
+% which provides ChiselTest functionality within ScalaTest.
+% The method \code{test()} is invoked with the DUT as parameter and the test code as a function literal.
+
+El banco de pruebas de este DUT extiende \code{AnyFlatSpec} con \code{ChiselScalatestTester}, que es
+quien aporta la funcionalidad de ChiselTest dentro de ScalaTest.
+El método \code{test()} se invoca con el DUT como parámetro y el código de la prueba como función literal.
 
 \shortlist{code/test_bench_simple.txt}
 
 
-The input and output ports of the DUT are accessed with \code{dut.io}.
-You can set values via a \code{poke} on a port, which takes the value as a Chisel type of the
-input port as a parameter.
-An output port can be read by invoking \code{peekInt()} or \code{peekBoolean()} on the port,
-which will return the value as a Scala type.
-The tester advances the simulation by one clock cycle with \code{dut.clock.step()}.
-For advancing the simulation by several clock cycles, we can provide a parameter to
+% The input and output ports of the DUT are accessed with \code{dut.io}.
+% You can set values via a \code{poke} on a port, which takes the value as a Chisel type of the
+% input port as a parameter.
+% An output port can be read by invoking \code{peekInt()} or \code{peekBoolean()} on the port,
+% which will return the value as a Scala type.
+% The tester advances the simulation by one clock cycle with \code{dut.clock.step()}.
+% For advancing the simulation by several clock cycles, we can provide a parameter to
+% \code{step()}.
+% We can print the values of the outputs with \code{println()}.
+
+A los puertos de entrada y de salida del DUT se accede con \code{dut.io}.
+Puedes fijar valores con un \code{poke} sobre un puerto, al que se le pasa como parámetro el valor
+expresado con el tipo de Chisel de ese puerto de entrada.
+Un puerto de salida se lee invocando \code{peekInt()} o \code{peekBoolean()} sobre él,
+que devuelven el valor como un tipo de Scala.
+El tester hace avanzar la simulación un ciclo de reloj con \code{dut.clock.step()}.
+Para avanzar varios ciclos de reloj podemos pasarle un parámetro a
 \code{step()}.
-We can print the values of the outputs with \code{println()}.
+Podemos imprimir los valores de las salidas con \code{println()}.
 
+% When you run the test
 
+Cuando ejecutes la prueba
 
-When you run the test
-
-\begin{chisel}
+\begin{verbatim}
 $ sbt "testOnly SimpleTest"
-\end{chisel}
+\end{verbatim}
 
-\noindent you will see the results printed to the terminal
-(besides other information):
+% \noindent you will see the results printed to the terminal
+% (besides other information):
+
+\noindent verás los resultados impresos en el terminal
+(junto a otra información):
 
 \begin{verbatim}
 ...
@@ -3114,16 +3149,25 @@ Result is: 2
 ...
 \end{verbatim}
 
-We see that 0 AND 1 results in 0; 3 AND 2 results in 2.
-Besides manually inspecting printouts, which is a good starting point, we can also
-express our expectations in the test bench itself by invoking
-\code{expect(value)} on the output port and the expected value as a parameter.
-The following example shows testing with expectations:
+% We see that 0 AND 1 results in 0; 3 AND 2 results in 2.
+% Besides manually inspecting printouts, which is a good starting point, we can also
+% express our expectations in the test bench itself by invoking
+% \code{expect(value)} on the output port and the expected value as a parameter.
+% The following example shows testing with expectations:
+
+Vemos que 0 AND 1 da 0, y que 3 AND 2 da 2.
+Además de inspeccionar a mano lo que se imprime, que es un buen punto de partida, podemos
+expresar nuestras expectativas en el propio banco de pruebas invocando
+\code{expect(valor)} sobre el puerto de salida, con el valor esperado como parámetro.
+El siguiente ejemplo muestra cómo realizar pruebas con valores esperados:
 
 \shortlist{code/test_bench.txt}
 
-Executing this test does not print out any values from the hardware,
-but that all tests passed as all expect values are correct.
+% Executing this test does not print out any values from the hardware,
+% but that all tests passed as all expect values are correct.
+
+Al ejecutar esta prueba no se imprime ningún valor generado por el hardware. Se imprime que todas las pruebas se han
+superado, ya que todos los valores esperados son correctos.
 
 \begin{verbatim}
 [info] SimpleTestExpect:
@@ -3138,9 +3182,13 @@ but that all tests passed as all expect values are correct.
 [info] Passed: Total 1, Failed 0, Errors 0, Passed 1
 \end{verbatim}
 
-A failed test, when either the DUT or the test bench contains an error,
-produces an error message describing the difference between the expected and actual
-value. In the following, we changed the test bench to expect a 4, which is an error:
+% A failed test, when either the DUT or the test bench contains an error,
+% produces an error message describing the difference between the expected and actual
+% value. In the following, we changed the test bench to expect a 4, which is an error:
+
+Una prueba que falla, ya sea porque el error está en el DUT o en el banco de pruebas,
+produce un mensaje de error que describe la diferencia entre el valor esperado y el valor
+real. A continuación hemos cambiado el banco de pruebas para que espere un 4, que es incorrecto:
 
 \begin{verbatim}
 [info] SimpleTestExpect:
@@ -3159,25 +3207,43 @@ value. In the following, we changed the test bench to expect a 4, which is an er
 [error] 	SimpleTestExpect
 \end{verbatim}
 
-The \code{peek()} function returns a Chisel type, which would need conversion to be used
-as Scala type. To simplify using test values in Scala land, ChiselTest supports \code{peekInt()}
-and \code{peekBoolean()}. The following test example reads the output with \code{peekInt()},
-which returns a Scala integer\footnote{To support arbitrarily wide integer values, the
-return value is a Scala \codefoot{BigInt} instead of a Scala \codefoot{Int}.}
-that is used in the \code{assert()} statement.
-Similar we can read the \code{equ} output into a Scala \code{Boolean}, directly
-used in the assert statement.
+% The \code{peek()} function returns a Chisel type, which would need conversion to be used
+% as Scala type. To simplify using test values in Scala land, ChiselTest supports \code{peekInt()}
+% and \code{peekBoolean()}. The following test example reads the output with \code{peekInt()},
+% which returns a Scala integer\footnote{To support arbitrarily wide integer values, the
+% return value is a Scala \codefoot{BigInt} instead of a Scala \codefoot{Int}.}
+% that is used in the \code{assert()} statement.
+% Similar we can read the \code{equ} output into a Scala \code{Boolean}, directly
+% used in the assert statement.
+
+La función \code{peek()} devuelve un tipo de Chisel, que habría que convertir para usarlo
+como tipo de Scala. Para facilitar el uso de los valores de prueba en el mundo de Scala, ChiselTest
+ofrece \code{peekInt()} y \code{peekBoolean()}. El siguiente ejemplo lee la salida con \code{peekInt()},
+que devuelve un entero de Scala\footnote{Para admitir enteros de anchura arbitraria, el valor
+devuelto es un \codefoot{BigInt} de Scala en lugar de un \codefoot{Int}.}
+que se usa en la sentencia \code{assert()}.
+De forma parecida podemos leer la salida \code{equ} en un \code{Boolean} de Scala, que se usa
+directamente en la sentencia assert.
 
 \shortlist{code/test_peek_scala.txt}
 
-This example is a bit too simple to see the benefit of reading values from the DUT
-into Scala types. However, with more complex tests, e.g., looping till some value is true,
-these functions become useful.
+% This example is a bit too simple to see the benefit of reading values from the DUT
+% into Scala types. However, with more complex tests, e.g., looping till some value is true,
+% these functions become useful.
 
-In this section, we described the basic testing facility with Chisel for simple tests.
-However, keep in mind that the full power of Scala is available to write testers.
-This includes, for example, writing a reference model of your hardware in Scala to
-test the DUT against.
+Este ejemplo es demasiado sencillo como para apreciar la ventaja de leer valores del DUT
+a tipos de Scala. Sin embargo, en pruebas más complejas, por ejemplo un bucle que se repite hasta que
+algún valor sea cierto, estas funciones resultan muy útiles.
+
+% In this section, we described the basic testing facility with Chisel for simple tests.
+% However, keep in mind that the full power of Scala is available to write testers.
+% This includes, for example, writing a reference model of your hardware in Scala to
+% test the DUT against.
+
+En esta sección hemos descrito lo básico para escribir pruebas sencillas con Chisel.
+Pero no pierdas de vista que dispones de toda la potencia de Scala para escribir las pruebas.
+Eso incluye, por ejemplo, escribir en Scala un modelo de referencia de tu hardware contra el que
+comprobar el DUT.
 
 \subsection{Waveforms}
 
