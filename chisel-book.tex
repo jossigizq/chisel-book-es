@@ -3395,51 +3395,84 @@ El \code{printf} de Chisel admite
 estilo de Scala}.
 
 
-\section{Exercises}
+\section{Ejercicios}
 
-For this exercise, we will revisit the blinking LED from
+% For this exercise, we will revisit the blinking LED from
+% \myref{https://github.com/schoeberl/chisel-examples}{chisel-examples}
+% and explore Chisel testing.
+
+En este ejercicio volveremos al LED parpadeante de
 \myref{https://github.com/schoeberl/chisel-examples}{chisel-examples}
-and explore Chisel testing.
+y exploraremos las pruebas en Chisel.
 
-\subsection{A Minimal Project}
+\subsection{Un proyecto sencillo}
 
-First, let us find out what a minimal Chisel project is. Explore the files in the
-\myref{https://github.com/schoeberl/chisel-examples/tree/master/hello-world}{Hello World}
-example.
-The \code{Hello.scala} is the single hardware source file.
-It contains the hardware description of the blinking LED (\code{class Hello})
-and an \code{App} that generates the Verilog code.
+% First, let us find out what a minimal Chisel project is. Explore the files in the
+% \myref{https://github.com/schoeberl/chisel-examples/tree/master/hello-world}{Hello World}
+% example.
+% The \code{Hello.scala} is the single hardware source file.
+% It contains the hardware description of the blinking LED (\code{class Hello})
+% and an \code{App} that generates the Verilog code.
 
-Each file starts with the import of Chisel and related packages:
+Primero, veamos en qué consiste un proyecto sencillo de Chisel. Explora los ficheros del ejemplo
+\myref{https://github.com/schoeberl/chisel-examples/tree/master/hello-world}{Hello World}.
+\code{Hello.scala} es el único fichero fuente de hardware.
+Contiene la descripción hardware del LED parpadeante (\code{class Hello})
+y una \code{App} que genera el código Verilog.
+
+% Each file starts with the import of Chisel and related packages:
+
+Cada fichero empieza importando Chisel y los paquetes relacionados:
 
 \shortlist{code/import.txt}
 
-\noindent Then follows the hardware description, as shown in Listing~\ref{lst:chisel:hello}.
-To generate the Verilog description, we need an application.
-The only action of this application is to create a new \code{Hello} object and pass it
-to the \code{emitVerilog()} function.
+% \noindent Then follows the hardware description, as shown in Listing~\ref{lst:chisel:hello}.
+% To generate the Verilog description, we need an application.
+% The only action of this application is to create a new \code{Hello} object and pass it
+% to the \code{emitVerilog()} function.
+
+\noindent A continuación viene la descripción hardware, como se muestra en el código~\ref{lst:chisel:hello}.
+Para generar la descripción en Verilog necesitamos una aplicación.
+La única acción de esta aplicación es crear un nuevo objeto \code{Hello} y pasárselo
+a la función \code{emitVerilog()}.
 
 \shortlist{code/generate.txt}
 
-\noindent Run the generation of the example manually with
+% \noindent Run the generation of the example manually with
 
-\begin{chisel}
+\noindent Lanza a mano la generación del ejemplo con
+
+\begin{verbatim}
 $ sbt run
-\end{chisel}
+\end{verbatim}
 
-and explore the generated \code{Hello.v} with an editor. The generated Verilog code may not be
-very readable, but we can find out some details. The file starts with a module \code{Hello},
-which is the same name as our Chisel module. We can identify our LED port as
-\code{output io\_led}. Pin names are the Chisel names with a prepended \code{io\_}.
-Besides our LED pin, the module also contains \code{clock} and \code{reset} input signals.
-Those two signals are added automatically by Chisel.
+% and explore the generated \code{Hello.v} with an editor. The generated Verilog code may not be
+% very readable, but we can find out some details. The file starts with a module \code{Hello},
+% which is the same name as our Chisel module. We can identify our LED port as
+% \code{output io\_led}. Pin names are the Chisel names with a prepended \code{io\_}.
+% Besides our LED pin, the module also contains \code{clock} and \code{reset} input signals.
+% Those two signals are added automatically by Chisel.
 
-Furthermore, we can identify the definition of our two registers \code{cntReg} and \code{blkReg}.
-We may also find the reset and update of those registers at the end of the module definition.
-Note that Chisel generates a synchronous reset.
+y explora con un editor el \code{Hello.v} generado. El código Verilog generado quizá no sea
+muy legible, pero podemos averiguar algunos detalles. El fichero empieza con un módulo \code{Hello},
+que tiene el mismo nombre que nuestro módulo de Chisel. Podemos identificar nuestro puerto del LED como
+\code{output io\_led}. Los nombres de los pines son los nombres de Chisel precedidos de \code{io\_}.
+Además del pin del LED, el módulo contiene también las señales de entrada \code{clock} y \code{reset},
+que Chisel añade automáticamente.
 
-For \code{sbt} to be able to fetch the correct Scala compiler and the Chisel library,
-we need a \code{build.sbt}:
+% Furthermore, we can identify the definition of our two registers \code{cntReg} and \code{blkReg}.
+% We may also find the reset and update of those registers at the end of the module definition.
+% Note that Chisel generates a synchronous reset.
+
+También podemos identificar la definición de nuestros dos registros, \code{cntReg} y \code{blkReg}.
+Al final de la definición del módulo encontraremos además el reset y la actualización de esos registros.
+Fíjate en que Chisel genera un reset síncrono.
+
+% For \code{sbt} to be able to fetch the correct Scala compiler and the Chisel library,
+% we need a \code{build.sbt}:
+
+Para que \code{sbt} pueda descargar el compilador de Scala y la biblioteca de Chisel correctos,
+necesitamos un \code{build.sbt}:
 \index{build.sbt}
 
 \begin{chisel}
@@ -3456,23 +3489,37 @@ libraryDependencies += "edu.berkeley.cs" %% "chisel3" % chiselVersion
 libraryDependencies += "edu.berkeley.cs" %% "chiseltest" % "0.5.6"
 \end{chisel}
 
-\noindent Note that in this example, we have a concrete Chisel version number to avoid checking on
-each run for a new version (which will fail if we are not connected to the Internet,
-e.g., when doing hardware design during a flight). Additionally, we have added the Chisel3 compiler
-plugin which is needed since Chisel 3.5.
-Change the \code{build.sbt} configuration to use the latest Chisel version by changing the
-library dependency to
+% \noindent Note that in this example, we have a concrete Chisel version number to avoid checking on
+% each run for a new version (which will fail if we are not connected to the Internet,
+% e.g., when doing hardware design during a flight). Additionally, we have added the Chisel3 compiler
+% plugin which is needed since Chisel 3.5.
+% Change the \code{build.sbt} configuration to use the latest Chisel version by changing the
+% library dependency to
+
+\noindent Fíjate en que en este ejemplo fijamos un número de versión concreto de Chisel para no tener que
+comprobar en cada ejecución si hay una versión nueva (lo que fallaría si no estamos conectados a Internet,
+por ejemplo al hacer diseño hardware durante un vuelo). Además, hemos añadido el plugin del compilador
+de Chisel3, necesario desde Chisel 3.5.
+Cambia la configuración de \code{build.sbt} para usar la última versión de Chisel, modificando la
+dependencia de la biblioteca a
 
 \begin{chisel}
 libraryDependencies += "edu.berkeley.cs" %% "chisel3" % "latest.release"
 \end{chisel}
 
-\noindent and rerun the build with \code{sbt}. Is there a newer version of Chisel
-available and will it be automatically downloaded?
+% \noindent and rerun the build with \code{sbt}. Is there a newer version of Chisel
+% available and will it be automatically downloaded?
 
-For convenience, the project also contains a \code{Makefile}.
-It just contains the \code{sbt} command, so we do not need to remember it and
-can generate the Verilog code with:
+\noindent y vuelve a lanzar la compilación con \code{sbt}. ¿Hay una versión más reciente de Chisel
+disponible? ¿Se descarga automáticamente?
+
+% For convenience, the project also contains a \code{Makefile}.
+% It just contains the \code{sbt} command, so we do not need to remember it and
+% can generate the Verilog code with:
+
+Por comodidad, el proyecto incluye también un \code{Makefile}.
+Solo contiene el comando de \code{sbt}, así que no hace falta recordarlo y
+podemos generar el código Verilog con:
 
 \begin{chisel}
 make
@@ -3482,38 +3529,67 @@ make
 %\myref{https://github.com/schoeberl/chisel-examples/blob/master/hello-world/verilog/hello_top.v}{Verilog top level},
 %which wires the reset signal to 0.
 %This works for our example in an FPGA, as registers usually power up 0.
-Besides a \code{README} file, the example project also contains project
-files for different FPGA boards. E.g., in
-\myref{https://github.com/schoeberl/chisel-examples/tree/master/hello-world/quartus/altde2-115}{quartus/altde2-115}
-you can find the two project files to define a Quartus project for the DE2-115 board.
-The main definitions (source files, device, pin assignments) can be found in a plain text file
-\myref{https://github.com/schoeberl/chisel-examples/blob/master/hello-world/quartus/altde2-115/hello.qsf}{hello.qsf}.
-Explore the file and find out which pins are connected to which signals.
-If you need to adapt the project to a different board, this is where the changes are applied.
-If you have Quartus installed, open that project, compile with the green \emph{Play} button,
-and then configure the FPGA.
+% Besides a \code{README} file, the example project also contains project
+% files for different FPGA boards. E.g., in
+% \myref{https://github.com/schoeberl/chisel-examples/tree/master/hello-world/quartus/altde2-115}{quartus/altde2-115}
+% you can find the two project files to define a Quartus project for the DE2-115 board.
+% The main definitions (source files, device, pin assignments) can be found in a plain text file
+% \myref{https://github.com/schoeberl/chisel-examples/blob/master/hello-world/quartus/altde2-115/hello.qsf}{hello.qsf}.
+% Explore the file and find out which pins are connected to which signals.
+% If you need to adapt the project to a different board, this is where the changes are applied.
+% If you have Quartus installed, open that project, compile with the green \emph{Play} button,
+% and then configure the FPGA.
 
-Note that the \emph{Hello World} is a minimal Chisel project.
-More realistic projects have their source files organized in packages and contain testers.
+Además de un fichero \code{README}, el proyecto de ejemplo contiene ficheros de proyecto
+para distintas placas FPGA. Por ejemplo, en
+\myref{https://github.com/schoeberl/chisel-examples/tree/master/hello-world/quartus/altde2-115}{quartus/altde2-115}
+encontrarás los dos ficheros que definen un proyecto de Quartus para la placa DE2-115.
+Las definiciones principales (ficheros fuente, dispositivo, asignación de pines) están en un fichero de
+texto plano,
+\myref{https://github.com/schoeberl/chisel-examples/blob/master/hello-world/quartus/altde2-115/hello.qsf}{hello.qsf}.
+Explora el fichero y averigua qué pines están conectados a qué señales.
+Si necesitas adaptar el proyecto a otra placa, es ahí donde se aplican los cambios.
+Si tienes Quartus instalado, abre ese proyecto, compílalo con el botón verde \emph{Play}
+y después configura la FPGA.
+
+% Note that the \emph{Hello World} is a minimal Chisel project.
+% More realistic projects have their source files organized in packages and contain testers.
+
+Ten en cuenta que el \emph{Hola Mundo} es un proyecto básico de Chisel.
+Los proyectos más realistas organizan sus ficheros fuente en paquetes y contienen testers.
 %The next chapter's exercise will explore such a project.
 
-\subsection{A Testing Exercise}
+\subsection{Un ejercicio de pruebas}
 
-In the last chapter's exercise, you have extended the blinking LED example with some input
-to build an AND gate and a multiplexer and run this hardware in an FPGA.
-We will now use this example and test the functionality with a Chisel tester
-to automate testing and also to be independent of an FPGA board.
-Use your designs from the previous chapter and add a Chisel tester to test the functionality.
-Try to enumerate all possible inputs and test the output with \code{expect()}.
+% In the last chapter's exercise, you have extended the blinking LED example with some input
+% to build an AND gate and a multiplexer and run this hardware in an FPGA.
+% We will now use this example and test the functionality with a Chisel tester
+% to automate testing and also to be independent of an FPGA board.
+% Use your designs from the previous chapter and add a Chisel tester to test the functionality.
+% Try to enumerate all possible inputs and test the output with \code{expect()}.
 
-Testing within Chisel can speed up the debugging of your design.
-However, it is always a good idea to synthesize your design for an FPGA and run tests
-with the FPGA. There you can perform a reality check on the size of your design (usually
-in LUTs and flip-flops) and your performance of your design in maximum clocking frequency.
-As a reference point, a textbook style pipelined RISC processor may consume about 3000
-4-bit LUTs and may run around 100~MHz in a low-cost FPGA (Intel Cyclone or
+En el ejercicio del capítulo anterior ampliaste el ejemplo del LED parpadeante con algunas entradas
+para construir una puerta AND y un multiplexor, y ejecutaste ese hardware en una FPGA.
+Ahora usaremos ese ejemplo y probaremos su funcionalidad con un tester de Chisel,
+para automatizar las pruebas y no depender de una placa FPGA.
+Toma tus diseños del capítulo anterior y añádeles un tester de Chisel que pruebe su funcionalidad.
+Intenta enumerar todas las entradas posibles y comprobar la salida con \code{expect()}.
+
+% Testing within Chisel can speed up the debugging of your design.
+% However, it is always a good idea to synthesize your design for an FPGA and run tests
+% with the FPGA. There you can perform a reality check on the size of your design (usually
+% in LUTs and flip-flops) and your performance of your design in maximum clocking frequency.
+% As a reference point, a textbook style pipelined RISC processor may consume about 3000
+% 4-bit LUTs and may run around 100~MHz in a low-cost FPGA (Intel Cyclone or
+% Xilinx Spartan).
+
+Probar dentro de Chisel puede acelerar la depuración de tu diseño.
+Aun así, siempre es buena idea sintetizar el diseño para una FPGA y hacer pruebas
+con ella. Ahí puedes contrastar con la realidad el tamaño de tu diseño (normalmente
+en LUT y biestables) y su rendimiento en frecuencia máxima de reloj.
+Como referencia, un procesador RISC segmentado de los que encontramos en un libro de texto puede 
+ocupar unas 3000 LUT de 4 bits y funcionar a unos 100~MHz en una FPGA de gama baja (Intel Cyclone o
 Xilinx Spartan).
-
 
 \chapter{Components}
 
