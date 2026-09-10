@@ -3337,21 +3337,31 @@ las dos señales de entrada de 2 bits.
 $ sbt "testOnly WaveformCounterTest"
 \end{verbatim}
 
-\subsection{printf Debugging}
+\subsection{Depuración con printf}
 
 \index{printf}
 
-Another form of debugging is ``printf debugging''. The name of this debugging method comes from
-simply putting \code{printf} statements in C code to print variables of interest during
-the execution of the program. This printf debugging is also available during testing
-of Chisel circuits. The printing happens at the rising edge of the clock.
-A \code{printf} statement can be inserted just anywhere in the module definition,
-as shown in the printf debugging version of the DUT.
+% Another form of debugging is ``printf debugging''. The name of this debugging method comes from
+% simply putting \code{printf} statements in C code to print variables of interest during
+% the execution of the program. This printf debugging is also available during testing
+% of Chisel circuits. The printing happens at the rising edge of the clock.
+% A \code{printf} statement can be inserted just anywhere in the module definition,
+% as shown in the printf debugging version of the DUT.
+
+Otra forma de depurar es la ``depuración con printf''. El nombre de este método viene de
+poner sentencias \code{printf} en el código C para imprimir las variables que interesan durante
+la ejecución del programa. Esta depuración con printf también está disponible al probar
+circuitos en Chisel. La impresión se produce en el flanco de subida del reloj.
+Una sentencia \code{printf} puede insertarse en cualquier punto de la definición del módulo,
+tal y como se ve en la versión del DUT con depuración con printf.
 
 \shortlist{code/test_dut_printf.txt}
 
-\noindent When testing this module with the counter-based tester, which iterates over all possible
-values, we get the following output, verifying that the AND function is correct:
+% \noindent When testing this module with the counter-based tester, which iterates over all possible
+% values, we get the following output, verifying that the AND function is correct:
+
+\noindent Al probar este módulo con el tester basado en un contador, que recorre todos los valores
+posibles, obtenemos la siguiente salida, que confirma que la función AND es correcta:
 
 \begin{verbatim}
 Elaborating design...
@@ -3377,8 +3387,12 @@ test DeviceUnderTestPrintf Success: 0 tests passed in 18 cycles
 in 0,031521 seconds 571,04 Hz
 \end{verbatim}
 
-Chisel \code{printf} supports
-\myref{https://www.chisel-lang.org/chisel3/docs/explanations/printing.html}{C and Scala style formatting}.
+% Chisel \code{printf} supports
+% \myref{https://www.chisel-lang.org/chisel3/docs/explanations/printing.html}{C and Scala style formatting}.
+
+El \code{printf} de Chisel admite
+\myref{https://www.chisel-lang.org/chisel3/docs/explanations/printing.html}{formato al estilo de C y al
+estilo de Scala}.
 
 
 \section{Exercises}
