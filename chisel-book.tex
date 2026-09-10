@@ -3245,60 +3245,93 @@ Pero no pierdas de vista que dispones de toda la potencia de Scala para escribir
 Eso incluye, por ejemplo, escribir en Scala un modelo de referencia de tu hardware contra el que
 comprobar el DUT.
 
-\subsection{Waveforms}
+\subsection{Formas de onda}
 
 \index{Waveform}
 \index{Vcd}
 
 
-Testers, as described above, work well for small designs and for
-\myref{https://en.wikipedia.org/wiki/Unit_testing}{unit testing}, as it is common in
-software development. A collection of unit tests can also serve
-\myref{https://en.wikipedia.org/wiki/Regression_testing}{regression testing}. However, 
-for debugging more complex designs, one would like to investigate several signals at 
-once. A classic approach to debug digital designs is displaying the signals in a 
-waveform. In a waveform the signals are displayed over time.
+% Testers, as described above, work well for small designs and for
+% \myref{https://en.wikipedia.org/wiki/Unit_testing}{unit testing}, as it is common in
+% software development. A collection of unit tests can also serve
+% \myref{https://en.wikipedia.org/wiki/Regression_testing}{regression testing}. However,
+% for debugging more complex designs, one would like to investigate several signals at
+% once. A classic approach to debug digital designs is displaying the signals in a
+% waveform. In a waveform the signals are displayed over time.
 
-\noindent Chisel testers can generate a waveform that includes all registers and all
-IO signals. In the following examples, we show waveform testers for the
-\code{DeviceUnderTest} from the former example (the 2-bit AND function).
-To generate a waveform for a test pass a definition of \code{writeVcd=1} to
-the test, as shown in the following \code{sbt} command:
+Los testers, tal y como los hemos descrito, funcionan bien para diseños pequeños y para las
+\myref{https://en.wikipedia.org/wiki/Unit_testing}{pruebas unitarias}, como es habitual en
+el desarrollo de software. Un conjunto de pruebas unitarias puede servir además para las
+\myref{https://en.wikipedia.org/wiki/Regression_testing}{pruebas de regresión}. Ahora bien,
+para depurar diseños más complejos conviene poder examinar varias señales a la
+vez. Una forma clásica de depurar diseños digitales es mostrar las señales en una
+forma de onda (\emph{waveform}), donde se representan a lo largo del tiempo.
+
+% \noindent Chisel testers can generate a waveform that includes all registers and all
+% IO signals. In the following examples, we show waveform testers for the
+% \code{DeviceUnderTest} from the former example (the 2-bit AND function).
+% To generate a waveform for a test pass a definition of \code{writeVcd=1} to
+% the test, as shown in the following \code{sbt} command:
+
+\noindent Los testers de Chisel pueden generar una forma de onda que incluya todos los registros y todas
+las señales de IO. En los siguientes ejemplos mostramos testers de forma de onda para el
+\code{DeviceUnderTest} del ejemplo anterior (la función AND de 2 bits).
+Para generar una forma de onda de una prueba, pásale a la prueba la definición \code{writeVcd=1},
+tal y como se ve en el siguiente comando de \code{sbt}:
 
 \begin{verbatim}
 sbt "testOnly SimpleTest -- -DwriteVcd=1"
 \end{verbatim}
 
-You can view the waveform with the free viewer
-\myref{http://gtkwave.sourceforge.net/}{GTKWave} or with ModelSim.
-Start GTKWave and select \emph{File -- Open New Window} and navigate to the
-folder where the Chisel tester put the \code{.vcd} file. By default, the generated files
-are in \code{test\_run\_dir} within a subfolder named after the test description.
-Within this folder, you should be able to find \code{DeviceUnderTest.vcd}.
-You can select the signals from the left side and drag them into the main window.
-If you want to save a configuration of signals you can do so with \emph{File -- Write Save File}
-and load it later with \emph{File -- Read Save File}.
+% You can view the waveform with the free viewer
+% \myref{http://gtkwave.sourceforge.net/}{GTKWave} or with ModelSim.
+% Start GTKWave and select \emph{File -- Open New Window} and navigate to the
+% folder where the Chisel tester put the \code{.vcd} file. By default, the generated files
+% are in \code{test\_run\_dir} within a subfolder named after the test description.
+% Within this folder, you should be able to find \code{DeviceUnderTest.vcd}.
+% You can select the signals from the left side and drag them into the main window.
+% If you want to save a configuration of signals you can do so with \emph{File -- Write Save File}
+% and load it later with \emph{File -- Read Save File}.
 
-The generation of waveforms can also be initiated by passing the\\ \code{WriteVcdAnnotation}
-annotation to the \code{test()} function.\footnote{This is an alternative to
-using the command line options.}
-We start with a simple tester that pokes values to the inputs and advances
-the clock with \code{step}. We do not read any output or compare it with \code{expect}.
-Instead, we will inspect the generated waveform in the \code{.vcd} file.
+Puedes ver la forma de onda con el visor gratuito
+\myref{http://gtkwave.sourceforge.net/}{GTKWave} o con ModelSim.
+Arranca GTKWave, selecciona \emph{File -- Open New Window} y ve a la
+carpeta donde el tester de Chisel haya dejado el fichero \code{.vcd}. Por defecto, los ficheros generados
+están en \code{test\_run\_dir}, dentro de una subcarpeta que toma su nombre de la prueba.
+Ahí deberías encontrar \code{DeviceUnderTest.vcd}.
+Puedes seleccionar las señales en la parte izquierda y arrastrarlas a la ventana principal.
+Si quieres guardar una configuración de señales, puedes hacerlo con \emph{File -- Write Save File}
+y cargarla más adelante con \emph{File -- Read Save File}.
 
+% The generation of waveforms can also be initiated by passing the\\ \code{WriteVcdAnnotation}
+% annotation to the \code{test()} function.\footnote{This is an alternative to
+% using the command line options.}
+% We start with a simple tester that pokes values to the inputs and advances
+% the clock with \code{step}. We do not read any output or compare it with \code{expect}.
+% Instead, we will inspect the generated waveform in the \code{.vcd} file.
+
+La generación de formas de onda también puede activarse pasándole la anotación\\
+\code{WriteVcdAnnotation} a la función \code{test()}.\footnote{Es una alternativa a
+usar las opciones de la línea de comandos.}
+Empezamos con un tester sencillo que hace \code{poke} de unos valores en las entradas y avanza
+el reloj con \code{step}. No leemos ninguna salida ni la comparamos con \code{expect}.
+En su lugar, inspeccionaremos la forma de onda generada en el fichero \code{.vcd}.
 
 \shortlist{code/test_bench_wave.txt}
 
+% Explicitly enumerating all possible input values does not scale. Therefore, we will use
+% some Scala code to drive the DUT. The following tester enumerates all possible values for
+% the two 2-bit input signals.
 
-
-
-Explicitly enumerating all possible input values does not scale. Therefore, we will use
-some Scala code to drive the DUT. The following tester enumerates all possible values for
-the two 2-bit input signals.
+Enumerar de forma explícita todos los valores de entrada posibles no es escalable. Por eso vamos a utilizar
+algo de código Scala para excitar el DUT. El siguiente tester enumera todos los valores posibles de
+las dos señales de entrada de 2 bits.
 
 \shortlist{code/test_bench_wavecnt.txt}
 
-\noindent and execute it with
+% \noindent and execute it with
+
+\noindent y lo ejecutamos con
 
 \begin{verbatim}
 $ sbt "testOnly WaveformCounterTest"
